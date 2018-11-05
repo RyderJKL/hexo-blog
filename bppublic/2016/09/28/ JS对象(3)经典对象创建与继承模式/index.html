@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,JS对象,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x01 组合模式创建对象JS 中创建一个对象的方式多种多样，每种方式都有自己缺点或者优点，具体的可以参考____ 而组合使用构造函数模式和原型模式来创建自定义类型算是最常见的方式了。 在组合模式中，构造函数用于定义实例属性，而原型用于定义方法和共享的属性。 如此，每个实例都会有自己的一份实例属性的副本，又共享着对方法的引用。 12345678910111213141516171819202122">
+<meta name="keywords" content="JavaScript,JS对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS对象(3)经典对象创建与继承模式">
+<meta property="og:url" content="http://yoursite.com/2016/09/28/ JS对象(3)经典对象创建与继承模式/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x01 组合模式创建对象JS 中创建一个对象的方式多种多样，每种方式都有自己缺点或者优点，具体的可以参考____ 而组合使用构造函数模式和原型模式来创建自定义类型算是最常见的方式了。 在组合模式中，构造函数用于定义实例属性，而原型用于定义方法和共享的属性。 如此，每个实例都会有自己的一份实例属性的副本，又共享着对方法的引用。 12345678910111213141516171819202122">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS对象(3)经典对象创建与继承模式">
+<meta name="twitter:description" content="0x01 组合模式创建对象JS 中创建一个对象的方式多种多样，每种方式都有自己缺点或者优点，具体的可以参考____ 而组合使用构造函数模式和原型模式来创建自定义类型算是最常见的方式了。 在组合模式中，构造函数用于定义实例属性，而原型用于定义方法和共享的属性。 如此，每个实例都会有自己的一份实例属性的副本，又共享着对方法的引用。 12345678910111213141516171819202122">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/28/ JS对象(3)经典对象创建与继承模式/">
+
+
+
+
+
+  <title>JS对象(3)经典对象创建与继承模式 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/28/ JS对象(3)经典对象创建与继承模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS对象(3)经典对象创建与继承模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-28T00:00:00+08:00">
+                2016-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x01-组合模式创建对象"><a href="#0x01-组合模式创建对象" class="headerlink" title="0x01 组合模式创建对象"></a>0x01 组合模式创建对象</h3><p>JS 中创建一个对象的方式多种多样，每种方式都有自己缺点或者优点，具体的可以参考____</p>
+<p>而组合使用构造函数模式和原型模式来创建自定义类型算是最常见的方式了。</p>
+<p>在组合模式中，构造函数用于定义实例属性，而原型用于定义方法和共享的属性。</p>
+<p>如此，每个实例都会有自己的一份实例属性的副本，又共享着对方法的引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function Person(name, age, job)&#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.age = age;</span><br><span class="line">	this.job = job;</span><br><span class="line">	this.friends = [&quot;jack&quot;, &quot;marli&quot;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">	// 使用字面量形式重写原型</span><br><span class="line">	constructor : Person,</span><br><span class="line">	sayName : function()&#123;</span><br><span class="line">		console.log(this.name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var person1 = new Person(&quot;刘德华&quot;,54,&quot;歌手 演员&quot;)</span><br><span class="line">person1.friends.push(&quot;成龙&quot;)</span><br><span class="line">var person2 = new Person(&quot;特朗普&quot;,60,&quot;企业家 花花公子 总统&quot;)</span><br><span class="line"></span><br><span class="line">console.log(person1.sayName()+&quot;的朋友: &quot;+person1.friends)</span><br><span class="line">//刘德华的朋友: jack,marli,成龙</span><br><span class="line">console.log(person2.name+&quot;的朋友: &quot; +person2.friends)</span><br><span class="line">//特朗普的朋友: jack,marli</span><br></pre></td></tr></table></figure>
+<p>当修改了 <code>person1.friends</code> 并不会影响到 <code>person2.friends</code>，因为它们分别引用了不同的数组。</p>
+<p>现在，对 Person 的原型进行如下修改:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Person.prototype = &#123;</span><br><span class="line">	// 使用字面量形式重写原型</span><br><span class="line">	constructor : Person,</span><br><span class="line">	sex:&apos;man&apos;,</span><br><span class="line">	hobby:[&apos;woman&apos;,&apos;money&apos;,&apos;food&apos;],</span><br><span class="line">	sayName : function()&#123;</span><br><span class="line">		console.log(this.name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上，我们新添加了 <code>sex</code> 和 <code>hobby</code> 两个共享属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">person1.sex = &quot;woman&quot;</span><br><span class="line">console.log(person1.sex)</span><br><span class="line">// woman</span><br><span class="line">console.log(person2.sex)</span><br><span class="line">// man</span><br><span class="line"></span><br><span class="line">person1.hobby.push(&quot;reputation&quot;)</span><br><span class="line">// [&quot;woman&quot;, &quot;money&quot;, &quot;food&quot;, &quot;reputation&quot;]</span><br><span class="line">console.log(person2.hobby)</span><br><span class="line">// [&quot;woman&quot;, &quot;money&quot;, &quot;food&quot;, &quot;reputation&quot;]</span><br></pre></td></tr></table></figure>
+<p>我们尝试在 <code>person1</code> 中将 <code>Person</code> 原型里的 <code>sex</code> 修改为 <code>woman</code>,<code>person2</code> 并没有受到影响，即使 <code>sex</code> 属性是属于 <code>Person</code> 原型中的共享属性。这很容易理解，因为 <code>Person</code> 中的 <code>sex</code> 是字符串，即属于六种原始类型中的一种。</p>
+<p>但是，当我门对 <code>person1</code> 中的 <code>hobby</code> 推入一个元素的时候，<code>person2</code> 中 <code>hobby</code> 同样被更改了。这也很容易理解，<code>hobby</code> 数数组，是引用类型的，且存在于 <code>Person</code> 的原型中，即它是共享属性，那么在任何实例中的操作都会影响到原型中的共享属性。</p>
+<hr>
+<h3 id="0x02-组合式继承"><a href="#0x02-组合式继承" class="headerlink" title="0x02 组合式继承"></a>0x02 组合式继承</h3><p>作为经典继承模式，组合式继承模式算是 JS 中使用最多的了。</p>
+<p>其思想是使用原型链实现对原型属性和方法的继承，而通过借用构造函数来实现对实例属性的继承。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">function SuperType(name)&#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.colors = [&quot;red&quot;,&quot;blue&quot;,&quot;pink&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype = &#123;</span><br><span class="line">	// 重写原型</span><br><span class="line">	constructor: SuperType,</span><br><span class="line">	// 将原型的构造函数指向 SuperType</span><br><span class="line">	job:[&quot;teacher&quot;,&quot;student&quot;],</span><br><span class="line">	sayName:function()&#123;</span><br><span class="line">		console.log(this.name)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function SubType(name, age)&#123;</span><br><span class="line">	</span><br><span class="line">	SuperType.call(this, name); // **第二次调用 SuperType 构造函数**</span><br><span class="line">	// 继承父类的实例属性，也因此而覆盖了原型继承中的同名属性</span><br><span class="line">	this.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SubType.prototype = new SuperType(); // **第一次调用 Supertype 构造函数**</span><br><span class="line">// 此时 SubType 的原型中将会包含 SuperType 的所有属性和方法(包括实例属性,共享属性,以及共享方法)</span><br><span class="line"></span><br><span class="line">SubType.constructor = SubType;</span><br><span class="line"></span><br><span class="line">SubType.prototype.sayAge = function()&#123;</span><br><span class="line">	// 继承而来的原型不能通过对象字面量的方式被重写，即是添加了 constructor 属性也没用</span><br><span class="line">	console.log(this.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var aSubType = new  SubType(&quot;jack&quot;, 24)</span><br><span class="line">aSubType.sayName()</span><br><span class="line">// jack</span><br><span class="line"></span><br><span class="line">var aSuperType = new SuperType(&quot;mack&quot;,35)</span><br><span class="line">aSubType.job.push(&quot;softfore engineering&quot;)</span><br><span class="line">console.log(aSuperType.job)</span><br><span class="line">// [&quot;teacher&quot;, &quot;student&quot;, &quot;softfore engineering&quot;]</span><br><span class="line">console.log(aSubType.job)</span><br><span class="line">// [&quot;teacher&quot;, &quot;student&quot;, &quot;softfore engineering&quot;]</span><br></pre></td></tr></table></figure>
+<p>如下，我们大概了解了组合式继承，但，正如星号(**)所标记的那样，组合继承存在一个不足的地方，就是无论在何种情况下，都会调用两次超类型构函数。一次是在创建子类型原型的时候，一次是在子类型构造函数内部。</p>
+<p>如何想解决这个问题，可以进一步的使用寄生组合式继承模式，它被认为是引用类型最理想的继承范式，也是实现基于类型继承的最有效方式。</p>
+<hr>
+<h3 id="0x03-寄生组合式继承"><a href="#0x03-寄生组合式继承" class="headerlink" title="0x03 寄生组合式继承"></a>0x03 寄生组合式继承</h3><p>使用寄生组合式继承可以不必为了指定子类型的原型而调用超类型的构造函数，我们所需要的无非是超类型的一个副本而已。</p>
+<p>如下是寄生组合式继承的基本模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function inheritPrototype(subType, superType)&#123;</span><br><span class="line">	var prototype = Object(superType.prototype)             </span><br><span class="line">	// 创建对象 </span><br><span class="line">	prototype.constructor = subType;			</span><br><span class="line">	// 增强对象</span><br><span class="line">	subType.prototype = prototype;				</span><br><span class="line">	// 指定对象</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>inheritPrototype()</strong> 函数接受两个参数:子类型构造函数和超类型构造函数。在函数中我们首先创建了一个超类型原型的一个副本，然后为创建的副本添加 <code>constructor</code> 属性，从而弥补因重写原型而失去的默认的 constructor 属性，最后我们将新创建的对象(原型副本)赋给子类型的原型。</p>
+<p>如此，便可以使用 inheritPrototype() 函数替换组合式继承模式中为子类原型赋值的操作了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">function SuperType(name)&#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.colors = [&quot;red&quot;,&quot;blue&quot;,&quot;pink&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype = &#123;</span><br><span class="line">	// 重写原型</span><br><span class="line">	constructor: SuperType,</span><br><span class="line">	// 将原型的构造函数指向 SuperType</span><br><span class="line">	job:[&quot;teacher&quot;,&quot;student&quot;],</span><br><span class="line">	sayName:function()&#123;</span><br><span class="line">		console.log(this.name)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function SubType(name, age)&#123;</span><br><span class="line">	</span><br><span class="line">	SuperType.call(this, name); </span><br><span class="line">	this.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function inheritPrototype(subType, superType)&#123;</span><br><span class="line">	var prototype = Object(superType.prototype) // 拷贝父级对象原型 </span><br><span class="line">	prototype.constructor = subType;           //将子类原型构造属性指向其子类构造函数</span><br><span class="line">	subType.prototype = prototype;	    	// 指定对象</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inheritPrototype(SubType, SuperType);</span><br><span class="line"></span><br><span class="line">var aSubType = new  SubType(&quot;jack&quot;, 24)</span><br><span class="line">aSubType.sayName()</span><br><span class="line">// jack</span><br><span class="line">console.log(aSubType.colors)</span><br><span class="line">//[&quot;red&quot;, &quot;blue&quot;, &quot;pink&quot;]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JS对象/" rel="tag"># JS对象</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/28/JS对象番外篇(1)创建对象的多种方式/" rel="next" title="JS对象番外篇(1)创建对象的多种方式">
+                <i class="fa fa-chevron-left"></i> JS对象番外篇(1)创建对象的多种方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/29/JS正则(1)正则初步/" rel="prev" title="JS正则(1)正则初步">
+                JS正则(1)正则初步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-组合模式创建对象"><span class="nav-number">1.</span> <span class="nav-text">0x01 组合模式创建对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-组合式继承"><span class="nav-number">2.</span> <span class="nav-text">0x02 组合式继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-寄生组合式继承"><span class="nav-number">3.</span> <span class="nav-text">0x03 寄生组合式继承</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

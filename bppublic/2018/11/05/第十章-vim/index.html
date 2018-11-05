@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="vim title: 第十章-vimdate: 2016-04-10 12:22:52tags: [‘鸟哥的Linux读书笔记基础篇’]toc: truecategories: technology 0x00 Why Vim首先要说的是vim是一款文字编辑器，但它并不是一款编辑器那么简单:  神器中的神器 所有的类UNIX操作系统都会内建vi编辑器，其它的则不一定会有 很多个软件的编辑接口都会主动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="onejustone">
+<meta property="og:url" content="http://yoursite.com/2018/11/05/第十章-vim/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="vim title: 第十章-vimdate: 2016-04-10 12:22:52tags: [‘鸟哥的Linux读书笔记基础篇’]toc: truecategories: technology 0x00 Why Vim首先要说的是vim是一款文字编辑器，但它并不是一款编辑器那么简单:  神器中的神器 所有的类UNIX操作系统都会内建vi编辑器，其它的则不一定会有 很多个软件的编辑接口都会主动">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="onejustone">
+<meta name="twitter:description" content="vim title: 第十章-vimdate: 2016-04-10 12:22:52tags: [‘鸟哥的Linux读书笔记基础篇’]toc: truecategories: technology 0x00 Why Vim首先要说的是vim是一款文字编辑器，但它并不是一款编辑器那么简单:  神器中的神器 所有的类UNIX操作系统都会内建vi编辑器，其它的则不一定会有 很多个软件的编辑接口都会主动">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/05/第十章-vim/">
+
+
+
+
+
+  <title> | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/第十章-vim/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-05T17:53:02+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h1><hr>
+<p>title: 第十章-vim<br>date: 2016-04-10 12:22:52<br>tags: [‘鸟哥的Linux读书笔记基础篇’]<br>toc: true<br>categories: technology</p>
+<h2 id="0x00-Why-Vim"><a href="#0x00-Why-Vim" class="headerlink" title="0x00 Why Vim"></a>0x00 Why Vim</h2><p>首先要说的是vim是一款文字编辑器，但它并不是一款编辑器那么简单:</p>
+<ul>
+<li>神器中的神器</li>
+<li>所有的类UNIX操作系统都会内建vi编辑器，其它的则不一定会有</li>
+<li>很多个软件的编辑接口都会主动呼叫vi;</li>
+<li>vim具有程序编辑能力</li>
+</ul>
+<p>简单的说，vi是一个老式的处理机，而vim可以说的是一个程序开发工具，你可以将 vim 视作 vi 的进阶版本，vim可以使用颜色或底线来显示一些特殊信息，vim 会依据档案的扩展名或者是档案内的开头信息， 判断该档案的内容而自动的呼叫该程序的语法判断式，再以颜色来显示程序代码与一般信息</p>
+<h2 id="0x01-vi的使用"><a href="#0x01-vi的使用" class="headerlink" title="0x01 vi的使用"></a>0x01 vi的使用</h2><p>vi有三种模式，一般模式，编辑模式，指令模式:</p>
+<ul>
+<li><p>一般模式:vi默认打开一个文档，就进入一般模式了，该模式下我们可以使用<code>上下左右</code>按键来移动鼠标，使用<code>删除字符</code>,或<code>删除整行</code>来处理文档，也可以使用复制，粘贴__来处理数据。</p>
+</li>
+<li><p>编辑模式: 在一般模式中按下<code>{i,I,o,O,a,A,r,R}</code>等任何一个字母后才会进入到编辑模式，通常下方会显示<code>INSERT或REPLACE</code>的字样！按<code>Esc</code>回到一般模式！</p>
+</li>
+<li><p>指令模式:在一般模式中输入<code>{: / ?}</code>三个中的任何一个按钮，关闭便会移动到最底下一行，该模式中，可以查询，替换字符内容等，进行读取，保存，离开vi，显示行号的操作！</p>
+</li>
+</ul>
+<p>值得注意的是，一般模式编辑模式，指令模式之间可任意互换，但编辑模式与指令模式之间不可互换！</p>
+<h2 id="一般模式"><a href="#一般模式" class="headerlink" title="一般模式"></a>一般模式</h2><h3 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">h 或 向左箭头键(←)</td>
+<td style="text-align:center">光标向左移动一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">j 或 向下箭头键(↓)</td>
+<td style="text-align:center">光标向下移动一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">k 或 向上箭头键(↑)</td>
+<td style="text-align:center">光标向上移动一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">l 或 向右箭头键(→)</td>
+<td style="text-align:center">光标向右移动一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">组合键:30j</td>
+<td style="text-align:center">向下移动30行</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl] + [f]</td>
+<td style="text-align:center">屏幕『向下』移动一页，相当于 [Page Down]按键</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl] + [b]</td>
+<td style="text-align:center">屏幕『向上』移动一页，相当于 [Page Up] 按键</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">光标移动到非空格符的下一列</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td style="text-align:center">光标移动到非空格符的上一列</td>
+</tr>
+<tr>
+<td style="text-align:center">n<code>&lt;space&gt;</code></td>
+<td style="text-align:center">那个 n 表示『数字』，例如 20 。按下数字后再按空格键，光标会向右移动这一行的 n 个字符。例如 20<space> 则光标会向后面移动 20 个字符距离。</space></td>
+</tr>
+<tr>
+<td style="text-align:center">0 或功能键[Home]</td>
+<td style="text-align:center">这是数字『 0 』：移动到这一行的最前面字符处</td>
+</tr>
+<tr>
+<td style="text-align:center">G</td>
+<td style="text-align:center">移动到这个档案的最后一行</td>
+</tr>
+<tr>
+<td style="text-align:center">nG</td>
+<td style="text-align:center">n 为数字。移动到这个档案的第 n 行。例如 20G 则会移动到这个档案的第 20 行(可配合 :set nu)</td>
+</tr>
+<tr>
+<td style="text-align:center">gg</td>
+<td style="text-align:center">移动到这个档案的第一行，相当于 1G 啊！</td>
+</tr>
+<tr>
+<td style="text-align:center">n<code>&lt;Enter&gt;</code></td>
+<td style="text-align:center">n 为数字。光标向下移动 n 行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查找与替换"><a href="#查找与替换" class="headerlink" title="查找与替换"></a>查找与替换</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/word</td>
+<td style="text-align:center">向光标之下寻找一个名称为 word 的字符串。</td>
+</tr>
+<tr>
+<td style="text-align:center">?word</td>
+<td style="text-align:center">向光标之上寻找一个字符串名称为 word 的字符串。</td>
+</tr>
+<tr>
+<td style="text-align:center">n</td>
+<td style="text-align:center">代表『重复前一个搜寻的动作』</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td style="text-align:center">这个 N 是英文按键。与 n 刚好相反，为『反向』进行前一个搜寻动作。 例如 /vbird 后，按下 N 则表示『向上』搜寻 vbird 。</td>
+</tr>
+<tr>
+<td style="text-align:center">:n1,n2s/word1/word2/g</td>
+<td style="text-align:center">n1 与 n2 为数字。</td>
+</tr>
+<tr>
+<td style="text-align:center">:1,$s/word1/word2/g</td>
+<td style="text-align:center">从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 ！</td>
+</tr>
+<tr>
+<td style="text-align:center">:1,$s/word1/word2/gc</td>
+<td style="text-align:center">从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 ！且在取代前显示提示字符给用户确认 (confirm) 是否需要取代！</td>
+</tr>
+</tbody>
+</table>
+<h3 id="删除，复制与粘贴"><a href="#删除，复制与粘贴" class="headerlink" title="删除，复制与粘贴"></a>删除，复制与粘贴</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x,X</td>
+<td style="text-align:center">在一行字当中，x 为向后删除一个字符 (相当于 [del] 按键)， X 为向前删除一个字符(相当于 [backspace] 亦即是退格键)</td>
+</tr>
+<tr>
+<td style="text-align:center">nx</td>
+<td style="text-align:center">n 为数字，连续向后删除 n 个字符。举例来说，我要连续删除 10 个字符， 『10x』。</td>
+</tr>
+<tr>
+<td style="text-align:center">dd</td>
+<td style="text-align:center">删除游标所在的那一整列</td>
+</tr>
+<tr>
+<td style="text-align:center">ndd</td>
+<td style="text-align:center">n 为数字。删除光标所在的向下 n 列</td>
+</tr>
+<tr>
+<td style="text-align:center">yy</td>
+<td style="text-align:center">复制游标所在的那一行</td>
+</tr>
+<tr>
+<td style="text-align:center">nyy</td>
+<td style="text-align:center">n 为数字。复制光标所在的向下 n 列</td>
+</tr>
+<tr>
+<td style="text-align:center">p,P</td>
+<td style="text-align:center">p 为将已复制的数据在光标下一行贴上，P 则为贴在游标上一行 举例来说</td>
+</tr>
+<tr>
+<td style="text-align:center">u</td>
+<td style="text-align:center">复原前一个动作。</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl]+r</td>
+<td style="text-align:center">重做上一个动作。</td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:center">不要怀疑！这就是小数点！意思是重复前一个动作的意思。 如果你想要重复删除、重复贴上等等动作，按下小数点<code>.</code>就好了</td>
+</tr>
+</tbody>
+</table>
+<h2 id="一般模式切换到编辑模式"><a href="#一般模式切换到编辑模式" class="headerlink" title="一般模式切换到编辑模式"></a>一般模式切换到编辑模式</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">i,I</td>
+<td style="text-align:left">进入插入模式(Insert mode)：i 为『从目前光标所在处插入』， I 为『在目前所在行的第一个非空格符处开始插入』。</td>
+</tr>
+<tr>
+<td style="text-align:center">a,A</td>
+<td style="text-align:left">进入插入模式(Insert mode)：a 为『从目前光标所在的下一个字符处开始插入』， A 为『从光标所在行的最后一个字符处开始插入』。</td>
+</tr>
+<tr>
+<td style="text-align:center">o,O</td>
+<td style="text-align:left">进入插入模式(Insert mode)：这是英文字母 o 的大小写。o 为『在目前光标所在的下一行处插入新的一行』； O 为在目前光标所在处的上一行插入新的一行！</td>
+</tr>
+<tr>
+<td style="text-align:center">r,R</td>
+<td style="text-align:left">进入取代模式(Replace mode)：r 只会取代光标所在的那一个字符一次；R会一直取代光标所在的文字，直到按下 ESC 为止；</td>
+</tr>
+</tbody>
+</table>
+<h2 id="一般模式切换到指令模式"><a href="#一般模式切换到指令模式" class="headerlink" title="一般模式切换到指令模式"></a>一般模式切换到指令模式</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:w</td>
+<td style="text-align:left">将编辑的数据写入硬盘档案中</td>
+</tr>
+<tr>
+<td style="text-align:center">:w!</td>
+<td style="text-align:left">若文件属性为『只读』时，强制写入该档案。不过，到底能不能写入， 还是跟你对该档案的档案权限有关</td>
+</tr>
+<tr>
+<td style="text-align:center">:wq!</td>
+<td style="text-align:left">储存后离开，若为 :wq! 则为强制储存后离开</td>
+</tr>
+<tr>
+<td style="text-align:center">:w filename</td>
+<td style="text-align:left">将编辑的数据储存成另一个档案（类似另存新档）</td>
+</tr>
+<tr>
+<td style="text-align:center">:r filename</td>
+<td style="text-align:left">在编辑的数据中，读入另一个档案的数据。亦即将 『filename』 这个档案内容加到游标所在行后面</td>
+</tr>
+<tr>
+<td style="text-align:center">:set nu</td>
+<td style="text-align:left">显示行号，设定之后，会在每一行的前缀显示该行的行号</td>
+</tr>
+</tbody>
+</table>
+<h2 id="区块选择-Visual-Block"><a href="#区块选择-Visual-Block" class="headerlink" title="区块选择(Visual Block)"></a>区块选择(Visual Block)</h2><h3 id="区块选择快捷键"><a href="#区块选择快捷键" class="headerlink" title="区块选择快捷键"></a>区块选择快捷键</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">v</td>
+<td style="text-align:center">字符选择，会将光标经过的地方反白选择！</td>
+</tr>
+<tr>
+<td style="text-align:center">V</td>
+<td style="text-align:center">行选择，会将光标经过的行反白选择</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl]+v</td>
+<td style="text-align:center">区块选择，可以用长方形的方式选择资料</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td style="text-align:center">将反白的地方复制起来</td>
+</tr>
+<tr>
+<td style="text-align:center">d</td>
+<td style="text-align:center">将反白的地方删除</td>
+</tr>
+</tbody>
+</table>
+<h2 id="多文件编辑"><a href="#多文件编辑" class="headerlink" title="多文件编辑"></a>多文件编辑</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:n</td>
+<td style="text-align:center">编辑下一个档案</td>
+</tr>
+<tr>
+<td style="text-align:center">:N</td>
+<td style="text-align:center">编辑上一个档案</td>
+</tr>
+<tr>
+<td style="text-align:center">: files</td>
+<td style="text-align:center">列出目前这个 vim 的开启的所有档案</td>
+</tr>
+</tbody>
+</table>
+<h2 id="多窗口功能"><a href="#多窗口功能" class="headerlink" title="多窗口功能"></a>多窗口功能</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:sp filename</td>
+<td style="text-align:left">开启一个新窗口，如果有加 filename， 表示在新窗口开启一个新档案，否则表示两个窗口为同一个档案内容(同步显示)。</td>
+</tr>
+<tr>
+<td style="text-align:center">[ctrl]+w+ j[ctrl]+w+↓</td>
+<td style="text-align:left">按键的按法是：先按下 [ctrl] 不放， 再按下 w 后放开所有的按键，然后再按下 j (或向下箭头键)，则光标可移动到下方的窗口。</td>
+</tr>
+<tr>
+<td style="text-align:center">[ctrl]+w+ k[ctrl]+w+↑</td>
+<td style="text-align:left">同上，不过光标移动到上面的窗口。</td>
+</tr>
+<tr>
+<td style="text-align:center">[ctrl]+w+ q</td>
+<td style="text-align:left">其实就是 :q 结束离开啦！ 举例来说，如果我想要结束下方的窗口，那么利用 [ctrl]+w+↓ 移动到下方窗口后，按下 :q 即可离开， 也可以按下 [ctrl]+w+q 啊！</td>
+</tr>
+</tbody>
+</table>
+<h2 id="0x06-vim的配置文件"><a href="#0x06-vim的配置文件" class="headerlink" title="0x06 vim的配置文件"></a>0x06 vim的配置文件</h2><p>整体<code>vim</code>的设定值一般是放置在<code>/etc/vimrc</code>这个档案，不过，不建议你修改他！ 你可以修改<code>~/.vimrc</code>这个档案 (预设不存在，请你自行手动建立！</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">快捷键</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&gt;&gt;</td>
+<td style="text-align:left">将当前行缩进一个<code>shiftwidth</code></td>
+</tr>
+<tr>
+<td style="text-align:center">5&gt;&gt;</td>
+<td style="text-align:left">将当前五行进行缩进一个<code>shiftwidth</code></td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:left">重复上一个操作</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/05/前端面试题总结/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/05/Django博客(2)Models/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vim"><span class="nav-number">1.</span> <span class="nav-text">vim</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-Why-Vim"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 Why Vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-vi的使用"><span class="nav-number">1.2.</span> <span class="nav-text">0x01 vi的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般模式"><span class="nav-number">1.3.</span> <span class="nav-text">一般模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#光标移动"><span class="nav-number">1.3.1.</span> <span class="nav-text">光标移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找与替换"><span class="nav-number">1.3.2.</span> <span class="nav-text">查找与替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除，复制与粘贴"><span class="nav-number">1.3.3.</span> <span class="nav-text">删除，复制与粘贴</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般模式切换到编辑模式"><span class="nav-number">1.4.</span> <span class="nav-text">一般模式切换到编辑模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般模式切换到指令模式"><span class="nav-number">1.5.</span> <span class="nav-text">一般模式切换到指令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区块选择-Visual-Block"><span class="nav-number">1.6.</span> <span class="nav-text">区块选择(Visual Block)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区块选择快捷键"><span class="nav-number">1.6.1.</span> <span class="nav-text">区块选择快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多文件编辑"><span class="nav-number">1.7.</span> <span class="nav-text">多文件编辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多窗口功能"><span class="nav-number">1.8.</span> <span class="nav-text">多窗口功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-vim的配置文件"><span class="nav-number">1.9.</span> <span class="nav-text">0x06 vim的配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它"><span class="nav-number">1.10.</span> <span class="nav-text">其它</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

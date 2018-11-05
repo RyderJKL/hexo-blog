@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS3,CSS3D,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 transform 2D我们先来看看在二维坐标系中的 transform 的作用效果。 transform 可以让元素进行移动translate,旋转rotate,缩放scale,变形skew。  2D 中的旋转角为正时,将会沿顺时针旋转。  旋转1transform:rotate(50deg) 缩放1transform:scale(xNum,yNum) 倾斜123transform:s">
+<meta name="keywords" content="CSS3,CSS3D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 3D">
+<meta property="og:url" content="http://yoursite.com/2016/11/14/CSS3D/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 transform 2D我们先来看看在二维坐标系中的 transform 的作用效果。 transform 可以让元素进行移动translate,旋转rotate,缩放scale,变形skew。  2D 中的旋转角为正时,将会沿顺时针旋转。  旋转1transform:rotate(50deg) 缩放1transform:scale(xNum,yNum) 倾斜123transform:s">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-08e3ebedd4e32d00.png?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-a5756362f624def7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-4e630ef425dfa715.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-dc9f239a7c94c84e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.685Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 3D">
+<meta name="twitter:description" content="0x00 transform 2D我们先来看看在二维坐标系中的 transform 的作用效果。 transform 可以让元素进行移动translate,旋转rotate,缩放scale,变形skew。  2D 中的旋转角为正时,将会沿顺时针旋转。  旋转1transform:rotate(50deg) 缩放1transform:scale(xNum,yNum) 倾斜123transform:s">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1571420-08e3ebedd4e32d00.png?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/14/CSS3D/">
+
+
+
+
+
+  <title>CSS 3D | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/14/CSS3D/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSS 3D</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-14T13:50:00+08:00">
+                2016-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-transform-2D"><a href="#0x00-transform-2D" class="headerlink" title="0x00 transform 2D"></a>0x00 transform 2D</h3><p>我们先来看看在二维坐标系中的 <code>transform</code> 的作用效果。</p>
+<p><code>transform</code> 可以让元素进行移动<code>translate</code>,旋转<code>rotate</code>,缩放<code>scale</code>,变形<code>skew</code>。</p>
+<blockquote>
+<p>2D 中的旋转角为正时,将会沿顺时针旋转。</p>
+</blockquote>
+<h5 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform:rotate(50deg)</span><br></pre></td></tr></table></figure>
+<h5 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform:scale(xNum,yNum)</span><br></pre></td></tr></table></figure>
+<h5 id="倾斜"><a href="#倾斜" class="headerlink" title="倾斜"></a>倾斜</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">transform:skewX(angle)</span><br><span class="line">transform:skewY(angel)</span><br><span class="line">trasnform:skew(xangle,yangle)</span><br></pre></td></tr></table></figure>
+<h5 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform:tanslate(x,y)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x01-CSS-3D"><a href="#0x01-CSS-3D" class="headerlink" title="0x01 CSS 3D"></a>0x01 CSS 3D</h3><hr>
+<h4 id="关于坐标系"><a href="#关于坐标系" class="headerlink" title="关于坐标系"></a>关于坐标系</h4><p>传说从初中到高中到大学的课堂上，教材中所涉及的立体几何基本都是右手系。<br>关于左手系与右手系的关系，见下图。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-08e3ebedd4e32d00.png?imageMogr2/auto-orient/strip" alt="坐标系"></p>
+<p>规定在右手坐标系中，物体旋转的正方向是右手螺旋方向，即**从该轴正半轴向原点看是顺时针方向(记住这点很重要，不然在之后的 CSS 3D 旋转属性中，你的世界会有种眩晕感，然后你的坐标系开始紊乱，然后你的宇宙就崩溃了。。。)</p>
+<p>OK,我们借坐标系短暂回忆了下我们的青春，现在我们来看看值移动设备或PC中的坐标系是如何建立的，同样见下图，一目了然。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-a5756362f624def7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3D坐标系"></p>
+<blockquote>
+<p>在移动设备和电脑中 Y 轴是向下的。</p>
+</blockquote>
+<hr>
+<h3 id="0x02-transform-3D-属性"><a href="#0x02-transform-3D-属性" class="headerlink" title="0x02 transform 3D 属性"></a>0x02 transform 3D 属性</h3><h4 id="transform-origin"><a href="#transform-origin" class="headerlink" title="transform-origin"></a>transform-origin</h4><p><code>transform-origin</code> 可以改变元素是旋转中心的位置。默认情况下，元素即绕三维物体会绕着自身的中心点旋转。<code>rotate()</code> 默认的旋转中心是(50%,50%)。</p>
+<p>CSS3变形属性中旋转、缩放、倾斜都可以通过 <code>transform-origin</code> 属性重置元素的原点，但其中的位移 <code>translate()</code> 始终以元素中心点进行位移。</p>
+<h4 id="persective"><a href="#persective" class="headerlink" title="persective"></a>persective</h4><p>需要知道的是，在设计 3D 效果时:</p>
+<ul>
+<li>只能选择透视方式，也就是近大远小的显示方式。</li>
+<li>镜头方向只能是平行Z轴向屏幕内，也就是从屏幕正前方向里看。</li>
+<li>初始状态下，所有元素都是放置在z=0的平面上。</li>
+</ul>
+<p><code>perspective</code> 属性让元素拥有了视野和视角的效果，而不是像以往的贴在屏幕上的平面，模拟了眼睛与物体之前的距离带来的远近视差效果。</p>
+<p>通过 <code>perspective(透视)</code> 属性， 可以设置镜头到元素所在平面的距离，它会让东西看起来近处的大，远处的小。以此，从视觉上产生不同程度的3D效果。其默认值是设备的屏幕分辨率。所以不同设备的 <code>perspective</code> 默认值是不一样的。</p>
+<p>设置 <code>perserspective</code> 有两种方式，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">transform: perspective( 400px );</span><br><span class="line">/**或者**/</span><br><span class="line">perspective: 400px;</span><br></pre></td></tr></table></figure>
+<p>这两种写法，都触发了元素的3D行为，函数型的写法<code>transform:perspective(400px)</code> 适用于单个元素，会对每一个元素做3D视图的变换，而<code>perspective:400px</code> 的写法，需写在父元素上。</p>
+<p>所以，<code>perspective</code> 并不影响当前元素的渲染，而是影响它的所有子元素。这也是它跟<em>transform:perspective()</em>方法的主要区别。</p>
+<blockquote>
+<p>在 WebKit 浏览器里，使用 <code>perspective</code> 只要是它的祖先元素都行，但在火狐或IE里只能是直接父元素。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-4e630ef425dfa715.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="perspective 1000px"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-dc9f239a7c94c84e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="perspective 300px"></p>
+<p> 此外,<code>perspective-origin</code> 属性规定了镜头在平面上的位置。镜头的默认位置是 <strong>对着</strong> 元素的中心点的。</p>
+<h4 id="backface-visibility"><a href="#backface-visibility" class="headerlink" title="backface-visibility"></a>backface-visibility</h4><p>backface-visibility 属性可用于隐藏内容的背面。</p>
+<h4 id="transform-style"><a href="#transform-style" class="headerlink" title="transform-style"></a>transform-style</h4><p><code>transform-style</code> 属性是3D空间一个非常重要的属性，指定嵌套元素如何在3D空间中呈现。他主要有两个属性值：<code>flat</code> 和 <code>preserve-3d</code>。</p>
+<p>其中 <code>flat</code> 值为默认值，表示所有子元素都在2D平面呈现。而 <code>preserve-3d</code> 表示所有子元素在3D空间中呈现。</p>
+<p>当对 <strong>舞台元素</strong> (变形元素们的共同直接父元素)使用 <code>transform-style:perserve-3d</code> 时，便是为其中的所有的子元素声明了一个 3D 渲染空间，这样处于其中的子元素便会以 3D 的形态展现出来。</p>
+<blockquote>
+<p><code>transform-style</code>  属性是非继承的，即只对其直接子元素提供 3D 渲染空间，对于中间节点需要显式设定。</p>
+</blockquote>
+<p>**如果需要使用 3D 模式，必须先为其直接父元素指定 <code>transform-style:perserve-3d</code>，并在任意祖先元素(包括直接父级元素)上增加 <code>perspective</code> 属性，有必要的好最好一并添加 <code>perspective-origin</code> 来指定透视点。</p>
+<hr>
+<h3 id="0x03-绘制-3D-图像"><a href="#0x03-绘制-3D-图像" class="headerlink" title="0x03 绘制 3D 图像"></a>0x03 绘制 3D 图像</h3><hr>
+<h4 id="正方体"><a href="#正方体" class="headerlink" title="正方体"></a>正方体</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</span><br><span class="line">&lt;title&gt;Cubes&lt;/title&gt;</span><br><span class="line">&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;</span><br><span class="line">&lt;meta name=&quot;keywords&quot; content=&quot;&quot;&gt;</span><br><span class="line">&lt;link href=&quot;&quot; rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">	html,body&#123;</span><br><span class="line">		perspective-origin: 50% 50%;</span><br><span class="line">		perspective:1000px;</span><br><span class="line">		height: 100%;</span><br><span class="line">		width: 100%;</span><br><span class="line">		background: #444;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.cube &#123;</span><br><span class="line">		position: fixed;</span><br><span class="line">		top:25%;</span><br><span class="line">		left: 50%;</span><br><span class="line">		width: 200px;</span><br><span class="line">		height: 200px;</span><br><span class="line">		margin-left: -100px;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.container-3D&#123;</span><br><span class="line">		transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);</span><br><span class="line">		transform-style: preserve-3d;</span><br><span class="line">		animation: rotation 10s linear infinite;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@-webkit-keyframes rotation &#123;</span><br><span class="line">		from&#123;</span><br><span class="line">				transform: rotateY(0deg) rotateX(-180deg) rotateZ(-140deg);</span><br><span class="line">		&#125;50%&#123;</span><br><span class="line">				transform: rotateY(360deg) rotateX(-360deg) rotateZ(0deg);</span><br><span class="line">		&#125;to&#123;</span><br><span class="line">				transform: rotateY(360deg) rotateX(180deg) rotateZ(220deg);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@-webkit-keyframes plus&#123;</span><br><span class="line">		from&#123;	width: 200px; height: 200px;background-color: #B00;border-width: 1px;border-color: #000;border-radius: 0px;	&#125;</span><br><span class="line">		20%&#123;	width: 200px; height: 200px;background-color: deeppink;border-width: 10px;border-color:#333;border-radius: 15px;	&#125;</span><br><span class="line">		40%&#123;	width: 100px; height: 100px;background-color: yellowgreen;border-width: 12px;border-color: #444;border-radius: 20px;	&#125;</span><br><span class="line">		60%&#123;	width: 100px; height: 100px; background-color: #B00; border-width: 30px;border-color: #fff;border-radius: 50px&#125;</span><br><span class="line">		80%&#123;	 width: 180px; height: 180px; background-color: #0B0; border-width: 10px;border-color: #000; border-radius: 0px	&#125;</span><br><span class="line">		to&#123;		width: 200px; height: 200px;background-color: #333;border-width: 1px;border-color: #123;border-radius: 10px;	&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	.face&#123;</span><br><span class="line">		background: rgba(200,200,200,1);</span><br><span class="line">		width: 200px;</span><br><span class="line">		height: 200px;</span><br><span class="line">		position: absolute;</span><br><span class="line">		border:1px solid black;</span><br><span class="line">		transform-style: preserve-3d;</span><br><span class="line">		animation: plus 5s ease-in-out infinite alternate;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.face--front&#123;</span><br><span class="line">		transform: translateZ(100px);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.face--back&#123;</span><br><span class="line">		transform: translateZ(-100px);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.face--left&#123;</span><br><span class="line">		transform: rotateY(-90deg) translateZ(-100px);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.face--right&#123;</span><br><span class="line">		transform: rotateY(90deg) translateZ(-100px);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.face--top&#123;</span><br><span class="line">		transform: rotateX(-90deg) translateZ(100px);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.face--bottom&#123;</span><br><span class="line">		transform: rotateX(90deg) translateZ(100px);</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;cube container-3D&quot;&gt;</span><br><span class="line">    	&lt;div class=&quot;face face--front&quot;&gt;face--front&lt;/div&gt;</span><br><span class="line">    	&lt;div class=&quot;face face--back&quot;&gt;face--back&lt;/div&gt;</span><br><span class="line">    	&lt;div class=&quot;face face--left&quot;&gt;face--left&lt;/div&gt;</span><br><span class="line">    	&lt;div class=&quot;face face--right&quot;&gt;face--right&lt;/div&gt;</span><br><span class="line">    	&lt;div class=&quot;face face--top&quot;&gt;face--top&lt;/div&gt;</span><br><span class="line">    	&lt;div class=&quot;face face--bottom&quot;&gt;face--bottom&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot; &quot; &gt;&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>如上，我们为 <code>html/body</code> 设置 <code>perspective</code> 属性，使其成为舞台元素，而为 <code>.container-3D</code> 添加了 <code>transform-style:preserve-3d</code> 使其成为渲染 3D 空间的容器，为其直接子元素开启 3D 渲染环境。</p>
+<hr>
+<h4 id="3D-container-元素的常用旋转动画"><a href="#3D-container-元素的常用旋转动画" class="headerlink" title="3D container 元素的常用旋转动画"></a>3D container 元素的常用旋转动画</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.container-3D&#123;</span><br><span class="line">		transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);</span><br><span class="line">		transform-style: preserve-3d;</span><br><span class="line">		animation: rotation 10s linear infinite;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@-webkit-keyframes rotation &#123;</span><br><span class="line">		from&#123;</span><br><span class="line">				transform: rotateY(0deg) rotateX(-180deg) rotateZ(-140deg);</span><br><span class="line">		&#125;50%&#123;</span><br><span class="line">				transform: rotateY(360deg) rotateX(-360deg) rotateZ(0deg);</span><br><span class="line">		&#125;to&#123;</span><br><span class="line">				transform: rotateY(360deg) rotateX(180deg) rotateZ(220deg);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS3/" rel="tag"># CSS3</a>
+          
+            <a href="/tags/CSS3D/" rel="tag"># CSS3D</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/14/CSS选择器/" rel="next" title="CSS选择器">
+                <i class="fa fa-chevron-left"></i> CSS选择器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/21/Canvas绘画一个时钟/" rel="prev" title="Canvas绘画一个时钟">
+                Canvas绘画一个时钟 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-transform-2D"><span class="nav-number">1.</span> <span class="nav-text">0x00 transform 2D</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#旋转"><span class="nav-number">1.0.1.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缩放"><span class="nav-number">1.0.2.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#倾斜"><span class="nav-number">1.0.3.</span> <span class="nav-text">倾斜</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平移"><span class="nav-number">1.0.4.</span> <span class="nav-text">平移</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-CSS-3D"><span class="nav-number">2.</span> <span class="nav-text">0x01 CSS 3D</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于坐标系"><span class="nav-number">2.1.</span> <span class="nav-text">关于坐标系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-transform-3D-属性"><span class="nav-number">3.</span> <span class="nav-text">0x02 transform 3D 属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#transform-origin"><span class="nav-number">3.1.</span> <span class="nav-text">transform-origin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#persective"><span class="nav-number">3.2.</span> <span class="nav-text">persective</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#backface-visibility"><span class="nav-number">3.3.</span> <span class="nav-text">backface-visibility</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transform-style"><span class="nav-number">3.4.</span> <span class="nav-text">transform-style</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-绘制-3D-图像"><span class="nav-number">4.</span> <span class="nav-text">0x03 绘制 3D 图像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正方体"><span class="nav-number">4.1.</span> <span class="nav-text">正方体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3D-container-元素的常用旋转动画"><span class="nav-number">4.2.</span> <span class="nav-text">3D container 元素的常用旋转动画</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hexo,博客,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装准备安装Node.js安装Node最好的方式是使用nvm进行安装，首先从git上克隆nvm项目: 1root@jack:~# git clone https://github.com/creationix/nvm.git ~/.nvm &amp;amp;&amp;amp; cd ~/.nvm &amp;amp;&amp;amp; git checkout `git describe --abbrev=0 --tags` 克隆">
+<meta name="keywords" content="hexo,博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo建站笔记">
+<meta property="og:url" content="http://yoursite.com/2016/05/26/搭建Hexo博客站点/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="安装准备安装Node.js安装Node最好的方式是使用nvm进行安装，首先从git上克隆nvm项目: 1root@jack:~# git clone https://github.com/creationix/nvm.git ~/.nvm &amp;amp;&amp;amp; cd ~/.nvm &amp;amp;&amp;amp; git checkout `git describe --abbrev=0 --tags` 克隆">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo建站笔记">
+<meta name="twitter:description" content="安装准备安装Node.js安装Node最好的方式是使用nvm进行安装，首先从git上克隆nvm项目: 1root@jack:~# git clone https://github.com/creationix/nvm.git ~/.nvm &amp;amp;&amp;amp; cd ~/.nvm &amp;amp;&amp;amp; git checkout `git describe --abbrev=0 --tags` 克隆">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/26/搭建Hexo博客站点/">
+
+
+
+
+
+  <title>Hexo建站笔记 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/26/搭建Hexo博客站点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hexo建站笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-26T20:25:52+08:00">
+                2016-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装准备"><a href="#安装准备" class="headerlink" title="安装准备"></a>安装准备</h1><h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p>安装Node最好的方式是使用nvm进行安装，首先从git上克隆nvm项目:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~<span class="comment"># git clone https://github.com/creationix/nvm.git ~/.nvm &amp;&amp; cd ~/.nvm &amp;&amp; git checkout `git describe --abbrev=0 --tags`</span></span><br></pre></td></tr></table></figure>
+<p>克隆完成使用,使用source命令，激活nvm:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~<span class="comment"># . ~/.nvm/nvm.sh</span></span><br></pre></td></tr></table></figure>
+<p>然后在～/.bashrc添加nvm全局变量:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">"<span class="variable">$HOME</span>/.nvm"</span></span><br><span class="line">[ -s <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> ] &amp;&amp; . <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> <span class="comment"># This loads nvm</span></span><br></pre></td></tr></table></figure>
+<p>ok,搞定，开始安装nvm:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~<span class="comment"># nvm install 5.0</span></span><br><span class="line">Downloading https://nodejs.org/dist/v5.0.0/node-v5.0.0-linux-x64.tar.xz...</span><br></pre></td></tr></table></figure>
+<p>启动nvm</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~<span class="comment"># nvm use 5.0</span></span><br><span class="line">Now using node v5.0.0 (npm v3.3.6)</span><br></pre></td></tr></table></figure>
+<h2 id="uninstal-nvm"><a href="#uninstal-nvm" class="headerlink" title="uninstal nvm"></a>uninstal nvm</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/.nvm</span><br><span class="line">rm -rf ~/.npm</span><br><span class="line">rm -rf ~/.bower</span><br></pre></td></tr></table></figure>
+<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>当然，kali已经默认安装git了。<br>ubuntu安装git:sudo apt-get install git-core</p>
+<h1 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h1><p>一切准备就绪，开始安装Hexo吧:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~<span class="comment"># mkdir MyBlog #新建一个MyBlog目录,作为博客的存放地</span></span><br><span class="line">root@jack:~/MyBlog<span class="comment"># npm install -g hexo-cli</span></span><br></pre></td></tr></table></figure>
+<p>等待Hexo安装完毕，然后依次使用以下命令对hexo进行初始配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog<span class="comment"># hexo init hexo</span></span><br><span class="line">INFO  Start blogging with Hexo!</span><br></pre></td></tr></table></figure>
+<h2 id="Hexo-建站"><a href="#Hexo-建站" class="headerlink" title="Hexo 建站"></a>Hexo 建站</h2><p>Hexo安装完毕以后依次执行以下命令可以建立Hexo站了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog<span class="comment"># hexo init hexo  #执行命令时没有“&lt;&gt;”</span></span><br><span class="line"><span class="comment">#新建一个网站。如果没有设置 folder ，Hexo 默认在目前的文件夹建立网站，"hexo"文件夹即是我们的博客网站。</span></span><br><span class="line">root@jack:~/MyBlog<span class="comment"># cd hexo/</span></span><br><span class="line">root@jack:~/MyBlog/hexo<span class="comment"># npm install</span></span><br><span class="line"><span class="comment">#Hexo随后会自动在目标文件夹建立网站所需要的配置文件</span></span><br><span class="line">root@jack:~/MyBlog/hexo<span class="comment"># hexo generate</span></span><br><span class="line"><span class="comment">#生成静态文件</span></span><br><span class="line">root@jack:~/MyBlog/hexo<span class="comment"># hexo server</span></span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</span><br><span class="line"><span class="comment">#启动hexo本地服务器访问网址为： http://localhost:4000/</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置Hexo主题"><a href="#配置Hexo主题" class="headerlink" title="配置Hexo主题"></a>配置Hexo主题</h2><p>以hexo下的huno主题为例:<a href="https://github.com/onejustone/huno" target="_blank" rel="noopener">https://github.com/onejustone/huno</a></p>
+<p>在当前目录中/root/MyBlog/hexo<br>{即已经部署了hexo基本配置文件的文件夹}</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog/hexo<span class="comment"># git clone git://github.com/someus/huno.git themes/huno</span></span><br></pre></td></tr></table></figure>
+<p>然后更改更目录下_config.yml的theme属性为:huno即可更换主题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog/hexo<span class="comment"># vim _config.yml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line">theme: huno</span><br></pre></td></tr></table></figure>
+<p>用浏览器打开localhost:4000查看是否成功！</p>
+<p>其它主题:<br>Maupassant一款极简的主题:<br><a href="https://github.com/tufu9441/maupassant-hexo/" target="_blank" rel="noopener">https://github.com/tufu9441/maupassant-hexo/</a></p>
+<h2 id="0x03-第一篇文章"><a href="#0x03-第一篇文章" class="headerlink" title="0x03 第一篇文章"></a>0x03 第一篇文章</h2><p>执行下列命令来创建一篇新文章</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+<p>我们可以在命令中指定文章的布局（layout），默认为 post，可以通过修改 config.yml 中的 default_layout 参数来指定默认布局。</p>
+<h2 id="部署-Hexo-到-GitPages"><a href="#部署-Hexo-到-GitPages" class="headerlink" title="部署 Hexo 到 GitPages"></a>部署 Hexo 到 GitPages</h2><h3 id="配置和使用Github"><a href="#配置和使用Github" class="headerlink" title="配置和使用Github"></a>配置和使用Github</h3><p>Git安装完成后注册Github账号:<a href="http://www.github.com/" target="_blank" rel="noopener">http://www.github.com/</a><br>github上创建onejustone.git.io仓库<br>以建立个人博客登录后系统，在github首页，点击页面右下角「New Repository」project name:onejustone.github.io<br>description:–保持自己的独立思维–<br>要在Pages上建立个人博客，Repository名字是特定的，即是必须是user_name.github.io的形式！点击【Creat Repository】完成创建，之后通过<a href="http://onejustone.github.io/" target="_blank" rel="noopener">http://onejustone.github.io</a> 去访问我们的博客页面!</p>
+<p>通过SSH keys让本地git项目与远程的github建立联系:</p>
+<p>首先我们需要检查你电脑上现有的ssh key:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/. ssh 检查本机的ssh密钥</span><br><span class="line"><span class="comment"># 如果提示：No such file or directory 说明你是第一次使用git。</span></span><br></pre></td></tr></table></figure>
+<p>生成新的SSH Key：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"邮件地址@youremail.com"</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</span><br><span class="line"></span><br><span class="line">注意1: 此处的邮箱地址，你可以输入自己的邮箱地址；注意2: 此处的「-C」的是大写的「C」</span><br><span class="line"></span><br><span class="line">然后系统会要你输入密码：</span><br><span class="line"></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):&lt;输入加密串&gt;</span><br><span class="line">Enter same passphrase again:&lt;再次输入加密串&gt;</span><br><span class="line"></span><br><span class="line">在回车中会提示你输入一个密码，这个密码会在你提交项目时使用，如果为空的话提交项目时则不用输入。这个设置是防止别人往你的项目里提交内容。</span><br><span class="line"></span><br><span class="line">注意：输入密码的时候没有*字样的，你直接输入就可以了。</span><br></pre></td></tr></table></figure>
+<p>最后看到这样的界面，就成功设置ssh key了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~<span class="comment"># cd ~/.ssh</span></span><br><span class="line">bash: <span class="built_in">cd</span>: /root/.ssh: 没有那个文件或目录</span><br><span class="line">root@jack:~<span class="comment">#  ssh-keygen -t rsa -C "807527097@qq.com"</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Created directory <span class="string">'/root/.ssh'</span>.</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">4f:1c:9c:fa:91:53:8f:d2:16:9c:2b:6a:76:8a:3c:9b 807527097@qq.com</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 2048]----+</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">|         . o .   |</span></span><br><span class="line"><span class="string">|          + =    |</span></span><br><span class="line"><span class="string">|         o = =   |</span></span><br><span class="line"><span class="string">|        S O = .  |</span></span><br><span class="line"><span class="string">|         = *     |</span></span><br><span class="line"><span class="string">|        + +      |</span></span><br><span class="line"><span class="string">|     ..= o       |</span></span><br><span class="line"><span class="string">|      Eo.        |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置SSH-keys"><a href="#配置SSH-keys" class="headerlink" title="配置SSH keys"></a>配置SSH keys</h3><p>生成SSH keys以后:</p>
+<ul>
+<li>将id_rsa.pub里的字符复制下，准备添加到GitHub的SSH keys里。</li>
+<li>登陆github系统。点击右上角的 Settings—&gt;SSH  keys —&gt; New SSH key</li>
+<li>把你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了</li>
+</ul>
+<h3 id="测试SSH-keys"><a href="#测试SSH-keys" class="headerlink" title="测试SSH keys"></a>测试SSH keys</h3><p>可以输入下面的命令，看看设置是否成功，<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>的部分不要修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line"></span><br><span class="line">如果是下面的反馈：</span><br><span class="line">The authenticity of host <span class="string">'github.com (207.97.227.239)'</span> can<span class="string">'t be established.</span></span><br><span class="line"><span class="string">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.Are you sure you want to continue connecting (yes/no)?</span></span><br><span class="line"><span class="string">不要紧张，输入yes就好(此处会提示你输入刚才设置的密码)，然后会看到：</span></span><br><span class="line"><span class="string">Hi onejustone! You'</span>ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
+<h3 id="设置用户信息"><a href="#设置用户信息" class="headerlink" title="设置用户信息"></a>设置用户信息</h3><p>现在你已经可以通过SSH链接到GitHub了，还有一些个人信息需要完善的。</p>
+<p>Git会根据用户的名字和邮箱来记录提交。GitHub也是用这些信息来做权限的处理，输入下面的代码进行个人信息的设置，把名称和邮箱替换成你自己的，名字必须是你的真名，而不是GitHub的昵称。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"jack"</span>//用户名</span><br><span class="line">$ git config --global user.email  <span class="string">"onejustone@gmail.com"</span>//写自己的邮箱</span><br><span class="line">SSH Key配置成功</span><br></pre></td></tr></table></figure>
+<p>ok,本机已成功连接到github。</p>
+<h3 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h3><p>部署到github需要安装一个插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog/hexo<span class="comment">#  npm install hexo-deployer-git --save</span></span><br></pre></td></tr></table></figure>
+<p>然后，进入MyBlog/hexo根目录下对_config.yml文件进行配置:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog/hexo<span class="comment"># vim _config.yml</span></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repository: git@github.com:onejustone/onejustone.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<p>博主这里使用的是SSH Keys如果你用了https Keys的话直接在github里复制https的就行了，总共就两种协议。</p>
+<p>然后命令行进入MyBlog/hexo里:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<p>ok，我们的小窝棚已经基本搭建好了，现在可以访问你的个人github页面查看一把了我的是<a href="http://onejustone.github.io" target="_blank" rel="noopener">http://onejustone.github.io</a> 对应的将onejustone改成你自己的github账户名就行了！</p>
+<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><ul>
+<li><p>GitHub Pages的设置:在onejustone.github.io Repository的根目录下面，新建一个名为CNAME的文本文件，里面写入你要绑定的域名，比如<a href="http://www.onejustone.xyz" target="_blank" rel="noopener">www.onejustone.xyz</a>.</p>
+</li>
+<li><p>阿里万维网下注册域名:<a href="http://wanwang.aliyun.com/domain" target="_blank" rel="noopener">http://wanwang.aliyun.com/domain</a>,然后登陆阿里云控制台，找到“云解析”，选择解析设置，点击新手设置，添加gitpages的IP地址: 192.30.252.153</p>
+</li>
+<li><p>通过浏览器，访问 <code>http://www.onejustone.xyz</code>， 就打开了我们建好的博客站点。</p>
+</li>
+<li><p>为防止hexo部署后，CNAME会被自动删除，需要在source文件夹，创建CNAME(同时favicon.ico、images也可以在source文件下创建).</p>
+</li>
+</ul>
+<h2 id="将-Hexo-部署到自有服务器"><a href="#将-Hexo-部署到自有服务器" class="headerlink" title="将 Hexo 部署到自有服务器"></a>将 Hexo 部署到自有服务器</h2><p><a href="https://segmentfault.com/a/1190000009363890" target="_blank" rel="noopener">服务器上搭建hexo博客</a></p>
+<h2 id="关于windows下中文乱码问题"><a href="#关于windows下中文乱码问题" class="headerlink" title="关于windows下中文乱码问题"></a>关于windows下中文乱码问题</h2><p>在编辑文件的时候将文本的保存格式设置为UTF8格式保存！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/博客/" rel="tag"># 博客</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/25/(3)去除排序中的重复元素/" rel="next" title="(3)排序去重">
+                <i class="fa fa-chevron-left"></i> (3)排序去重
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/26/Python标准库(1)-概览/" rel="prev" title="Python标准库(1)概览">
+                Python标准库(1)概览 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装准备"><span class="nav-number">1.</span> <span class="nav-text">安装准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Node-js"><span class="nav-number">1.1.</span> <span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uninstal-nvm"><span class="nav-number">1.2.</span> <span class="nav-text">uninstal nvm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Git"><span class="nav-number">1.3.</span> <span class="nav-text">安装Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Hexo"><span class="nav-number">2.</span> <span class="nav-text">安装Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-建站"><span class="nav-number">2.1.</span> <span class="nav-text">Hexo 建站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Hexo主题"><span class="nav-number">2.2.</span> <span class="nav-text">配置Hexo主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-第一篇文章"><span class="nav-number">2.3.</span> <span class="nav-text">0x03 第一篇文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署-Hexo-到-GitPages"><span class="nav-number">2.4.</span> <span class="nav-text">部署 Hexo 到 GitPages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置和使用Github"><span class="nav-number">2.4.1.</span> <span class="nav-text">配置和使用Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置SSH-keys"><span class="nav-number">2.4.2.</span> <span class="nav-text">配置SSH keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试SSH-keys"><span class="nav-number">2.4.3.</span> <span class="nav-text">测试SSH keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置用户信息"><span class="nav-number">2.4.4.</span> <span class="nav-text">设置用户信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始部署"><span class="nav-number">2.4.5.</span> <span class="nav-text">开始部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定域名"><span class="nav-number">2.4.6.</span> <span class="nav-text">绑定域名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将-Hexo-部署到自有服务器"><span class="nav-number">2.5.</span> <span class="nav-text">将 Hexo 部署到自有服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于windows下中文乱码问题"><span class="nav-number">2.6.</span> <span class="nav-text">关于windows下中文乱码问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

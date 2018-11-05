@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="kali渗透测试,主动信息收集,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 碎语首先我们要明确的是，发现的目的是扫描出可能存活的IP地址，四层发现虽然涉及端口扫描，但是并不对端口的状态进行识别，其本质是利用四层协议的一些通信来识别主机ip是否存在，至于端口的问题，以后在谈。 四层发现的优点是可路由且结果可靠；不太可能被防火墙过滤，甚至可以发现所有端口都被过滤的主机。缺点是基于状态过滤的防火墙可能过滤扫描；全端口(十几万个端口)扫描的速度慢。  0x01 四层发现">
+<meta name="keywords" content="kali渗透测试,主动信息收集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四层发现">
+<meta property="og:url" content="http://yoursite.com/2016/05/11/四层发现/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 碎语首先我们要明确的是，发现的目的是扫描出可能存活的IP地址，四层发现虽然涉及端口扫描，但是并不对端口的状态进行识别，其本质是利用四层协议的一些通信来识别主机ip是否存在，至于端口的问题，以后在谈。 四层发现的优点是可路由且结果可靠；不太可能被防火墙过滤，甚至可以发现所有端口都被过滤的主机。缺点是基于状态过滤的防火墙可能过滤扫描；全端口(十几万个端口)扫描的速度慢。  0x01 四层发现">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="四层发现">
+<meta name="twitter:description" content="0x00 碎语首先我们要明确的是，发现的目的是扫描出可能存活的IP地址，四层发现虽然涉及端口扫描，但是并不对端口的状态进行识别，其本质是利用四层协议的一些通信来识别主机ip是否存在，至于端口的问题，以后在谈。 四层发现的优点是可路由且结果可靠；不太可能被防火墙过滤，甚至可以发现所有端口都被过滤的主机。缺点是基于状态过滤的防火墙可能过滤扫描；全端口(十几万个端口)扫描的速度慢。  0x01 四层发现">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/11/四层发现/">
+
+
+
+
+
+  <title>四层发现 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/11/四层发现/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">四层发现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-11T09:45:00+08:00">
+                2016-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-碎语"><a href="#0x00-碎语" class="headerlink" title="0x00 碎语"></a>0x00 碎语</h3><p>首先我们要明确的是，发现的目的是扫描出可能存活的IP地址，四层发现虽然涉及端口扫描，但是并不对端口的状态进行识别，其本质是利用四层协议的一些通信来识别主机ip是否存在，至于端口的问题，以后在谈。</p>
+<p>四层发现的优点是可路由且结果可靠；不太可能被防火墙过滤，甚至可以发现所有端口都被过滤的主机。缺点是基于状态过滤的防火墙可能过滤扫描；全端口(十几万个端口)扫描的速度慢。</p>
+<hr>
+<h3 id="0x01-四层发现如何探测目标"><a href="#0x01-四层发现如何探测目标" class="headerlink" title="0x01 四层发现如何探测目标"></a>0x01 四层发现如何探测目标</h3><hr>
+<h4 id="TCP探测"><a href="#TCP探测" class="headerlink" title="TCP探测"></a>TCP探测</h4><p>正确tcp连接是通过三次握手建立通信过程，然后可以向目标发送资源申请的请求，本机再发送ack进行确认，这是一种基于连接的可靠的通信协议，当然这是正确的时候。如果我们之前没有建立tcp连接，而是直接向目标发送tcp资源请求，这时目标服务器回想本机发送一个RST包(意思是，你是谁，我不认识你啊，你不能连我哦)，因此，当目标服务器委婉且礼貌的拒绝我们时，便可以基于次探测目标主机是否存在了！这是已中国基于tcp协议的特征进行的一种判断。当然我们也可以通过正确的，即是通过三次握手建立通信连接，通过发送的SYN包来确定目标主机是否在线。</p>
+<hr>
+<h4 id="UDP探测"><a href="#UDP探测" class="headerlink" title="UDP探测"></a>UDP探测</h4><p>UDP不同于TCP，UDP没有通过握手建立连接的过程，UDP只是尽力而为而已，它是一种非连接的不可靠传输协议，因此基于UDP来探测主机，难度和发现的准确率都高于TCP。同样是基于UDP的一些特征信息来探测。</p>
+<p>如果目标ip不在线，那我们对其发送的UDP包不会有任何的回应，但假如目标Ip在线，而且发送到UDP的目标端口处于开放状态，一般说来，这时目标主机接受到我的UDP包时也不会有任何回应，但有一种列外，即是目标端口没有开放时，会向我们发送一个ICMP不可达的包(但是到这里我们并不对其端口进行扫描)。</p>
+<hr>
+<h3 id="0x02-TCP发现"><a href="#0x02-TCP发现" class="headerlink" title="0x02 TCP发现"></a>0x02 TCP发现</h3><p><strong>原理:通过非正常TCP连接，探测目标主机(防火墙，交换机，服务器)是否存在</strong></p>
+<p><strong>ACK–&gt;TCP Port–&gt;RST</strong><br>  将TCP包头的flag位设定为ACK，然后发送给一个目标/端口，最后判断是否收到RST响应包，以此确定目标是否存在！</p>
+<p><em>无论是基于几层的探测扫描，得到结果也只不过是一种极大可能的参考，一切都可能不是真实的</em></p>
+<h4 id="Scapy构造四层TCP探测数据包"><a href="#Scapy构造四层TCP探测数据包" class="headerlink" title="Scapy构造四层TCP探测数据包"></a>Scapy构造四层TCP探测数据包</h4><p>先构造三层ip包，再构成四层tcp，然后将三层/四层组合起来构成一个TCP包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/scripts# scapy</span><br><span class="line">WARNING: No route found for IPv6 destination :: (no default route?)</span><br><span class="line">Welcome to Scapy (2.2.0)</span><br><span class="line">&gt;&gt;&gt; ip=IP() </span><br><span class="line">&gt;&gt;&gt; tcp=TCP()</span><br><span class="line">&gt;&gt;&gt; r=(ip/tcp)</span><br><span class="line">&gt;&gt;&gt; r[IP].dst=&quot;192.168.0.1&quot; #设置目标Ip地址</span><br><span class="line">&gt;&gt;&gt;r[TCP].flags=&quot;A&quot; #设置TCPflags为”ACK“</span><br><span class="line">&gt;&gt;&gt;r.display()</span><br><span class="line">###[ IP ]###</span><br><span class="line">  version= 4</span><br><span class="line">  ihl= None</span><br><span class="line">  tos= 0x0</span><br><span class="line">  len= None</span><br><span class="line">  id= 1</span><br><span class="line">  flags= </span><br><span class="line">  frag= 0</span><br><span class="line">  ttl= 64</span><br><span class="line">  proto= tcp</span><br><span class="line">  chksum= None</span><br><span class="line">  src= 192.168.0.109 #本机ip已经自动识别</span><br><span class="line">  dst= 192.168.0.1 #目标ip也已设置好</span><br><span class="line">  \options\</span><br><span class="line">###[ TCP ]###</span><br><span class="line">     sport= ftp_data</span><br><span class="line">     dport= http  #默认的tcp的端口是80端口</span><br><span class="line">     seq= 0</span><br><span class="line">     ack= 0</span><br><span class="line">     dataofs= None</span><br><span class="line">     reserved= 0</span><br><span class="line">     flags= A</span><br><span class="line">     window= 8192</span><br><span class="line">     chksum= None</span><br><span class="line">     urgptr= 0</span><br><span class="line">     options= &#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>开始发包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a=sr1(r)</span><br><span class="line">Begin emission:</span><br><span class="line">.Finished to send 1 packets.</span><br><span class="line">*</span><br><span class="line">Received 2 packets, got 1 answers, remaining 0 packets</span><br><span class="line">&gt;&gt;&gt; a.display()</span><br><span class="line">###[ IP ]###</span><br><span class="line">  version= 4L</span><br><span class="line">  ihl= 5L</span><br><span class="line">  tos= 0x0</span><br><span class="line">  len= 40</span><br><span class="line">  id= 14705</span><br><span class="line">  flags= </span><br><span class="line">  frag= 0L</span><br><span class="line">  ttl= 64</span><br><span class="line">  proto= tcp</span><br><span class="line">  chksum= 0xbfa0</span><br><span class="line">  src= 192.168.0.1</span><br><span class="line">  dst= 192.168.0.109</span><br><span class="line">  \options\</span><br><span class="line">###[ TCP ]###</span><br><span class="line">     sport= http</span><br><span class="line">     dport= ftp_data</span><br><span class="line">     seq= 0</span><br><span class="line">     ack= 0</span><br><span class="line">     dataofs= 5L</span><br><span class="line">     reserved= 0L</span><br><span class="line">     flags= R  &lt;---flags位由A变成了R</span><br><span class="line">     window= 0</span><br><span class="line">     chksum= 0x2dbe</span><br><span class="line">     urgptr= 0</span><br><span class="line">     options= &#123;&#125;</span><br><span class="line">###[ Padding ]###</span><br><span class="line">        load= &apos;\x00\x00\x13(\x82\x9e&apos;</span><br></pre></td></tr></table></figure></p>
+<p>一条命令搞定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a=sr1(IP(dst=&quot;192.168.0.1&quot;)/TCP(dport=80,flags=&apos;A&apos;),timeout=1,verbose=0)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&lt;IP  version=4L ihl=5L tos=0x0 len=40 id=50048 flags= frag=0L ttl=64 proto=tcp chksum=0x3591 src=192.168.0.1 dst=192.168.0.109 options=[] |&lt;TCP  sport=http dport=ftp_data seq=0 ack=0 dataofs=5L reserved=0L flags=R window=0 chksum=0x2dbe urgptr=0 |&lt;Padding  load=&apos;\x00\x00\x80+\x86\xfe&apos; |&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="Python脚本实现TCP四层扫描"><a href="#Python脚本实现TCP四层扫描" class="headerlink" title="Python脚本实现TCP四层扫描"></a>Python脚本实现TCP四层扫描</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line"></span><br><span class="line">import logging</span><br><span class="line">import subprocess</span><br><span class="line">logging.getLogger(&quot;scapy.runtime&quot;).setLevel(logging.ERROR)</span><br><span class="line">from scapy.all import *</span><br><span class="line"></span><br><span class="line">if len(sys.argv)!= 2:</span><br><span class="line">  print &quot;Usage - ./ping1.py [/24 network address]&quot;</span><br><span class="line">  print &quot;Example - ./ping1.py 128.38.28.3&quot;</span><br><span class="line">  sys.exit()</span><br><span class="line"></span><br><span class="line">address = str(sys.argv[1])</span><br><span class="line">prefix = address.split(&quot;.&quot;)[0]+&apos;.&apos;+address.split(&quot;.&quot;)[1]+&apos;.&apos;+address.split(&quot;.&quot;)[2]+&apos;.&apos;</span><br><span class="line"></span><br><span class="line">for addr in range(1, 254):</span><br><span class="line">  response = sr1(IP(dst=prefix+str(addr))/TCP(dport=2222,flags=&apos;A&apos;),timeout=0.1,verbose=0)</span><br><span class="line">  try:</span><br><span class="line">    if int(response[TCP].flags)==4: #tcp中Reset对应的flags是倒数第三位，2^2=4</span><br><span class="line">      print(prefix+str(addr))</span><br><span class="line">  except:</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-UDP发现"><a href="#0x03-UDP发现" class="headerlink" title="0x03 UDP发现"></a>0x03 UDP发现</h3><p>一条命令搞定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a=sr1(IP(dst=&quot;192.168.0.1&quot;)/UDP(dport=7643),timeout=0.1,verbose=0)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">&lt;IP  version=4L ihl=5L tos=0x0 len=56 id=63680 flags= frag=0L ttl=64 proto=icmp chksum=0x46 src=192.168.0.1 dst=192.168.0.109 options=[] |&lt;ICMP  type=dest-unreach code=port-unreachable chksum=0xdee4 unused=0 |&lt;IPerror  version=4L ihl=5L tos=0x0 len=28 id=1 flags= frag=0L ttl=64 proto=udp chksum=0xf911 src=192.168.0.109 dst=192.168.0.1 options=[] |&lt;UDPerror  sport=domain dport=7643 len=8 chksum=0x0 |&gt;&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="Python脚本实现UDP四层扫描"><a href="#Python脚本实现UDP四层扫描" class="headerlink" title="Python脚本实现UDP四层扫描"></a>Python脚本实现UDP四层扫描</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line"></span><br><span class="line">import logging</span><br><span class="line">import subprocess</span><br><span class="line">logging.getLogger(&quot;scapy.runtime&quot;).setLevel(logging.ERROR)</span><br><span class="line">from scapy.all import *</span><br><span class="line"></span><br><span class="line">if len(sys.argv)!= 2:</span><br><span class="line">  print &quot;Usage - ./ping1.py [/24 network address]&quot;</span><br><span class="line">  print &quot;Example - ./ping1.py 128.38.28.3&quot;</span><br><span class="line">  sys.exit()</span><br><span class="line"></span><br><span class="line">address = str(sys.argv[1])</span><br><span class="line">prefix = address.split(&quot;.&quot;)[0]+&apos;.&apos;+address.split(&quot;.&quot;)[1]+&apos;.&apos;+address.split(&quot;.&quot;)[2]+&apos;.&apos;</span><br><span class="line"></span><br><span class="line">for addr in range(1, 254):</span><br><span class="line">  response = sr1(IP(dst=prefix+str(addr))/UDP(dport=7634),timeout=0.1,verbose=0)</span><br><span class="line">  try:</span><br><span class="line">    if int(response[IP].proto)==1: #为何是protoco=1，</span><br><span class="line">#通过wireshark抓包可以发现</span><br><span class="line">#ip层有protocol字段，指向它的上层协议，TCP为6,ICMP为1,IJMP</span><br><span class="line">#为2，UDP为17，</span><br><span class="line">#由此我们可以知道ip上层协议不一定除了tcp，就是udp，</span><br><span class="line">#还可以是其它的很多类型的协议，在这里我们发送了一个udp包给</span><br><span class="line">#目标，我们由是否接受到来自目标的icmp包来判断ip是否存活</span><br><span class="line">      print(prefix+str(addr))</span><br><span class="line">  except:</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x04-nmap-四层发现"><a href="#0x04-nmap-四层发现" class="headerlink" title="0x04 nmap-四层发现"></a>0x04 nmap-四层发现</h3><p>nmap很强大，它除了可以实现三层扫描，第四层也是信手拈来，如探囊取物一般，当然他的强大远不止于此。</p>
+<ul>
+<li><p><strong>{ Usage $: nmap [ip段] -PU[port] -sn }</strong></p>
+<p><strong>只对ip段进行四层发现而不进行端口扫描,类似于UDP扫描</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~/MyBlog/hexo/source/_posts# nmap 221.22.0.1-50 -PU80 -sn</span><br><span class="line">Starting Nmap 7.01 ( https://nmap.org ) at 2016-05-11 09:07 CST</span><br><span class="line">Nmap scan report for softbank221022000006.bbtec.net (221.22.0.6)</span><br><span class="line">Host is up (0.25s latency).</span><br><span class="line">Nmap scan report for softbank221022000025.bbtec.net (221.22.0.25)</span><br><span class="line">Host is up (0.18s latency).</span><br><span class="line">Nmap done: 50 IP addresses (2 hosts up) scanned in 11.75 seconds</span><br></pre></td></tr></table></figure>
+<p>可以看到基于udp的扫描结果并不理想</p>
+</li>
+</ul>
+<ul>
+<li><p><strong> { Usage $: nmap [ip段] -PA[port] -sn }</strong></p>
+<p><strong>只对ip段进行四层发现而不进行端口扫描,类似于Scapy扫描</strong></p>
+</li>
+<li><p><strong>{ Usage $: nmap -iL iplist.txt -PA[port] -sn}</strong></p>
+<p><strong>对已有ip地址进行存活检测</strong></p>
+</li>
+</ul>
+<p><em>无论如何，以上方法并不是适用于所有互联网设备，但是对大部分还是有所收获的</em></p>
+<hr>
+<h3 id="0x05-hping3-四层发现"><a href="#0x05-hping3-四层发现" class="headerlink" title="0x05 hping3 四层发现"></a>0x05 hping3 四层发现</h3><ul>
+<li><p><strong>{ Usage $: hping3 -udp ip -c 1 }</strong></p>
+<p><strong>hping3基于udp的四层发现</strong></p>
+<p>udp_hping3.sh核心代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for addr in $(seq 1 254); do hping3 -udp $prefix.$addr -c 1 &gt;&gt; r.txt.done</span><br><span class="line">grep Unreachable r.txt | cut -d&quot; &quot; -f 5 | cut -d&quot;=&quot; -f 2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>{Usage $: hping3 ip -c 1}</strong></p>
+<p><strong>hping3基于tcp的四层发现，不加参数，默认就是</strong></p>
+<p>tcp_hping3.sh核心代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">prefix=$(echo $1 | cut -d&quot;.&quot; -f 1-3)</span><br><span class="line">for addr in $(seq 1 254);do</span><br><span class="line">    hping3 $prefix.$addr -c 1 &gt;&gt; r.txt</span><br><span class="line">done</span><br><span class="line">grep ^len r.txt | cut -d&quot; &quot; -f 2 | cut -d&quot;=&quot; -f 2 &gt;&gt; output.txt</span><br><span class="line">rm r.txt</span><br></pre></td></tr></table></figure>
+<p>凡是hping发送的tcp所有的flags位都是not set的，即都是0的状态，它不同于udp的扫描，它通过返回的ack+rst包来判断主机存活！</p>
+</li>
+</ul>
+<p>hping3对四层扫描结果最不理想，当然这个就是智者见智！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kali渗透测试/" rel="tag"># kali渗透测试</a>
+          
+            <a href="/tags/主动信息收集/" rel="tag"># 主动信息收集</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/09/三层发现/" rel="next" title="层发现">
+                <i class="fa fa-chevron-left"></i> 层发现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/11/Python标准库(3)-时间与日期(time,datetime)/" rel="prev" title="Python标准库(3)时间与日期">
+                Python标准库(3)时间与日期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-碎语"><span class="nav-number">1.</span> <span class="nav-text">0x00 碎语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-四层发现如何探测目标"><span class="nav-number">2.</span> <span class="nav-text">0x01 四层发现如何探测目标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP探测"><span class="nav-number">2.1.</span> <span class="nav-text">TCP探测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP探测"><span class="nav-number">2.2.</span> <span class="nav-text">UDP探测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-TCP发现"><span class="nav-number">3.</span> <span class="nav-text">0x02 TCP发现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Scapy构造四层TCP探测数据包"><span class="nav-number">3.1.</span> <span class="nav-text">Scapy构造四层TCP探测数据包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python脚本实现TCP四层扫描"><span class="nav-number">3.2.</span> <span class="nav-text">Python脚本实现TCP四层扫描</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-UDP发现"><span class="nav-number">4.</span> <span class="nav-text">0x03 UDP发现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Python脚本实现UDP四层扫描"><span class="nav-number">4.1.</span> <span class="nav-text">Python脚本实现UDP四层扫描</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-nmap-四层发现"><span class="nav-number">5.</span> <span class="nav-text">0x04 nmap-四层发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-hping3-四层发现"><span class="nav-number">6.</span> <span class="nav-text">0x05 hping3 四层发现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="AngularJS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 关于过滤器过滤器在数据从作用域传递到指令上时进行转换，但不改变源数据，这样可以允许同一份数据在应用中以不同的形式展示。 理论上，过滤器可以执行任何类型的转换，但是大多情况下用于格式化或者对数据以某种顺序排序。  0x01 过滤单个数据的值AngularJS 有两种类型的内置过滤器:一类对单个数据值，另一类对数据集合进行操作。 用于单个数据的内置过滤器：  currency: 对货币值进行">
+<meta name="keywords" content="AngularJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS(6)使用过滤器">
+<meta property="og:url" content="http://yoursite.com/2017/02/04/AngularJS(6)使用过滤器/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 关于过滤器过滤器在数据从作用域传递到指令上时进行转换，但不改变源数据，这样可以允许同一份数据在应用中以不同的形式展示。 理论上，过滤器可以执行任何类型的转换，但是大多情况下用于格式化或者对数据以某种顺序排序。  0x01 过滤单个数据的值AngularJS 有两种类型的内置过滤器:一类对单个数据值，另一类对数据集合进行操作。 用于单个数据的内置过滤器：  currency: 对货币值进行">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.789Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS(6)使用过滤器">
+<meta name="twitter:description" content="0x00 关于过滤器过滤器在数据从作用域传递到指令上时进行转换，但不改变源数据，这样可以允许同一份数据在应用中以不同的形式展示。 理论上，过滤器可以执行任何类型的转换，但是大多情况下用于格式化或者对数据以某种顺序排序。  0x01 过滤单个数据的值AngularJS 有两种类型的内置过滤器:一类对单个数据值，另一类对数据集合进行操作。 用于单个数据的内置过滤器：  currency: 对货币值进行">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/04/AngularJS(6)使用过滤器/">
+
+
+
+
+
+  <title>AngularJS(6)使用过滤器 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/04/AngularJS(6)使用过滤器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AngularJS(6)使用过滤器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-04T00:00:00+08:00">
+                2017-02-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-关于过滤器"><a href="#0x00-关于过滤器" class="headerlink" title="0x00 关于过滤器"></a>0x00 关于过滤器</h3><p>过滤器在数据从作用域传递到指令上时进行转换，但不改变源数据，这样可以允许同一份数据在应用中以不同的形式展示。</p>
+<p>理论上，过滤器可以执行任何类型的转换，但是大多情况下用于格式化或者对数据以某种顺序排序。</p>
+<hr>
+<h3 id="0x01-过滤单个数据的值"><a href="#0x01-过滤单个数据的值" class="headerlink" title="0x01 过滤单个数据的值"></a>0x01 过滤单个数据的值</h3><p>AngularJS 有两种类型的内置过滤器:一类对单个数据值，另一类对数据集合进行操作。</p>
+<p>用于单个数据的内置过滤器：</p>
+<ul>
+<li><code>currency</code>: 对货币值进行格式化；</li>
+<li><code>date</code>: 对时间进行格式化；</li>
+<li><code>json</code>: 从 JSON 字符串中生成一个对象；</li>
+<li><code>number</code>: 对数字值进行格式化；</li>
+<li><code>uppercase</code>，<code>lowercase</code>：大小写格式化。</li>
+</ul>
+<blockquote>
+<p>过滤器可以进行链式调用，这样便可以使用多个过滤器按照一定的顺序对同一数据进行操作。</p>
+</blockquote>
+<hr>
+<h3 id="0x02-过滤集合"><a href="#0x02-过滤集合" class="headerlink" title="0x02 过滤集合"></a>0x02 过滤集合</h3><p>AngularJS 包含了三个内置的集合过滤器: </p>
+<ul>
+<li><code>limitTo</code>: 从一个数组中选出一定数量的对象；</li>
+<li><code>filter</code>: 从数组中选取对象；</li>
+<li><code>orderBy</code>: 对数组中的对象进行排序。</li>
+</ul>
+<hr>
+<h4 id="限制项目数量"><a href="#限制项目数量" class="headerlink" title="限制项目数量"></a>限制项目数量</h4><p><code>limitTo</code> 过滤器可以限制从一个数据对象构成的数组中取出的项目的数量。</p>
+<p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-1</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-1.html)</p>
+<p>如上清单所示，其核心代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$scope.limitVal = &quot;5&quot;;</span><br><span class="line">$scope.limitRange = [];</span><br><span class="line">for(let i = (0 - $scope.products.length); i &lt;= $scope.products.length;i ++)&#123;</span><br><span class="line">  	$scope.limitRange.push(i.toString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Limit: &lt;select ng-model=&quot;limitVal&quot; ng-options=&quot;item for item in limitRange&quot;&gt;&lt;/select&gt;</span><br><span class="line"></span><br><span class="line">&lt;tr ng-repeat=&quot;p in products | limitTo:limitVal&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><code>limitTo</code> 过滤器的值被指定为一个变量。而当该变量为负数时，例如 -5，过滤器会从数组中选出最后的五个对象。</p>
+<hr>
+<h4 id="选取项"><a href="#选取项" class="headerlink" title="选取项"></a>选取项</h4><p><code>filter</code> 过滤器用于从数组中选出一些对象。选取的条件可以是表达式，一个匹配属性值的  <code>map</code> 对象，或者一个函数。</p>
+<p>比如，使用 <code>map</code> 对象选取对象:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr ng-repeat=&quot;p in products | filter: &#123;category: &apos;Fish&apos;&#125; | limitTo:limitVal&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-2</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-2.html)</p>
+<hr>
+<h4 id="对项目排序"><a href="#对项目排序" class="headerlink" title="对项目排序"></a>对项目排序</h4><p><code>orderBy</code> 过滤器可对数组中的对象进行排序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr ng-repeat=&quot;p in products | limitTo:limitVal | orderBy: &apos;-price&apos;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>在只设定了一个属性名的情况下，相当于隐式的请求过滤器为对象进行生序排序，可以通过使用 <code>+</code> 或 <code>-</code> 字符来设置排序顺序。</p>
+<blockquote>
+<p>注意此处的属性名使用了引号: ‘price’ 而不是 price。没有引号，过滤器会将该属性看作一个作用域变量或者控制器变量。</p>
+</blockquote>
+<p>当然，按照某个属性的值进行排序是最简单的一种方式，<code>orderBy</code> 过滤器也能使用一个函数进行排序，用于排序的函数需要传入一个数据数组中的对象，然后再返回一个在排序时用于参考的对象或者值。</p>
+<p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-3</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-3.html)</p>
+<p>函数 <code>myCustomSorter</code> 的作用是将 <code>expiry</code> 值小于 100 的项放到数据数组的前面。</p>
+<p>最后，<code>orderBy</code> 还支持使用多个谓语进行排序，即通过为 <code>orderBy</code> 过滤器配置为使用一个属性名或者函数名构成的数组，用于依次进行排序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr ng-repeat=&quot;p in products | orderBy: [myCustomeSorter, &apos;-price&apos;]&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-4</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-4.html)</p>
+<hr>
+<h3 id="0x03-使用自定义过滤器"><a href="#0x03-使用自定义过滤器" class="headerlink" title="0x03 使用自定义过滤器"></a>0x03 使用自定义过滤器</h3><p>过滤器由 <code>Module.filter</code> 方法创建，该方法接收两个参数:过滤器名称和一个工厂函数，该函数用于创建实际工作的 work 函数。</p>
+<hr>
+<h4 id="创建格式化数据值的过滤器"><a href="#创建格式化数据值的过滤器" class="headerlink" title="创建格式化数据值的过滤器"></a>创建格式化数据值的过滤器</h4><p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-5</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-5.html)</p>
+<p>如上，在清单中创建了 <code>labelCase</code> 过滤器，它会将一个字符串格式化为只有首字母是大写的。</p>
+<p>在将该过滤器应用于 category 属性时指定了配置项为 <code>true</code>,将会颠倒过滤器所应用的大小写转换过程。</p>
+<hr>
+<h4 id="创建一个集合过滤器"><a href="#创建一个集合过滤器" class="headerlink" title="创建一个集合过滤器"></a>创建一个集合过滤器</h4><p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-6</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-6.html)</p>
+<p>如清单中所示，过滤器 <code>skip</code> 将会跳过数组对象中的前两项并选出之后的五项。</p>
+<hr>
+<h4 id="组合过滤器"><a href="#组合过滤器" class="headerlink" title="组合过滤器"></a>组合过滤器</h4><p>我们可以在已有过滤器的基础上将多个过滤器的功能合并到单个过滤器中。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.filter(&quot;take&quot;, function ($filter) &#123;</span><br><span class="line">	return function (data, skipCount, takeCount) &#123;</span><br><span class="line">		let skippedData = $filter(&quot;skip&quot;)(data, skipCount);</span><br><span class="line">		return $filter(&quot;limitTo&quot;)(skippedData, takeCount);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如上，首先在工厂函数中声明对 <code>$filter</code> 服务的依赖，如此便可以访问模块中所有已经定义的过滤器。</p>
+<p>过滤器在工人函数中通过名称来访问和调用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let skippedData = $filter(&quot;skip&quot;)(data, skipCount);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/onejustone/SimpleAngularDemo/blob/master/src/AngularJS(6" target="_blank" rel="noopener">清单6-7</a>%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8/%E6%B8%85%E5%8D%956-7.html)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AngularJS/" rel="tag"># AngularJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/04/AngularJS(7)创建自定义指令/" rel="next" title="AngularJS(7)创建自定义指令">
+                <i class="fa fa-chevron-left"></i> AngularJS(7)创建自定义指令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/05/AngularJS(8)创建复杂指令/" rel="prev" title="AngularJS(8)创建复杂指令">
+                AngularJS(8)创建复杂指令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-关于过滤器"><span class="nav-number">1.</span> <span class="nav-text">0x00 关于过滤器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-过滤单个数据的值"><span class="nav-number">2.</span> <span class="nav-text">0x01 过滤单个数据的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-过滤集合"><span class="nav-number">3.</span> <span class="nav-text">0x02 过滤集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#限制项目数量"><span class="nav-number">3.1.</span> <span class="nav-text">限制项目数量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选取项"><span class="nav-number">3.2.</span> <span class="nav-text">选取项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对项目排序"><span class="nav-number">3.3.</span> <span class="nav-text">对项目排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-使用自定义过滤器"><span class="nav-number">4.</span> <span class="nav-text">0x03 使用自定义过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建格式化数据值的过滤器"><span class="nav-number">4.1.</span> <span class="nav-text">创建格式化数据值的过滤器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个集合过滤器"><span class="nav-number">4.2.</span> <span class="nav-text">创建一个集合过滤器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组合过滤器"><span class="nav-number">4.3.</span> <span class="nav-text">组合过滤器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

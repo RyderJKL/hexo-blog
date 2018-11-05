@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,JS引用类型,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 函数定义JS 使用关键字 function  关键字来定义函数(也称为函数的声明): 123funciton [function] &amp;#123;    statements;&amp;#125; function 后面紧跟函数名 functionName 如果省去，便是一个匿名函数。 Function Experison可以使用函数的标准语法定义一个函数，也可以使用函数表达式创建一个函数，这个函">
+<meta name="keywords" content="JavaScript,JS引用类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS引用类型(3)之Function">
+<meta property="og:url" content="http://yoursite.com/2016/10/06/JS引用类型(3)之Function/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 函数定义JS 使用关键字 function  关键字来定义函数(也称为函数的声明): 123funciton [function] &amp;#123;    statements;&amp;#125; function 后面紧跟函数名 functionName 如果省去，便是一个匿名函数。 Function Experison可以使用函数的标准语法定义一个函数，也可以使用函数表达式创建一个函数，这个函">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.745Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS引用类型(3)之Function">
+<meta name="twitter:description" content="0x00 函数定义JS 使用关键字 function  关键字来定义函数(也称为函数的声明): 123funciton [function] &amp;#123;    statements;&amp;#125; function 后面紧跟函数名 functionName 如果省去，便是一个匿名函数。 Function Experison可以使用函数的标准语法定义一个函数，也可以使用函数表达式创建一个函数，这个函">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/06/JS引用类型(3)之Function/">
+
+
+
+
+
+  <title>JS引用类型(3)之Function | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/06/JS引用类型(3)之Function/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS引用类型(3)之Function</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-06T00:00:00+08:00">
+                2016-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-函数定义"><a href="#0x00-函数定义" class="headerlink" title="0x00 函数定义"></a>0x00 函数定义</h3><p>JS 使用关键字 function  关键字来定义函数(也称为函数的声明):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">funciton [function] &#123;</span><br><span class="line">    statements;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>function 后面紧跟函数名 functionName 如果省去，便是一个匿名函数。</p>
+<h4 id="Function-Experison"><a href="#Function-Experison" class="headerlink" title="Function Experison"></a>Function Experison</h4><p>可以使用函数的标准语法定义一个函数，也可以使用函数表达式创建一个函数，这个函数可以是匿名函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var square = funciton [ functionName] ( arguments) &#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Calling-Funciton"><a href="#Calling-Funciton" class="headerlink" title="Calling Funciton"></a>Calling Funciton</h3><p>在页面加载完成以后调用函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;body onload = &quot;functionName()&quot;&gt;&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">//or</span><br><span class="line">window.onload(functionName());</span><br></pre></td></tr></table></figure>
+<p>函数一定要处于调用它们的域中，但是函数的声明可以在调用之后，但是这种方式只限于 <code>function funcName () {}</code> 的标准方式。而下面的代码是无效的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">console.log(square(5));  //square is not defined</span><br><span class="line">square = funciton (n) &#123;</span><br><span class="line">    return n*n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="About-arguments"><a href="#About-arguments" class="headerlink" title="About arguments"></a>About arguments</h3><p>JS 中的参数在内部是用一个数组来表示的，在函数体内部可以通过 <code>arguments</code> 对象来访问这个数组，从而获取传递给函数的每一个参数。</p>
+<p>其实，<code>arguments</code> 并非 <code>Array</code> 的实例，它只是与数组类似而已，但是我们依然可以使用方括号 [ ] 语法来访问它的每一个元素。</p>
+<p><code>arguments</code> 可以与参数名一起使用，并且它的值永远与对应的命名参数的值保持一致。</p>
+<p><code>arguments</code> 对象是函数的一个内部对象，存储的是 <strong>传递给该函数的实参</strong></p>
+<blockquote>
+<p>JS 函数有一个重要特点: 命名的参数只提供便利，但不是必需的。</p>
+</blockquote>
+<blockquote>
+<p>JS 中的所有参数传递都是值传递，不可能通过引用传递参数。</p>
+</blockquote>
+<h4 id="arguments-callee"><a href="#arguments-callee" class="headerlink" title="arguments.callee"></a>arguments.callee</h4><p><code>arguments</code> 对象有一个叫 <code>callee</code> 的属性，该属性是一个指针，指向拥有这个 <code>arguments</code> 对象的函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function factorial (num)&#123;</span><br><span class="line">		if (num &lt;= 1 )&#123;</span><br><span class="line">			return 1;</span><br><span class="line">		&#125;else &#123;</span><br><span class="line">			return num * arguments.callee(num - 1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p><code>arguments.callee</code> 属性减少了函数名与函数内部调用的紧密耦合。这样，无论应用函数时使用的是什么名字，都可以保证正常完成<strong>递归调用</strong>。</p>
+<hr>
+<h3 id="函数声明与提升"><a href="#函数声明与提升" class="headerlink" title="函数声明与提升"></a>函数声明与提升</h3><p>函数声明与变量声明会被JavaScript引擎隐式地提升到当前作用域的顶部，但是对变量只提升名称不会提升赋值部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var foo = 1;</span><br><span class="line">// 声明了一个全局的 foo 并赋值为 1</span><br><span class="line">function fn()&#123;</span><br><span class="line">    /*所有的声明的变量被提升到顶部*/</span><br><span class="line">    console.log(foo); // undefined</span><br><span class="line">    var foo = 2;</span><br><span class="line">    // 在函数内部声明了一个 foo 变量并赋值为 2</span><br><span class="line">    console.log(foo); // 2</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
+<p>慎用 <code>name</code>。</p>
+<p>上面的 fn 函数其实相当于:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function fn()&#123;</span><br><span class="line">    var foo;</span><br><span class="line">    /*所有的声明的变量被提升到顶部*/</span><br><span class="line">    console.log(foo); // undefined</span><br><span class="line">    foo = 2;</span><br><span class="line">    console.log(foo); // 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而在全局作用域的 foo 变量在 fn 函数内部会被屏蔽。</p>
+<p>此外，值得一提的是函数声明与函数表达式，浏览器会率先读取函数声明，并使其在执行任何代码之前可用；而对于函数表达式，则必须等到解析器执行到它所在的代码行，才会执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">alert(sum(10,10)</span><br><span class="line">// 正常运行，么有问题</span><br><span class="line">function sum(a, b)&#123;</span><br><span class="line">    return a+b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var sum = null;</span><br><span class="line">alert(sum(10,10)</span><br><span class="line">// 运行期间发生错误，原因在于函位于一个初始化语句中，而不是一个函数声明</span><br><span class="line">var sum = function(a,b)&#123;</span><br><span class="line">    return a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="apply-call"><a href="#apply-call" class="headerlink" title="apply(),call()"></a>apply(),call()</h3><p><code>apply()</code> 和 <code>call()</code> 都可以用于改变函数执行时的上下文，其实就是改变 <code>this</code> 的指向，其本质上是同一个方法，只是接收参数的形式有所不同而已。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function Human (name)&#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Human.prototype = &#123;</span><br><span class="line">	constructor: Human,</span><br><span class="line">	sayName: function()&#123;</span><br><span class="line">		alert(this.name)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var person = new Human(&quot;李小龙&quot;)</span><br><span class="line">person.sayName()</span><br><span class="line">// 李小龙</span><br><span class="line"></span><br><span class="line">var cat = &#123;</span><br><span class="line">	name:&quot;小咪&quot;</span><br><span class="line">&#125;</span><br><span class="line">person.sayName.call(cat)</span><br><span class="line">//person.sayName.apply(cat)</span><br><span class="line">// 小咪</span><br></pre></td></tr></table></figure>
+<p>如下，<code>cat</code> 首先并不具备 <code>sayName()</code> 方法，但是，我们使用了 <code>call</code>,动态改变了其执行的上下文，拿了 <code>person</code> 的 <code>sayName()</code> 来用。</p>
+<p>很好的实现了代码复用。</p>
+<blockquote>
+<p>使用 call() 或 apply() 来扩充作用域的最大好处，即是对象不需要与方法有任何的耦合关系</p>
+</blockquote>
+<hr>
+<h4 id="call-和-apply-的区别"><a href="#call-和-apply-的区别" class="headerlink" title="call 和 apply 的区别"></a>call 和 apply 的区别</h4><p><code>call</code> 和 <code>apply</code> 的第一个参数都是要改变上下文的对象，但是其后<code>call</code> 以参数列表的形式接收参数，而 <code>apply</code> 以数组的形式接收参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fn.call(obj,arg1,arg2...);</span><br><span class="line">fn.apply(obj, [arg1,arg2,...]);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>call 和 apply 改变了函数执行中this的上下文以后便立即执行该函数，而 bind 则是返回改变了上下文后的一个函数</p>
+</blockquote>
+<hr>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><hr>
+<h4 id="没有块级作用域"><a href="#没有块级作用域" class="headerlink" title="没有块级作用域"></a>没有块级作用域</h4><p>在了解闭包以前，我们需要知道 JS 是没有块级作用域的，这意味着在块级语句中定义的变量，实际上是在包含函数而非语句中创建的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0;i &lt; 10; i ++) &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">alert(i); // i = 10;</span><br></pre></td></tr></table></figure>
+<p>对 JS 而言，有 for 语句创建的变量 i 即使在 for 循环执行结束以后，也依旧会存在于循环外部的执行环境中。</p>
+<hr>
+<h4 id="何为闭包？"><a href="#何为闭包？" class="headerlink" title="何为闭包？"></a>何为闭包？</h4><p><strong>闭包</strong> 是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数。</p>
+<hr>
+<h4 id="闭包的常见形式"><a href="#闭包的常见形式" class="headerlink" title="闭包的常见形式"></a>闭包的常见形式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function f9()&#123;</span><br><span class="line">	var n = 999;</span><br><span class="line">	add = function()&#123;n++&#125;;</span><br><span class="line">	// 定义一个内部函数(匿名函数)</span><br><span class="line">	function f10()&#123;</span><br><span class="line">	// 定义一个内部函数 f10 函数</span><br><span class="line">		alert(n)</span><br><span class="line">	&#125;</span><br><span class="line">    return f10;</span><br><span class="line">&#125;</span><br><span class="line">var fn = f9();</span><br><span class="line">// 立即执行 f9 函数，并将执行结果赋值给 fn 变量</span><br><span class="line">// fn -=&gt; f10 此时 fn 变量指向 f10 函数</span><br><span class="line">add();</span><br><span class="line">// n == 1000</span><br><span class="line">fn()</span><br><span class="line">// 立即执行 f10 函数</span><br><span class="line">// alert:1000</span><br><span class="line">add();</span><br><span class="line">// n == 10001</span><br><span class="line">fn()</span><br><span class="line">// 立即执行 f10 函数</span><br><span class="line">// alert:1001</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="使用匿名函数模仿块级作用域"><a href="#使用匿名函数模仿块级作用域" class="headerlink" title="使用匿名函数模仿块级作用域"></a>使用匿名函数模仿块级作用域</h4><p>JS 重来不会告诉你是否多次声明了同一个变量，遇到这种情况，它只会对后续的声明视而不见(不过，它会执行后续声明中的变量初始化)。</p>
+<p>但是，我们是可以使用匿名函数来模仿块级作用域的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">( function () &#123;</span><br><span class="line">    // 这里是块级作用域</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>上述，定义并立即调用了一个匿名函数。将函数声明包含在一对圆括号中，表示它是一个函数表达式。而紧跟的另一对圆括号会立即调用这个函数。</p>
+<p>这种技术经常在全局作用域被用在函数外部，从而限制向全局作用域中添加过多的变量和函数。在一个由很多人开发的大型项目中，过多的全局变量和函数很容易导致命名冲突，而通过创建私有作用域，每个开发人员既可以使用自己的变量，又不必搞乱全局作用域。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">( function () &#123;</span><br><span class="line">    var now = new Date();</span><br><span class="line">    if (now.getMonth() == 0 &amp;&amp; now.getDate() == 1)&#123;</span><br><span class="line">        alert(&quot;Happy New Year!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>闭包的缺点：滥用闭包函数会造成内存泄露，因为闭包中引用到的包裹函数中定义的变量都永远不会被释放，所以我们应该在必要的时候，及时释放这个闭包函数。</p>
+</blockquote>
+<hr>
+<h3 id="私有变量"><a href="#私有变量" class="headerlink" title="私有变量"></a>私有变量</h3><p>JS 没有私有成员的概念，所有对象属性都是公有的。</p>
+<p>不过，倒是有个私有变量的概念。任何在函数中定义的变量，都可以认为是私有变量，因为不能在函数的外部访问这些变量。私有变量包括 <strong>函数的参数</strong>, <strong>局部变量</strong>， <strong>在函数内部定义的其它函数</strong>。</p>
+<p>不在函数外部访问这个私有的变量和函数，但是可以定义 <strong>特权方法( privileged method )</strong> 使其有权访问私有变量和私有函数。</p>
+<p>对此，有两种方法在在对象上创建特权方法。一是 <strong>在构造函数中创建特权方法</strong> ，但是使用构造函数的缺点也是显而易见的，它会针对每个实例都创建同样一组新方法，这对内存是种极大的浪费。其次我们可以使用 <strong>静态私有变量</strong>。</p>
+<hr>
+<h4 id="静态私有变量"><a href="#静态私有变量" class="headerlink" title="静态私有变量"></a>静态私有变量</h4><p>通过在私有作用域中定义私有变量和函数，同样也可以创建特权方法。</p>
+<p>其基本模式如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">( function () &#123;</span><br><span class="line">    //私有变量和私有函数</span><br><span class="line">    var privateVariable = 10;</span><br><span class="line">    function privateFunction () &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // 构造函数</span><br><span class="line">    MyObject = function () &#123;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //公有|特权方法</span><br><span class="line"></span><br><span class="line">    MyObject.prototype.publicMethod = function () &#123;</span><br><span class="line">        privateVariable ++;</span><br><span class="line">        return privateFunction();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">	&lt;li&gt;1&lt;/li&gt;</span><br><span class="line">	&lt;li&gt;2&lt;/li&gt;</span><br><span class="line">	&lt;li&gt;3&lt;/li&gt;</span><br><span class="line">	&lt;li&gt;4&lt;/li&gt;</span><br><span class="line">	&lt;li&gt;5&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">var lis = document.querySelectorAll(&quot;ul li&quot;)</span><br><span class="line">for(let i=0; i&lt; lis.length;i++)&#123;</span><br><span class="line">	(function(index)&#123;</span><br><span class="line">	lis[index].onclick = function()&#123;</span><br><span class="line">			lis[index].style.borderLeft = &quot;2px solid deeppink&quot;</span><br><span class="line">			for(let j = 0; j &lt; lis.length;j++)&#123;</span><br><span class="line">				if(j!=index)&#123;</span><br><span class="line">					lis[j].style.border = &quot;none&quot;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;)(i)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>如上，我们创建了一个私有作用域，并在其中封装了一个构造函数及其相应的方法。在私有作用域中，首先定义了私有变量和私有函数，然后又定义了构造函数和公有方法。而共有方法是在构造函数的原型上定义的。</p>
+<p>但是，在这个模式中定义构造函数时并没有使用函数声明，而是使用了函数表达式，因为<strong>函数声明只能创建局部函数</strong>。出于同样的原因，我们也没有在声明 MyObject 时使用 var 关键字，**初始化未经声明的变量，总是会创建一个全局变量，因此，MyObject 就成了一个全局变量。</p>
+<hr>
+<h3 id="几个全局函数"><a href="#几个全局函数" class="headerlink" title="几个全局函数"></a>几个全局函数</h3><h4 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h4><p><code>eval()</code> 是一个很强大的方法，它像一个完整的 ECMAScript 解析器，能够解释代码字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// eval</span><br><span class="line">var str =&quot;19-2&quot;</span><br><span class="line">console.log(eval(str))</span><br><span class="line">// 17</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JS引用类型/" rel="tag"># JS引用类型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/06/JS引用类型(5)之基本包装类型/" rel="next" title="JS引用类型(1)之String">
+                <i class="fa fa-chevron-left"></i> JS引用类型(1)之String
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/06/JS引用类型(4)之Date/" rel="prev" title="JS引用类型(4)之Date">
+                JS引用类型(4)之Date <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-函数定义"><span class="nav-number">1.</span> <span class="nav-text">0x00 函数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-Experison"><span class="nav-number">1.1.</span> <span class="nav-text">Function Experison</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Calling-Funciton"><span class="nav-number">2.</span> <span class="nav-text">Calling Funciton</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#About-arguments"><span class="nav-number">3.</span> <span class="nav-text">About arguments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arguments-callee"><span class="nav-number">3.1.</span> <span class="nav-text">arguments.callee</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数声明与提升"><span class="nav-number">4.</span> <span class="nav-text">函数声明与提升</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apply-call"><span class="nav-number">5.</span> <span class="nav-text">apply(),call()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#call-和-apply-的区别"><span class="nav-number">5.1.</span> <span class="nav-text">call 和 apply 的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包"><span class="nav-number">6.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#没有块级作用域"><span class="nav-number">6.1.</span> <span class="nav-text">没有块级作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#何为闭包？"><span class="nav-number">6.2.</span> <span class="nav-text">何为闭包？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包的常见形式"><span class="nav-number">6.3.</span> <span class="nav-text">闭包的常见形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用匿名函数模仿块级作用域"><span class="nav-number">6.4.</span> <span class="nav-text">使用匿名函数模仿块级作用域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#私有变量"><span class="nav-number">7.</span> <span class="nav-text">私有变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态私有变量"><span class="nav-number">7.1.</span> <span class="nav-text">静态私有变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个全局函数"><span class="nav-number">8.</span> <span class="nav-text">几个全局函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#eval"><span class="nav-number">8.1.</span> <span class="nav-text">eval()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

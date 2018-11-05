@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="鸟哥的Linux读书笔记基础篇,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 什么是程序管理 进程与程序(process &amp;amp;&amp;amp; program)当我们运行一个命令或者程序的时候，系统就会产生一个进程，并分配给这个进程一个id，即PID，每个进程对应一个PID，每个PID也只对应一个进程！ Linux的fork机制在linux里面基本上每一个子程序的产生都是由父程序以复制(fork)的方式，而这个程序与父程序唯一的差别就是PPID不同。 服务服务(d">
+<meta name="keywords" content="鸟哥的Linux读书笔记基础篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十七章-程序管理与SELLinux">
+<meta property="og:url" content="http://yoursite.com/2016/04/27/第十七章-程序管理与SELinux/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 什么是程序管理 进程与程序(process &amp;amp;&amp;amp; program)当我们运行一个命令或者程序的时候，系统就会产生一个进程，并分配给这个进程一个id，即PID，每个进程对应一个PID，每个PID也只对应一个进程！ Linux的fork机制在linux里面基本上每一个子程序的产生都是由父程序以复制(fork)的方式，而这个程序与父程序唯一的差别就是PPID不同。 服务服务(d">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.866Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第十七章-程序管理与SELLinux">
+<meta name="twitter:description" content="0x00 什么是程序管理 进程与程序(process &amp;amp;&amp;amp; program)当我们运行一个命令或者程序的时候，系统就会产生一个进程，并分配给这个进程一个id，即PID，每个进程对应一个PID，每个PID也只对应一个进程！ Linux的fork机制在linux里面基本上每一个子程序的产生都是由父程序以复制(fork)的方式，而这个程序与父程序唯一的差别就是PPID不同。 服务服务(d">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/27/第十七章-程序管理与SELinux/">
+
+
+
+
+
+  <title>第十七章-程序管理与SELLinux | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/27/第十七章-程序管理与SELinux/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第十七章-程序管理与SELLinux</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-27T18:22:52+08:00">
+                2016-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-什么是程序管理"><a href="#0x00-什么是程序管理" class="headerlink" title="0x00 什么是程序管理"></a>0x00 什么是程序管理</h3><hr>
+<h4 id="进程与程序-process-amp-amp-program"><a href="#进程与程序-process-amp-amp-program" class="headerlink" title="进程与程序(process &amp;&amp; program)"></a>进程与程序(process &amp;&amp; program)</h4><p>当我们运行一个命令或者程序的时候，系统就会产生一个进程，并分配给这个进程一个id，即PID，每个进程对应一个PID，每个PID也只对应一个进程！</p>
+<p><strong>Linux的fork机制</strong><br>在linux里面基本上每一个子程序的产生都是由父程序以复制(fork)的方式，而这个程序与父程序唯一的差别就是PPID不同。</p>
+<p><strong>服务</strong><br>服务(daemon)，其实就是常驻在内存当中的程序，通常负责一些系统所提供的功能以服务使用者各项任务。</p>
+<hr>
+<h3 id="0x01-工作管理-job-control"><a href="#0x01-工作管理-job-control" class="headerlink" title="0x01 工作管理(job control)"></a>0x01 工作管理(job control)</h3><p>job control的意思是:当我们登陆系统取得 bash shell之后，在单一终端机介面下同时进行多个工作的行为管理,比如一边复制文件一边打包，一边进行vi编辑。</p>
+<hr>
+<h4 id="工作管理"><a href="#工作管理" class="headerlink" title="工作管理?"></a>工作管理?</h4><p>我们把可以出现提示字节让你操作的环境就称为前景(foreground)，至于其他工作就可以让你放入背景 (background) 去暂停或运行。</p>
+<h5 id="job-control-amp-ctrl-z-jobs-fg-bg-kill"><a href="#job-control-amp-ctrl-z-jobs-fg-bg-kill" class="headerlink" title="job control:&amp;,[ctrl-z],jobs,fg,bg,kill"></a>job control:&amp;,[ctrl-z],jobs,fg,bg,kill</h5><ul>
+<li><p><strong>直接将命令丢到背景中运行:&amp;</strong></p>
+<p>假如我们将整个/etc备份成为/tmp/etc.tar.gz，且不想等待，则可以这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# tar -zpcvf /tmp/etc.tar.gz /etc &gt; /tmp/log.txt 2&gt;&amp;1 &amp;</span><br><span class="line">[1] 2130</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>输入一条命令后，在命令后加上&amp;就代表将该命令丢到背景中，此时bash给予该命令一个工作号码，其实就是该命令的pid了。然后我们使用数据流重定向，将该命令可能产生的错误输出到/tmp/log.txt文件中，当命令完成时会在终端中出现如下信息:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1]+  已完成  tar -zpcvf /tmp/etc.tar.gz /etc &gt; /tmp/log.txt 2&gt;&amp;1</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p><strong>ctrl-z</strong></p>
+<p>有时我们会正在使用vi对一个文件进行编辑，但是突然要查找某个文件，这时你会按下<strong>ctrl-z</strong>退出vi(其实按下<strong>ctrl-z</strong>并没有真正的退出vi编辑，系统只是将这个任务<strong>暂停</strong>了)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# vim /tmp/log.txt </span><br><span class="line">(ctrl-z)</span><br><span class="line">[1]+  已停止               vim /tmp/log.txt</span><br><span class="line">root@jack:~# find / -print </span><br><span class="line">...</span><br><span class="line">(ctrl-z)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>观察目前背景中作状态:jobs</strong></p>
+<p><strong>{ Usage $: jobs -[lrs] }</strong></p>
+<p><strong>选项与参数:</strong></p>
+<ul>
+<li>-l:除了列出 job number 与命令串之外，同时列出 PID 的号码；</li>
+<li>-r:仅列出正在背景 run 的工作</li>
+<li>-s:仅列出正在背景当中暂停 (stop) 的工作<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# jobs -l</span><br><span class="line">[1]-  2156 停止                  vim /tmp/log.txt</span><br><span class="line">[2]+  2168 停止                  find / -print</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>+ 代表最近被放到背景的工作号码， - 代表最近最后第二个被放置到背景中的工作号码</p>
+<ul>
+<li><p><strong>fg从背景中取出工作</strong></p>
+<p>fg(foreground)的意思就是将背景中的过工作拿到前景中来了</p>
+<p><strong>{ Usage $: fg %jobnumber }是工作号码，不是PID哈</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# jobs -l</span><br><span class="line">[1]-  2156 停止                  vim /tmp/log.txt</span><br><span class="line">[2]+  2168 停止                  find / -print</span><br><span class="line">root@jack:~# fg %1</span><br><span class="line">vim /tmp/log.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>让工作在背景下运行bg</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# jobs;bg 2;jobs</span><br><span class="line">[1]-  已停止               vim /tmp/log.txt</span><br><span class="line">[2]+  已停止               find / - print &gt; /tmp/find.txt</span><br><span class="line">[2]+ find / - print &gt; /tmp/find.txt &amp;</span><br><span class="line">[1]+  已停止               vim /tmp/log.txt</span><br><span class="line">[2]-  运行中               find / - print &gt; /tmp/find.txt &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>kill进程终结者</strong></p>
+<p><strong>{ Usage $: kill [-1 9 15] }</strong></p>
+<p><strong>选项与参数:</strong></p>
+<ul>
+<li>-1:重新读取一次参数的配置档 (类似 reload)</li>
+<li>-9:立刻强制删除一个工作</li>
+<li>-15:以正常的程序方式终止一项工作。与 -9 是不一样的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# jobs -l</span><br><span class="line">[1]+  2270 停止                  vim /tmp/log.txt</span><br><span class="line">root@jack:~# kill -9 2270</span><br><span class="line">root@jack:~# jobs</span><br><span class="line">[1]+  已杀死               vim /tmp/log.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>此外，需要注意的是 kill 后面接的数字默认会是 PID ，如果想要管理 bash 的工作控制，就得要加上 %数字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# jobs</span><br><span class="line">[1]+  已停止               vim /tmp/log.txt</span><br><span class="line">root@jack:~# kill -9 %1</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p><strong>离线管理:nohup</strong></p>
+<p>想要让在背景的工作在你注销后还能够继续的运行，那么使用 nohup 搭配 &amp; 是不错的运行情境:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# nohup ./sleepsh02.sh &amp;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="0x02-程序管理"><a href="#0x02-程序管理" class="headerlink" title="0x02 程序管理"></a>0x02 程序管理</h3><p>下面我们将了解如何观察程序与程序的状态，然后再加以程序控制！</p>
+<hr>
+<h4 id="观察程序-ps-top-pstree"><a href="#观察程序-ps-top-pstree" class="headerlink" title="观察程序:ps,top,pstree"></a>观察程序:ps,top,pstree</h4><h5 id="ps静态观察"><a href="#ps静态观察" class="headerlink" title="ps静态观察"></a>ps静态观察</h5><p> <strong>选项与参数</strong></p>
+<ul>
+<li>ps aux:观察系统所有的程序数据</li>
+<li>ps -l:仅观察自己的相关程序</li>
+<li><p>ps axjf:连同部分程序树</p>
+<p>仅观察自己的相关程序:ps -l</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ps -l</span><br><span class="line">F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD</span><br><span class="line">0 S     0  2253  2247  0  80   0 -  6308 -      pts/1    00:00:00 bash</span><br><span class="line">0 R     0  2482  2253  0  80   0 -  2708 -      pts/1    00:00:00 ps</span><br><span class="line">#-----#</span><br><span class="line">F:代表程序旗标，常见的０表示此程序的权限为root</span><br><span class="line">S:代表程序状态(stat),D(runing),S(sleep),D(不可唤醒的睡眠状态),Ｔ(stoop),Z(Zombie)僵尸态</span><br><span class="line">UID/PID/PPID:</span><br><span class="line">C:CPU使用率</span><br><span class="line">PRI/NI:Priority/Nice缩写，此程序被cpu所运行的优先顺序，数字越小越优先</span><br><span class="line">ADDR/SZ/WCHAN:与内存有关</span><br><span class="line">TTY:登录者的终端机，远程为(pst/n)</span><br><span class="line">TIME:占用cpu的时间</span><br><span class="line">CMD:command的缩写</span><br></pre></td></tr></table></figure>
+<p>ps -l 则仅列出与你的操作环境 (bash) 有关的程序而已， 亦即最上一级的父程序会是你自己的 bash 而没有延伸到 init 这支程序,他的内容如下:</p>
+<p>_bash 的程序属於 UID 为 0 的使用者，状态为睡眠 (sleep)， 之所以为睡眠因为他触发了 ps (状态为 run) 之故。此程序的 PID 为 2253，优先运行顺序为 80 ， 下达 bash 所取得的终端介面为 pts/1 ，运行状态为等待 (wait) _</p>
+</li>
+</ul>
+<h5 id="ps-aux观察系统所有程序"><a href="#ps-aux观察系统所有程序" class="headerlink" title="ps aux观察系统所有程序"></a>ps aux观察系统所有程序</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ps aux</span><br><span class="line">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         1  0.0  0.0 176724  5028 ?        Ss   08:37   0:01 /lib/systemd/s</span><br><span class="line">#-----#</span><br><span class="line">%CPU:该程序使用的cpu百分比</span><br><span class="line">%MEN:该程序使用的实体内存百分比</span><br><span class="line">STAT:程序状态(R/S/D/T/Z)</span><br><span class="line">START:该程序启动时间</span><br><span class="line">TIME:已实际使用cpu运行的时间</span><br><span class="line">COMMAND:该程序实际命令</span><br></pre></td></tr></table></figure>
+<p>找出与 cron 与 syslog 这两个服务有关的 PID 号码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ps aux | egrep &apos;(cron|syslog)&apos;</span><br><span class="line">root       671  0.0  0.0  27644  2780 ?        Ss   08:37   0:00 /usr/sbin/cron -f</span><br><span class="line">root       723  0.0  0.0 258672  3420 ?        Ssl  08:37   0:00 /usr/sbin/rsyslogd -n</span><br><span class="line">Debian-+   852  0.0  0.1 361492  9408 ?        S&lt;l  08:37   0:00 /usr/bin/pulseaudio --start --log-target=syslog</span><br><span class="line">root      2514  0.0  0.0  12892  1556 pts/1    S+   11:03   0:00 grep -E (cron|syslog)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>zombie</strong><br>发现在某个程序的 CMD 后面还接上 <defunct> 时，就代表该程序是僵尸程序啦,这时我们就需要一步一步跟踪它直到找出它的父程序然后杀掉它！</defunct></li>
+</ul>
+<h5 id="top"><a href="#top" class="headerlink" title="top"></a>top</h5><p>不同于ps，top可以将目前系统程序运行状态动态的显示出来:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　root@jack:~# top</span><br><span class="line">　top - 11:13:32 up  2:36,  2 users,  load average: 0.15, 0.18, 0.17</span><br><span class="line">Tasks: 175 total,   2 running, 172 sleeping,   1 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  3.0 us,  0.7 sy,  0.0 ni, 96.3 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem:   5792464 total,  2549740 used,  3242724 free,   231280 buffers</span><br><span class="line">KiB Swap:  7908348 total,        0 used,  7908348 free.   833968 cached Mem</span><br><span class="line">PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                               </span><br><span class="line"> 1168 root      20   0 2011860 231160  59236 S   5.4  4.0   3:35.12 gnome-shell</span><br></pre></td></tr></table></figure></p>
+<p>top默认使用能cpu占用率进行排序！</p>
+<h5 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h5><p> 要找到进程之间的相关性，pstress是必不可少的命令，它会使用线段将相关性进程连接起来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# pstree -up</span><br><span class="line">#列出每个进程的PID以及所属的账号名称</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="进程管理-signal-kill-killall"><a href="#进程管理-signal-kill-killall" class="headerlink" title="进程管理:signal,kill,killall"></a>进程管理:signal,kill,killall</h4><p>进程之间是可以相互控制的，但是又是如何相互控制的呢？其实就是信号了，我们通过给某个进程传递一个讯号从而告知该进程想要它做什么，因此这个信号就很重要了！</p>
+<p>下面是主要的一些信号内容:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">数字</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:left">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">SIGHUP</td>
+<td style="text-align:left">启动被终止的进程，可让该 PID 重新读取自己的配置档，类似重新启动</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">SIGINT</td>
+<td style="text-align:left">相当于用键盘输入 [ctrl]-c 来中断一个进程的进行</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">SIGKILL</td>
+<td style="text-align:left">代表强制中断一个进程的进行，如果该进程进行到一半， 那么尚未完成的部分可能会有『半产品』产生，类似 vim会有 .filename.swp 保留下来。</td>
+</tr>
+<tr>
+<td style="text-align:center">15</td>
+<td style="text-align:center">SIGTERM</td>
+<td style="text-align:left">以正常的结束进程来终止该进程，不是使用于当该进程已近发生错误</td>
+</tr>
+<tr>
+<td style="text-align:center">17</td>
+<td style="text-align:center">SIGSTOP</td>
+<td style="text-align:left">相当於用键盘输入 [ctrl]-z 来暂停一个进程的进行</td>
+</tr>
+</tbody>
+</table>
+<p>那么如何将信号传递给进程呢？就是kill，killall命令了</p>
+<ul>
+<li><p><strong>kill -singal PID 管理单个进程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# kill -9 %1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>killall -singal 进程名称 管理整个服务</strong><br>强制杀掉所有以httpd启动的服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# killall -9 httpd</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>需要强调的是， kill 后面直接加数字（代表进程PID）与加上 %number(jobs查询到的工作号码) 的情况是不同的！</p>
+<blockquote>
+<h6 id="关于进程的运行顺序"><a href="#关于进程的运行顺序" class="headerlink" title="关于进程的运行顺序"></a>关于进程的运行顺序</h6></blockquote>
+<p>Liunx中进程运行的优先顺序与PRI(priority)值有关，PRI的值越低代表越优先的意思，但是这个PRI的值是由系统核心动态调整的，使用者无法直接调整PRI的值，如果想要改变进程的优先顺序，就得通过Nice值，它们的关系是: __PRI(new)=PRI(old)+nice</p>
+<p>对root而言nice的可调整范围为:-20-19,一般使用者为0-19,然后我们有两种方式给予某给进程nice值</p>
+<ul>
+<li><p><strong>nice:在进程开始运行时给予nice值</strong></p>
+<p><strong>{ Usage $: nice [-n 数字] command }</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# nice -n -5 vi &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>renice:调整已经运行进程的nice值</strong></p>
+<p><strong>{ Usage $: renice [number] PID }</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ps -l</span><br><span class="line">F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD</span><br><span class="line">4 T     0  2384  1606  0  75  -5 - 43557 -      pts/0    00:00:00 vi</span><br><span class="line">0 R     0  2390  1606  0  80   0 -  2708 -      pts/0    00:00:00 ps</span><br><span class="line">root@jack:~# renice 6 2384</span><br><span class="line">2384 (process ID) old priority -5, new priority 6</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<h6 id="系统资源观察"><a href="#系统资源观察" class="headerlink" title="系统资源观察"></a>系统资源观察</h6></blockquote>
+<ul>
+<li><p><strong>free</strong>观察内存使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# free </span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:       5792464    1537280    4255184     148380      50304     576536</span><br><span class="line">-/+ buffers/cache:     910440    4882024</span><br><span class="line">Swap:      7908348          0    7908348</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>uname</strong>查看系统核心信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# uname -a</span><br><span class="line">Linux jack 4.0.0-kali1-amd64 #1 SMP Debian 4.0.4-1+kali2 (2015-06-03) x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>uptime</strong>系统启动时间与工作负载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# uptime</span><br><span class="line"> 13:35:42 up 10 min,  2 users,  load average: 0.29, 0.26, 0.21</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>netstat</strong>追踪网络和系统插槽</p>
+<p>找出目前系统上已经在监听的网络及其PID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# netstat -tlnp</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>dmesg</strong>:分析核心信息<br>例如，查看启动时硬盘的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dmesg | grep -i hd</span><br><span class="line">[    0.082322] NMI watchdog: enabled on all CPUs, permanently consumes one hw-PMU counter.</span><br><span class="line">[    7.737685] iTCO_wdt: Intel TCO WatchDog Timer Driver v1.11</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>或者查看系统网卡相关信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dmesg | grep -i eth</span><br><span class="line">[    0.881331] e1000e 0000:00:19.0 eth0: registered PHC clock</span><br><span class="line">[    0.881352] e1000e 0000:00:19.0 eth0: (PCI Express:2.5GT/s:Width x1)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>vmstat</strong>检测系统资源变化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# vmstat</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0      0 4290044  51168 581576    0    0    96    11   79  420  3  1 93  2  0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<h4 id="0x03-特殊文件与程序"><a href="#0x03-特殊文件与程序" class="headerlink" title="0x03 特殊文件与程序"></a>0x03 特殊文件与程序</h4></blockquote>
+<hr>
+<blockquote>
+<h6 id="具有SUID-SGID权限的命令运行状态"><a href="#具有SUID-SGID权限的命令运行状态" class="headerlink" title="具有SUID/SGID权限的命令运行状态"></a>具有SUID/SGID权限的命令运行状态</h6></blockquote>
+<p>如何查找具有SUID/SGID权限的文件和目录？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:/tmp# find / -perm +6000</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<h6 id="proc-的意义"><a href="#proc-的意义" class="headerlink" title="/proc/* 的意义"></a>/proc/* 的意义</h6></blockquote>
+<p>程序都是存放在内存中的，而内存中的数据又都写到来/proc这个目录中，基本上，目前主机上面的各个程序的 PID 都是以目录的型态存在於 /proc 当中。</p>
+<blockquote>
+<h6 id="运行文查询-fuser-lsof-pidof"><a href="#运行文查询-fuser-lsof-pidof" class="headerlink" title="运行文查询:fuser,lsof,pidof"></a>运行文查询:fuser,lsof,pidof</h6></blockquote>
+<ul>
+<li><p><strong>fuser借文件找出正在使用该文件的程序</strong></p>
+<p>找出所有使用到/proc这个文件系统的程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# fuser -mvu /proc</span><br><span class="line">                     用户     进程号 权限   命令</span><br><span class="line">/proc:               root     kernel mount (root)/proc</span><br><span class="line">                     root          1 f.... (root)systemd</span><br><span class="line">                     root        241 f.... (root)systemd-journal</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>找出使用到单个文件系统的程序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# fuser -uv /run/systemd//sessions/1.ref </span><br><span class="line">                     用户     进程号 权限   命令</span><br><span class="line">/run/systemd/sessions/1.ref:</span><br><span class="line">                     root        677 f.... (root)systemd-logind</span><br><span class="line">                     root        906 F.... (root)gdm-session-wor</span><br></pre></td></tr></table></figure></p>
+<p>杀死该进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# fuser -ki /run/systemd//sessions/1.ref </span><br><span class="line">/run/systemd/sessions/1.ref:   677   906</span><br><span class="line">杀死进程 677 ? (y/N) n</span><br><span class="line">杀死进程 906 ? (y/N) n</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p><strong>lsof找出进程所开启的文件</strong></p>
+<p>找出该目录下正在被使用的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# lsof +d /dev</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>找出属于root的bash正在使用的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# lsof -u root | grep bash</span><br><span class="line">bash      1606 root  cwd       DIR               8,13     4096     524289 /root</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>pidof找出某个正在运行进程的PID</strong><br>找出init进程的pid<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# pidof init</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<h4 id="0x04-SELinux"><a href="#0x04-SELinux" class="headerlink" title="0x04 SELinux"></a>0x04 SELinux</h4></blockquote>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/鸟哥的Linux读书笔记基础篇/" rel="tag"># 鸟哥的Linux读书笔记基础篇</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/27/9.关键字-闭包/" rel="next" title="Python(9)-关键字－闭包">
+                <i class="fa fa-chevron-left"></i> Python(9)-关键字－闭包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/01/10.循环对象-生成器-表推导/" rel="prev" title="Python(10)－循环对象－生成器－表推导">
+                Python(10)－循环对象－生成器－表推导 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-什么是程序管理"><span class="nav-number">1.</span> <span class="nav-text">0x00 什么是程序管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程与程序-process-amp-amp-program"><span class="nav-number">1.1.</span> <span class="nav-text">进程与程序(process &amp;&amp; program)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-工作管理-job-control"><span class="nav-number">2.</span> <span class="nav-text">0x01 工作管理(job control)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作管理"><span class="nav-number">2.1.</span> <span class="nav-text">工作管理?</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#job-control-amp-ctrl-z-jobs-fg-bg-kill"><span class="nav-number">2.1.1.</span> <span class="nav-text">job control:&amp;,[ctrl-z],jobs,fg,bg,kill</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-程序管理"><span class="nav-number">3.</span> <span class="nav-text">0x02 程序管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观察程序-ps-top-pstree"><span class="nav-number">3.1.</span> <span class="nav-text">观察程序:ps,top,pstree</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ps静态观察"><span class="nav-number">3.1.1.</span> <span class="nav-text">ps静态观察</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ps-aux观察系统所有程序"><span class="nav-number">3.1.2.</span> <span class="nav-text">ps aux观察系统所有程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#top"><span class="nav-number">3.1.3.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pstree"><span class="nav-number">3.1.4.</span> <span class="nav-text">pstree</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程管理-signal-kill-killall"><span class="nav-number">3.2.</span> <span class="nav-text">进程管理:signal,kill,killall</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#关于进程的运行顺序"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">关于进程的运行顺序</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#系统资源观察"><span class="nav-number">3.2.0.2.</span> <span class="nav-text">系统资源观察</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x03-特殊文件与程序"><span class="nav-number">3.3.</span> <span class="nav-text">0x03 特殊文件与程序</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#具有SUID-SGID权限的命令运行状态"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">具有SUID/SGID权限的命令运行状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#proc-的意义"><span class="nav-number">3.3.0.2.</span> <span class="nav-text">/proc/* 的意义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#运行文查询-fuser-lsof-pidof"><span class="nav-number">3.3.0.3.</span> <span class="nav-text">运行文查询:fuser,lsof,pidof</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-SELinux"><span class="nav-number">3.4.</span> <span class="nav-text">0x04 SELinux</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

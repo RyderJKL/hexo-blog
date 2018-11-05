@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="鸟哥的Linux读书笔记基础篇,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 目录与路径 绝对路径与相对路径绝对路径写法『一定由根目录 / 写起』，例如： /usr/share/doc 这个目录。 相对路径路径的写法『不是由 / 写起』，例如由 /usr/share/doc 要到 /usr/share/man 底下时，可以写成： 『cd ../man』这就是相对路径的写法啦！相对路径意指『相对於目前工作目录的路径！』  目录的相关操作:cd,pwd,mkdir,r">
+<meta name="keywords" content="鸟哥的Linux读书笔记基础篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章-文件权限与目录配置">
+<meta property="og:url" content="http://yoursite.com/2016/02/27/第七章-文件与目录管理/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 目录与路径 绝对路径与相对路径绝对路径写法『一定由根目录 / 写起』，例如： /usr/share/doc 这个目录。 相对路径路径的写法『不是由 / 写起』，例如由 /usr/share/doc 要到 /usr/share/man 底下时，可以写成： 『cd ../man』这就是相对路径的写法啦！相对路径意指『相对於目前工作目录的路径！』  目录的相关操作:cd,pwd,mkdir,r">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第六章-文件权限与目录配置">
+<meta name="twitter:description" content="0x00 目录与路径 绝对路径与相对路径绝对路径写法『一定由根目录 / 写起』，例如： /usr/share/doc 这个目录。 相对路径路径的写法『不是由 / 写起』，例如由 /usr/share/doc 要到 /usr/share/man 底下时，可以写成： 『cd ../man』这就是相对路径的写法啦！相对路径意指『相对於目前工作目录的路径！』  目录的相关操作:cd,pwd,mkdir,r">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/02/27/第七章-文件与目录管理/">
+
+
+
+
+
+  <title>第六章-文件权限与目录配置 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/02/27/第七章-文件与目录管理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第六章-文件权限与目录配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-27T20:48:52+08:00">
+                2016-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-目录与路径"><a href="#0x00-目录与路径" class="headerlink" title="0x00 目录与路径"></a>0x00 目录与路径</h3><hr>
+<h4 id="绝对路径与相对路径"><a href="#绝对路径与相对路径" class="headerlink" title="绝对路径与相对路径"></a>绝对路径与相对路径</h4><h5 id="绝对路径"><a href="#绝对路径" class="headerlink" title="绝对路径"></a>绝对路径</h5><p>写法『一定由根目录 / 写起』，例如： /usr/share/doc 这个目录。</p>
+<h5 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h5><p>路径的写法『不是由 / 写起』，例如由 /usr/share/doc 要到 /usr/share/man 底下时，可以写成： 『cd ../man』这就是相对路径的写法啦！相对路径意指『相对於目前工作目录的路径！』</p>
+<hr>
+<h4 id="目录的相关操作-cd-pwd-mkdir-rmdir"><a href="#目录的相关操作-cd-pwd-mkdir-rmdir" class="headerlink" title="目录的相关操作:cd,pwd,mkdir,rmdir"></a>目录的相关操作:cd,pwd,mkdir,rmdir</h4><ul>
+<li>.：代表此层目录</li>
+<li>..:：代表上一层目录</li>
+<li>-：代表前一个工作目录</li>
+<li>~：代表『目前使用者身份』所在的家目录</li>
+<li>~account：代表 account 这个使用者的家目录(account是个帐号名称<br>在所有目录底下都会存在的两个目录，分别是『.』与『..』 分别代表此层与上一级目录的意思</li>
+</ul>
+<h5 id="cd变换目录"><a href="#cd变换目录" class="headerlink" title="cd变换目录"></a>cd变换目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$: cd ~	&#123;回到当前登录者的家目录&#125;</span><br><span class="line">$: cd ..	&#123;返回上一级目录&#125;</span><br><span class="line">$: cd -	&#123;返回前一个目录，不是上级目录是相对于当工作目录而言的前一目录&#125;</span><br><span class="line">$: cd ../public &#123;相对路径写法&#125;</span><br><span class="line">#由/var/spool/schemes 去到/var/spool/public 就这样写！#</span><br></pre></td></tr></table></figure>
+<h5 id="pwd：显示目前的目录"><a href="#pwd：显示目前的目录" class="headerlink" title="pwd：显示目前的目录"></a>pwd：显示目前的目录</h5><p>pwd是Print Working Directory，就是显示目前所在目录的命令</p>
+<h5 id="mkdir-创建一个新的目录"><a href="#mkdir-创建一个新的目录" class="headerlink" title="mkdir:创建一个新的目录"></a>mkdir:创建一个新的目录</h5><p>如果想要创建新的目录的话，那么就使用mkdir (make directory)吧！ 不过，在默认的情况下， 你所需要的目录得一层一层的创建才行！但是，加上 -p 这个选项后便可以直接下达：『 mkdir -p /home/bird/testing/test1 』 则系统会自动的帮你将 /home, /home/bird, /home/bird/testing 依序的创建起目录！并且， 如果该目录本来就已经存在时，系统也不会显示错误信息！</p>
+<h5 id="rmdir-删除一个空的目录"><a href="#rmdir-删除一个空的目录" class="headerlink" title="rmdir:删除一个空的目录"></a>rmdir:删除一个空的目录</h5><p>删除旧有的目录时，就使用rmdir吧，请注意，目录需要一层一层的删除才行！而且被删除的目录里面必定不能存在其他的目录或文件！同样的如果使用『 rm -r test 』即可一次性删除所有目录！</p>
+<hr>
+<h4 id="环境变量-PATH"><a href="#环境变量-PATH" class="headerlink" title="环境变量:$PATH"></a>环境变量:$PATH</h4><p>为什么我可以在任何地方运行ls这个命令呢？ 』 为什么我在任何目录下输入 ls 就一定可以显示出一些信息而不会说找不到该 ls 命令呢？ 这是因为环境变量 PATH 的帮助！</p>
+<hr>
+<h3 id="0x01-文件与目录管理"><a href="#0x01-文件与目录管理" class="headerlink" title="0x01 文件与目录管理"></a>0x01 文件与目录管理</h3><hr>
+<h4 id="文件与目录的检视ls"><a href="#文件与目录的检视ls" class="headerlink" title="文件与目录的检视ls"></a>文件与目录的检视ls</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ $:ls-</span><br><span class="line">选项与参数:</span><br><span class="line">-a  ：全部的文件，连同隐藏档( 开头为 . 的文件) 一起列出来(常用)</span><br><span class="line">-d  ：仅列出目录本身，而不是列出目录内的文件数据(常用)</span><br><span class="line">-l  ：长数据串列出，包含文件的属性与权限等等数据；(常用)</span><br><span class="line">-i  ：列出 inode 号码，inode 的意义下一章将会介绍；</span><br><span class="line">-S  ：以文件容量大小排序，而不是用档名排序；</span><br><span class="line">-t  ：依时间排序，而不是用档名。</span><br><span class="line">--full-time    ：以完整时间模式 (包含年、月、日、时、分) 输出</span><br><span class="line">--time=&#123;atime,ctime&#125; ：输出 access 时间或改变权限属性时间 (ctime) 而非内容变更时间 (modification time)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="复制、删除与移动：-cp-rm-mv"><a href="#复制、删除与移动：-cp-rm-mv" class="headerlink" title="复制、删除与移动： cp, rm, mv"></a>复制、删除与移动： cp, rm, mv</h4><hr>
+<h5 id="cp复制"><a href="#cp复制" class="headerlink" title="cp复制"></a>cp复制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# cp [-adfilprsu] 来源档(source) 目标档(destination)</span><br><span class="line">[root@www ~]# cp [options] source1 source2 source3 .... directory</span><br><span class="line">选项与参数：</span><br><span class="line">-a  ：相当於 -pdr 的意思，至於 pdr 请参考下列说明；(常用)</span><br><span class="line">-d  ：若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身；</span><br><span class="line">-i  ：若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</span><br><span class="line">-p  ：连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</span><br><span class="line">-r  ：递回持续复制，用於目录的复制行为；(常用)</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="rm-移除文件或目录"><a href="#rm-移除文件或目录" class="headerlink" title="rm (移除文件或目录)"></a>rm (移除文件或目录)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@ $:rm -[fir]文件或目录</span><br><span class="line">选项与参数：</span><br><span class="line">-f  ：就是 force 的意思，忽略不存在的文件，不会出现警告信息；</span><br><span class="line">-i  ：互动模式，在删除前会询问使用者是否动作</span><br><span class="line">-r  ：递回删除啊！最常用在目录的删除了！这是非常危险的选项！！！</span><br></pre></td></tr></table></figure>
+<p>不过，使用『 rm -r 』这个命令之前，请千万注意了，因为该目录或文件『肯定』会被 root 杀掉！</p>
+<hr>
+<h5 id="mv-移动文件与目录，或更名"><a href="#mv-移动文件与目录，或更名" class="headerlink" title="mv (移动文件与目录，或更名)"></a>mv (移动文件与目录，或更名)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@ $:mv [-fiu] source destination</span><br><span class="line">root@ $: mv [options] source1 source2 source3 .... directory</span><br><span class="line">选项与参数：</span><br><span class="line">-f  ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</span><br><span class="line">-i  ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！</span><br><span class="line">-u  ：若目标文件已经存在，且 source 比较新，才会升级 (update)</span><br></pre></td></tr></table></figure>
+<p><em>注意到这边，如果有多个来源文件或目录，则最后一个目标档一定是『目录！</em></p>
+<hr>
+<h3 id="0x02-文件内容查询"><a href="#0x02-文件内容查询" class="headerlink" title="0x02 文件内容查询"></a>0x02 文件内容查询</h3><ul>
+<li>cat  由第一行开始显示文件内容</li>
+<li>tac  从最后一行开始显示，可以看出 tac 是 cat 的倒著写！</li>
+<li>nl   显示的时候，顺道输出行号！</li>
+<li>more 一页一页的显示文件内容</li>
+<li>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！</li>
+<li>head 只看头几行</li>
+<li>tail 只看尾巴几行</li>
+<li>od   以二进位的方式读取文件内容！</li>
+</ul>
+<hr>
+<h4 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@ $: cat -</span><br><span class="line">选项与参数：</span><br><span class="line">-b  ：列出行号，仅针对非空白行做行号显示，空白行不标行号！</span><br><span class="line">-n  ：列印出行号，连同空白行也会有行号，与 -b 的选项不同；</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="tac-反向列示"><a href="#tac-反向列示" class="headerlink" title="tac (反向列示)"></a>tac (反向列示)</h4><p>cat 与 tac ，tac 刚好是将 cat 反写过来，所以他的功能就跟 cat 相反， cat 是由『第一行到最后一行连续显示在萤幕上』，而 tac 则是『 由最后一行到第一行反向在萤幕上显示出来 』!</p>
+<hr>
+<h4 id="nl-添加行号列印"><a href="#nl-添加行号列印" class="headerlink" title="nl (添加行号列印)"></a>nl (添加行号列印)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ $: nl []filename</span><br><span class="line">-b  ：指定行号指定的方式，主要有两种：</span><br><span class="line">      -b a ：表示不论是否为空行，也同样列出行号(类似 cat -n)；</span><br><span class="line">      -b t ：如果有空行，空的那一行不要列出行号(默认值)；</span><br><span class="line">-n  ：列出行号表示的方法，主要有三种：</span><br><span class="line">      -n ln ：行号在萤幕的最左方显示；</span><br><span class="line">      -n rn ：行号在自己栏位的最右方显示，且不加 0 ；</span><br><span class="line">      -n rz ：行号在自己栏位的最右方显示，且加 0 ；</span><br><span class="line">-w  ：行号栏位的占用的位数。</span><br><span class="line">cat -n 有点不太一样， nl 可以将行号做比较多的显示设计，包括位数与是否自动补齐 0 等等的功能</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="more-一页一页翻动"><a href="#more-一页一页翻动" class="headerlink" title="more (一页一页翻动)"></a>more (一页一页翻动)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@ $: more []filname</span><br><span class="line">选项与参数:</span><br><span class="line">空白键 (space)     ：代表向下翻一页；</span><br><span class="line">Enter         ：代表向下翻『一行』；</span><br><span class="line">/字串                      ：代表在这个显示的内容当中，向下搜寻『字串』这个关键字；</span><br><span class="line">:f            ：立刻显示出档名以及目前显示的行数；</span><br><span class="line">q             ：代表立刻离开 more ，不再显示该文件内容。</span><br><span class="line">b 或 [ctrl]-b ：代表往回翻页，不过这动作只对文件有用，对管线无用。</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="less-一页一页翻动"><a href="#less-一页一页翻动" class="headerlink" title="less (一页一页翻动)"></a>less (一页一页翻动)</h4><p>less 的用法比起 more 又更加的有弹性,在 more 的时候，我们并没有办法向前面翻， 只能往后面看，但若使用了 less 时,就可以使用 [pageup] [pagedown] 等按键的功能来往前往后翻看文件!<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ $:less [] filename</span><br><span class="line">选项与参数：</span><br><span class="line">空白键    ：向下翻动一页；</span><br><span class="line">[pagedown]：向下翻动一页；</span><br><span class="line">[pageup]  ：向上翻动一页；</span><br><span class="line">/字串     ：向下搜寻『字串』的功能；</span><br><span class="line">?字串     ：向上搜寻『字串』的功能；</span><br><span class="line">n         ：重复前一个搜寻 (与 / 或 ? 有关！)</span><br><span class="line">N         ：反向的重复前一个搜寻 (与 / 或 ? 有关！)</span><br><span class="line">q         ：离开 less 这个程序；</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="数据截取"><a href="#数据截取" class="headerlink" title="数据截取"></a>数据截取</h4><p>们可以将输出的数据作一个最简单的撷取，那就是取出前面 (head) 与取出后面 (tail) 文字的功能。 不过，要注意的是， head 与 tail 都是以『行』为单位来进行数据撷取的</p>
+<hr>
+<h5 id="head"><a href="#head" class="headerlink" title="head"></a>head</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@ $:head [-n number] 文件 </span><br><span class="line">选项与参数：</span><br><span class="line">-n  ：后面接数字，代表显示几行的意思.默认的情况中，显示前面十行！</span><br></pre></td></tr></table></figure>
+<p>另外的-n 选项后面的参数如果接的是负数，例如范例的-n -100时，代表列前的所有行数， 但不包括后面100行</p>
+<h5 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@ $: tail [-n number] 文件 </span><br><span class="line">选项与参数：</span><br><span class="line">-n  ：后面接数字，代表显示几行的意思</span><br><span class="line">-f  ：表示持续侦测后面所接的档名，要等到按下[ctrl]-c才会结束tail的侦测</span><br></pre></td></tr></table></figure>
+<p>同样的但-n后面跟的是一个负数是如：当下达『tail -n +100 /etc/man.config』 代表该文件从100行以后都会被列出来!</p>
+<p><em>假如要显示 /etc/man.config 的第 11 到第 20 行？</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ $： head -n 20 /etc/man.config | tail -n 10</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="修改文件时间或建置新档：-touch"><a href="#修改文件时间或建置新档：-touch" class="headerlink" title="修改文件时间或建置新档： touch"></a>修改文件时间或建置新档： touch</h4><p>每个文件在linux底下都会记录许多的时间参数， 其实是有三个主要的变动时间，那么三个时间的意义：</p>
+<ul>
+<li><p>modification time (mtime)：<br>当该文件的『内容数据』变更时，就会升级这个时间！内容数据指的是文件的内容，而不是文件的属性或权限喔！</p>
+</li>
+<li><p>status time (ctime)：<br>当该文件的『状态 (status)』改变时，就会升级这个时间，举例来说，像是权限与属性被更改了，都会升级这个时间啊。</p>
+</li>
+<li><p>access time (atime)：<br>当『该文件的内容被取用』时，就会升级这个读取时间 (access)。举例来说，我们使用 cat 去读取 /etc/man.config ， 就会升级该文件的 atime 了</p>
+<p>touch 这个命令最常被使用的情况是：<br>创建一个空的文件；<br>将某个文件日期修订为目前 (mtime 与 atime)</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@ $: touch [-acdmt] 文件</span><br><span class="line">选项与参数：</span><br><span class="line">-a  ：仅修订 access time；</span><br><span class="line">-c  ：仅修改文件的时间，若该文件不存在则不创建新文件；</span><br><span class="line">-d  ：后面可以接欲修订的日期而不用目前的日期，也可以使用 --date=&quot;日期或时间&quot;</span><br><span class="line">-m  ：仅修改 mtime ；</span><br><span class="line">-t  ：后面可以接欲修订的时间而不用目前的时间，格式为[YYMMDDhhmm]</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-文件与目录的默认权限与隐藏权限"><a href="#0x03-文件与目录的默认权限与隐藏权限" class="headerlink" title="0x03 文件与目录的默认权限与隐藏权限"></a>0x03 文件与目录的默认权限与隐藏权限</h3><p>由第六章、Linux文件权限的内容我们可以知道一个文件有若干个属性， 包括读写运行(r, w, x)等基本权限，及是否为目录 (d) 与文件 (-) 或者是连结档 (l) 等等的属性！ 要修改属性的方法在前面也约略提过了(chgrp, chown, chmod) ，本小节会再加强补充一下，要来谈一谈，『新增一个文件或目录时，默认的权限是什么？』</p>
+<hr>
+<h4 id="文件默认权限：umask"><a href="#文件默认权限：umask" class="headerlink" title="文件默认权限：umask"></a>文件默认权限：umask</h4><p>umask 就是指定 『目前使用者在创建文件或目录时候的权限默认值』<br>查需umask配置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# umask</span><br><span class="line">0022</span><br><span class="line">root@jack:~# umask -S</span><br><span class="line">u=rwx,g=rx,o=rx</span><br><span class="line">root@jack:~#</span><br></pre></td></tr></table></figure></p>
+<p>查阅的方式有两种，一种可以直接输入 umask ，就可以看到数字型态的权限配置分数， 一种则是加入 -S (Symbolic) 这个选项，就会以符号类型的方式来显示出权限了！第一组是特殊权限用的，我们先不要理他，所以先看后面三组即可。</p>
+<p>此前在默认权限的属性上，目录与文件是不一样的：</p>
+<ul>
+<li>若使用者创建为『文件』则默认『没有可运行( x )权限』，亦即只有 rw 这两个项目，也就是最大为 666 分，默认权限如下：<strong>-rw-rw-rw-</strong></li>
+<li>若使用者创建为『目录』，则由於 x 与是否可以进入此目录有关，因此默认为所有权限均开放，亦即为 777 分，默认权限如<strong>drwxrwxrwx</strong></li>
+</ul>
+<p>umask 的分数指的是<strong>该默认值需要减掉的权限</strong>因为 r、w、x 分别是 4、2、1 分，也就是说，当要拿掉能写的权限，就是输入 2 分，而如果要拿掉能读的权限，也就是 4 分，那么要拿掉读与写的权限，也就是 6 分，而要拿掉运行与写入的权限，也就是 3 分， 5 分是什么, 就是读与运行的权限啦！”</p>
+<p>如果以上面的例子来说明，因为 umask 为 022 ，所以 user 并没有被拿掉任何权限，不过 group 与 others 的权限被拿掉了 2 (也就是 w 这个权限)，那么当使用者：</p>
+<ul>
+<li>创建文件时：(-rw-rw-rw-) - (—–w–w-) ==&gt; -rw-r–r–</li>
+<li>创建目录时：(drwxrwxrwx) - (d—-w–w-) ==&gt; drwxr-xr-x</li>
+</ul>
+<hr>
+<h4 id="umask的利用与重要性"><a href="#umask的利用与重要性" class="headerlink" title="umask的利用与重要性"></a>umask的利用与重要性</h4><p>当我们需要新建文件给同群组的使用者共同编辑时，那么 umask 的群组就不能拿掉 2 这个 w 的权限！umask 就得要是 002 之类的才可以！这样新建的文件才能够是 -rw-rw-r– 的权限模样,那么直接在 umask 后面输入 002 就好了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# umask 002</span><br><span class="line">root@jack:~# umask</span><br><span class="line">0002</span><br></pre></td></tr></table></figure></p>
+<p> umask 对於新建文件与目录的默认权限是很有关系的！这个概念可以用在任何服务器上面， 尤其是未来在你架设文件服务器 (file server) ！</p>
+<p> 在默认的情况中， root 的 umask 会拿掉比较多的属性，root 的 umask 默认是 022 ， 这是基於安全的考量啦～至於一般身份使用者，通常他们的 umask 为 002 ，亦即保留同群组的写入权力</p>
+<hr>
+<h4 id="文件的隐藏属性"><a href="#文件的隐藏属性" class="headerlink" title="文件的隐藏属性"></a>文件的隐藏属性</h4><p>要先强调的是，<a>底下的chattr命令只能在Ext2/Ext3的文件系统上面生效</a>， 其他的文件系统可能就无法支持这个命令了！</p>
+<hr>
+<h5 id="chattr-配置文件隐藏属性"><a href="#chattr-配置文件隐藏属性" class="headerlink" title="chattr (配置文件隐藏属性)"></a>chattr (配置文件隐藏属性)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# chatter [+-=] (参数值) 文件或者目录</span><br><span class="line">选项与参数:</span><br><span class="line">&apos;+&apos;   ：添加某一个特殊参数，其他原本存在参数则不动。</span><br><span class="line">&apos;-&apos;   ：移除某一个特殊参数，其他原本存在参数则不动。</span><br><span class="line">&apos;=&apos;   ：配置一定，且仅有后面接的参数</span><br><span class="line">a:当配置 a 之后，这个文件将只能添加数据，而不能删除也不能修改数据，只有root才能配置这个属性。 </span><br><span class="line">i:这个 i 可就很厉害了！他可以让一个文件『不能被删除、改名、配置连结也无法写入或新增数据！』对於系统安全性有相当大的助益！只有 root 能配置此属性</span><br><span class="line">A:当配置了 A 这个属性时，若你有存取此文件(或目录)时，他的存取时间 atime将不会被修改，可避免I/O较慢的机器过度的存取磁碟。这对速度较慢的计算机有帮助</span><br><span class="line">S:一般文件是非同步写入磁碟的(原理请参考第五章sync的说明)，如果加上 S 这个 属性时，当你进行任何文件的修改，该更动会『同步』写入磁碟中。</span><br><span class="line">s:当文件配置了 s 属性时，如果这个文件被删除，他将会被完全的移除出这个硬盘空间，所以如果误删了，完全无法救回来了喔！</span><br><span class="line">u:与 s 相反的，当使用 u 来配置文件时，如果该文件被删除了，则数据内容其实还存在磁碟中，可以使用来救援该文件喔！</span><br><span class="line">属性配置常见的是 a 与 i 的配置值，而且很多配置值必须要身为 root 才能配置!</span><br></pre></td></tr></table></figure>
+<p>这个命令是很重要的，尤其是在系统的数据安全上面！由於这些属性是隐藏的性质，所以需要以 lsattr 才能看到该属性呦！其中，个人认为最重要的当属 +i 与 +a 这个属性了。+i 可以让一个文件无法被更动，对於需要强烈的系统安全的人来说， 真是相当的重要的！</p>
+<h5 id="lsattr-显示文件隐藏属性"><a href="#lsattr-显示文件隐藏属性" class="headerlink" title="lsattr (显示文件隐藏属性)"></a>lsattr (显示文件隐藏属性)</h5><p>使用 chattr 配置后，可以利用 lsattr 来查阅隐藏的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# lsattr [-adR] 文件或目录</span><br><span class="line">选项与参数：</span><br><span class="line">-a ：将隐藏档的属性也秀出来；</span><br><span class="line">-d ：如果接的是目录，仅列出目录本身的属性而非目录内的档名；</span><br><span class="line">-R ：连同子目录的数据也一并列出来！</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="文件特殊权限-SUID-SGID-SBIT"><a href="#文件特殊权限-SUID-SGID-SBIT" class="headerlink" title="文件特殊权限:SUID,SGID,SBIT"></a>文件特殊权限:SUID,SGID,SBIT</h4><hr>
+<h5 id="Set-UID"><a href="#Set-UID" class="headerlink" title="Set UID"></a>Set UID</h5><p>我们直接来看看/usr/bin/passwd的文件权限是何?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls -l /usr/bin/passwd</span><br><span class="line">-rwsr-xr-x 1 root root 54192 11月 21  2014 /usr/bin/passwd</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，这个文件的权限有点特殊啊，多了一s权限？其实这就是被称为 Set UID，简称为 SUID 的特殊权限，下面是他的功能与限制:</p>
+<ul>
+<li>SUID 权限仅对二进位程序(binary program)有效；</li>
+<li>运行者对於该程序需要具有 x 的可运行权限；</li>
+<li>本权限仅在运行该程序的过程中有效 (run-time)；</li>
+<li>运行者将具有该程序拥有者 (owner) 的权限。</li>
+</ul>
+<h5 id="SGID"><a href="#SGID" class="headerlink" title="SGID"></a>SGID</h5><p> SGID权限对于文件和目录均有影响，具体可学习完第十七章在回来看看</p>
+<h5 id="SBIT-Sticky-Bit"><a href="#SBIT-Sticky-Bit" class="headerlink" title="SBIT(Sticky Bit)"></a>SBIT(Sticky Bit)</h5><p> 简单的讲，当一个目录拥有SBIT权限时，便只有目录拥有者和root可以删除该目录，其他人只具有对该目录的w,x权限。</p>
+<h5 id="SUID-SDIG-SBIT权限配置"><a href="#SUID-SDIG-SBIT权限配置" class="headerlink" title="SUID/SDIG/SBIT权限配置"></a>SUID/SDIG/SBIT权限配置</h5><p> 与之前给文件配置读写权限一样，我们依然可以通过数字权限的方法为文件添加SUID/SGID等权限，其中:</p>
+<ul>
+<li>4为SUID</li>
+<li>2为SGID</li>
+<li>1为SBIT</li>
+</ul>
+<p>此外还有大T与大S的产生<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cd /tmp/</span><br><span class="line">root@jack:/tmp# touch test</span><br><span class="line">root@jack:/tmp# chmod 4755 test ;ll test &lt;==加入SUID权限</span><br><span class="line">-rwsr-xr-x 1 root root 0 4月  30 14:33 test</span><br><span class="line">root@jack:/tmp# chmod 6755 test ;ll test &lt;==加入SUID/SGID权限</span><br><span class="line">-rwsr-sr-x 1 root root 0 4月  30 14:33 test</span><br><span class="line">root@jack:/tmp# chmod 1755 test ;ll test &lt;==加入SBIT功能</span><br><span class="line">-rwxr-xr-t 1 root root 0 4月  30 14:33 test</span><br><span class="line">root@jack:/tmp# chmod 7666 test ;ll test &lt;==具有空的SUID/SGID权限</span><br><span class="line">-rwSrwSrwT 1 root root 0 4月  30 14:33 test</span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是最后一行，因为我们下达的是666权限，就是所有的人都不具备该文件的x权限，自然SUID/SGID也是空的了，就会显示T和S了</p>
+<hr>
+<h3 id="0x04-命令与文件的搜索"><a href="#0x04-命令与文件的搜索" class="headerlink" title="0x04 命令与文件的搜索"></a>0x04 命令与文件的搜索</h3><hr>
+<h4 id="查找命令文件-which"><a href="#查找命令文件-which" class="headerlink" title="查找命令文件 which"></a>查找命令文件 which</h4><p>当我们使用ls这个命令时，有没有曾想过这个命令的完整文件是存放在何处的呢？这时你可以使用which来一看究竟:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# which -a which</span><br><span class="line">/usr/bin/which</span><br><span class="line">/bin/which</span><br><span class="line"></span><br><span class="line">参数:-a 将所有PATH目录中可以找到的命令均列出，而只是找到的第一个！</span><br></pre></td></tr></table></figure></p>
+<p>下面再来找一个命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# which cd</span><br><span class="line">root@jack:~#</span><br></pre></td></tr></table></figure></p>
+<p>看到没有which并没有找到cd这个命令，why？这是因为cd是[bash内建的命令]而which默认是找PATH内所规范的目录，so that！关于bash我以后再谈！</p>
+<p>最后，要知道的是，which是根据使用者所配置的PATH变量内的目录去搜寻可运行文件的，即不同PATH配置内容所找到的命令是不一样的，你想说明啥?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# su chen</span><br><span class="line">$ which ifconfig</span><br><span class="line">$</span><br><span class="line">$ exit</span><br><span class="line">root@jack:~# which ifconfig</span><br><span class="line">/sbin/ifconfig</span><br></pre></td></tr></table></figure></p>
+<p>看到了吗，一般账户chen是which不到ifconfig这个命令的，而root是可以的！</p>
+<hr>
+<h4 id="查找文件-whereis-locate-find"><a href="#查找文件-whereis-locate-find" class="headerlink" title="查找文件 whereis locate find"></a>查找文件 whereis locate find</h4><hr>
+<h5 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h5><p>Linux系统会将系统内的所有文件记录在一个数据库文件里面，当使用whereis或者locate是，会以此数据库文的内容为准，因而有时当我们使用这两命令时，会找到已经被杀掉的文件，或者找不到刚刚新建立的文件，当然比起find的全盘搜索，它们俩会快很多！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# whereis ifconfig</span><br><span class="line">ifconfig: /sbin/ifconfig /usr/share/man/man8/ifconfig.8.gz</span><br><span class="line"># whereis [-bmsu] 文件与目录名</span><br><span class="line">选项与参数:</span><br><span class="line">-b:只找binary格式的文件</span><br><span class="line">-m:只找在说明文件manual路径下的文件</span><br><span class="line">-s:只找source来源文件</span><br><span class="line">-u:找出上述三种以外的其他类型文件</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h5><p>locate用起来就更简单了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# locate ifconfig</span><br><span class="line">/sbin/ifconfig</span><br><span class="line">/usr/lib/python2.7/dist-packages/volatility/plugins/linux/ifconfig.py</span><br><span class="line">/usr/lib/python2.7/dist-packages/volatility/plugins/mac/ifconfig.py</span><br><span class="line">/usr/share/man/de/man8/ifconfig.8.gz</span><br><span class="line"># locate [-ir] filename</span><br><span class="line">选项与参数:</span><br><span class="line">-i:忽略大小写</span><br></pre></td></tr></table></figure></p>
+<p>Linux的数据库默认是一天升级一次，当然每个版本有所不同，所以当新建立一个文件时，数据库并没有升级，那么便会找不到了，所以此时也就必须要升级数据库了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# updatedb</span><br></pre></td></tr></table></figure></p>
+<p>没错,就是一个词[updatedb]！</p>
+<p> <strong>Tips:</strong> </p>
+<blockquote>
+<p>updatedb：根据 /etc/updatedb.conf 的配置去搜寻系统硬盘内的档名，并升级 /var/lib/mlocate 内的数据库文件；<br>locate：依据 /var/lib/mlocate 内的数据库记载，找出使用者输入的关键字档名。</p>
+</blockquote>
+<hr>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p> <strong>$ find [PATH] [option] [action]</strong></p>
+<hr>
+<h5 id="选项与参数-与时间有关的选项"><a href="#选项与参数-与时间有关的选项" class="headerlink" title="选项与参数:与时间有关的选项:"></a>选项与参数:与时间有关的选项:</h5><p>与时间有关的选项，共有-actime，-ctime，-mtime，以-mtime说明:</p>
+<ul>
+<li>-mtime n: n是数字，意义为在n天之前的[一天之内]改动过内容的文件</li>
+<li>-mtime +n:列出n天之前(不含n天本身)被改动过内容的文件</li>
+<li>-mtime -n:列出在n天之内(含n天本身)被改动过内容的文件</li>
+<li><p>-newer filename:列出比filename这个文件还要新的文件</p>
+</li>
+<li><p>实例一: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find / mtime 0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>找出系统过去24小时内内容被改动过的文件来，”0”代表目前时间！倘若要找出三天前的24小时内被改动过内容的文件呢?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find / mtime 3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>实例二:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /etc -newer /etc/passwd</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>寻找/etc下的文件，如果文件日期比/etc/passwd新就列出啦！<br>所以要再找出<strong>4天内被改动的文件</strong>就是<a>$ find /var mtime -4</a>,要找出<strong>4天前的那一天</strong>就用<a>$ find /etc -mtime 4</a></p>
+<hr>
+<p>#####选项与参数:与使用者或群有关的参数</p>
+<ul>
+<li>-uid n:n为数字，代表使用者账号id，亦即UID在/etc/passwd里面</li>
+<li>-gid n:n为数字，代表群组id，亦即GID在/etc/group里面</li>
+<li>-user name:使用者名字</li>
+<li>-group name:群组名字</li>
+<li><p>-nouser:寻找不属于任何使用在即是不存在于/etc/passwd下的人的文件</p>
+<ul>
+<li>-nogroup:不属于/etc/group下的文件</li>
+</ul>
+</li>
+<li><p>实例一:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /home -user root</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>寻找/home下不属于root账号的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find / -nouser</span><br></pre></td></tr></table></figure></p>
+<p>搜索系统中不属于任何人的那些文件！</p>
+<hr>
+<h5 id="选项与参数-与文件权限及名称有关的参数"><a href="#选项与参数-与文件权限及名称有关的参数" class="headerlink" title="选项与参数:与文件权限及名称有关的参数:"></a>选项与参数:与文件权限及名称有关的参数:</h5><p>*-name filename:查找文件filename</p>
+<ul>
+<li>-size [-+]SIZE:查找比SIZE(+)大或(-)小的文件。SIZE规格:c:代表byte，k:代表1024bytes。比如，要查找比50kb大的文件就是size +50k__</li>
+<li>-type TYPE:TYPE的类型主要有:一般正规文件(f),装置文件(b,c),目录(d),软链接(l),socket(s),及FIFO(P).</li>
+<li>-perm mode:查找<strong>文件权限刚好等于mode的权限</strong>的文件，mode类似于chmod的属性值，如-rwsr-xr-x的属性为4755！</li>
+<li>-perm -mode:查找<strong>文件权限必须包括mode的权限</strong>的文件！</li>
+<li>-perm +mode:查找文<strong>件权限包含任一mode权限</strong>的文件</li>
+</ul>
+<p>perm的主要作用就是找出那些具有特殊权限的文件了！</p>
+<ul>
+<li>实例一:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack~# find /bin /sbin -perm +6000</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>查找/bin /sbin两个目录下，只要具有SUID或SGID权限的文件，SUID是4分，SGID是2分，ok！</p>
+<hr>
+<h4 id="find-的开挂技能action"><a href="#find-的开挂技能action" class="headerlink" title="find 的开挂技能action"></a>find 的开挂技能<strong>action</strong></h4><ul>
+<li><p>-exec command:command为其他命令，我们可以以此来处理查询到的结果</p>
+</li>
+<li><p>实例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack~# find / -perm +7000 -exec ls -l &#123;&#125; \\\\;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>{} 代表的是『由 find 找到的内容』，如上图所示，find 的结果会被放置到 {} 位置中；</p>
+</li>
+<li>-exec 一直到 \\; 是关键字，代表 find 额外动作的开始 (-exec) 到结束 (\\;) ，在这中间的就是 find 命令内的额外动作。 在本例中就是『 ls -l {} 』罗！因为『 ; 』在 bash 环境下是有特殊意义的，因此利用反斜线来跳脱。</li>
+</ul>
+<p>再来，比如查找/tmp目录下所有的.md文件并将其全部移动到/myblog目录下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$: mv `find /tmp -name &quot;*.md&quot;` /myblog </span><br><span class="line">$: find /tmp -name &quot;*.md&quot; | xargs -i mv &#123; &#125; /tmp</span><br><span class="line">$  find /tmp -name &quot;*.md&quot; -exex mv &#123;&#125; /tmp \;</span><br></pre></td></tr></table></figure></p>
+<h4 id="最后find也支持通配符查找"><a href="#最后find也支持通配符查找" class="headerlink" title="最后find也支持通配符查找"></a>最后find也支持通配符查找</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /etc -name &apos;*httpd*&apos;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x05-权限与命令间的关系"><a href="#0x05-权限与命令间的关系" class="headerlink" title="0x05 权限与命令间的关系"></a>0x05 权限与命令间的关系</h3><p>现在我们来看看什么样的命令在什么样的权限在才能够运行！</p>
+<ul>
+<li><p>1.使用者能够进入某目录成为[可工作目录]的基本权限为何？</p>
+<ul>
+<li>如命令:cd</li>
+<li>目录所需权限:使用者对该目录至少需要具有x的权限</li>
+<li>如还想使用ls查询档案名，则还需具有r权限</li>
+</ul>
+</li>
+<li><p>2.使用者在某个目录内读取一个文件的基本权限为何？</p>
+<ul>
+<li>如命令:cat,more,less</li>
+<li>目录所需权限:使用者至少对该目录具有x权限</li>
+<li>文件所有权限:使用者至少对该文件具有r权限</li>
+</ul>
+</li>
+<li><p>3.使用者可以修改一个文件的基本权限为何？</p>
+<ul>
+<li>如命令:vi</li>
+<li>目录所需权限:使用者至少对该目录具有x权限</li>
+<li>文件所有权限:使用者至少对该文件具有r,,w权限</li>
+</ul>
+</li>
+<li><p>3.使用者可以创建一个文件的基本权限为何？</p>
+<ul>
+<li>如命令:touch</li>
+<li>目录所需权限:使用者至少对该目录具有w,x权限</li>
+</ul>
+</li>
+<li><p>4.使用者进入某目录并运行该目录先的某个命令的基本权限为何?</p>
+<ul>
+<li>目录所需权限:使用者至少对该目录具有x权限</li>
+<li>文件所有权限:使用者至少对该文件具有x权限</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/鸟哥的Linux读书笔记基础篇/" rel="tag"># 鸟哥的Linux读书笔记基础篇</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/27/第五章-开关机命令/" rel="next" title="第五章-开关机命令">
+                <i class="fa fa-chevron-left"></i> 第五章-开关机命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/27/第六章-文件权限与目录配置/" rel="prev" title="第六章-文件权限与目录配置">
+                第六章-文件权限与目录配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-目录与路径"><span class="nav-number">1.</span> <span class="nav-text">0x00 目录与路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#绝对路径与相对路径"><span class="nav-number">1.1.</span> <span class="nav-text">绝对路径与相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#绝对路径"><span class="nav-number">1.1.1.</span> <span class="nav-text">绝对路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#相对路径"><span class="nav-number">1.1.2.</span> <span class="nav-text">相对路径</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录的相关操作-cd-pwd-mkdir-rmdir"><span class="nav-number">1.2.</span> <span class="nav-text">目录的相关操作:cd,pwd,mkdir,rmdir</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cd变换目录"><span class="nav-number">1.2.1.</span> <span class="nav-text">cd变换目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pwd：显示目前的目录"><span class="nav-number">1.2.2.</span> <span class="nav-text">pwd：显示目前的目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mkdir-创建一个新的目录"><span class="nav-number">1.2.3.</span> <span class="nav-text">mkdir:创建一个新的目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rmdir-删除一个空的目录"><span class="nav-number">1.2.4.</span> <span class="nav-text">rmdir:删除一个空的目录</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#环境变量-PATH"><span class="nav-number">1.3.</span> <span class="nav-text">环境变量:$PATH</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-文件与目录管理"><span class="nav-number">2.</span> <span class="nav-text">0x01 文件与目录管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件与目录的检视ls"><span class="nav-number">2.1.</span> <span class="nav-text">文件与目录的检视ls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制、删除与移动：-cp-rm-mv"><span class="nav-number">2.2.</span> <span class="nav-text">复制、删除与移动： cp, rm, mv</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cp复制"><span class="nav-number">2.2.1.</span> <span class="nav-text">cp复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rm-移除文件或目录"><span class="nav-number">2.2.2.</span> <span class="nav-text">rm (移除文件或目录)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mv-移动文件与目录，或更名"><span class="nav-number">2.2.3.</span> <span class="nav-text">mv (移动文件与目录，或更名)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-文件内容查询"><span class="nav-number">3.</span> <span class="nav-text">0x02 文件内容查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cat"><span class="nav-number">3.1.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tac-反向列示"><span class="nav-number">3.2.</span> <span class="nav-text">tac (反向列示)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nl-添加行号列印"><span class="nav-number">3.3.</span> <span class="nav-text">nl (添加行号列印)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more-一页一页翻动"><span class="nav-number">3.4.</span> <span class="nav-text">more (一页一页翻动)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less-一页一页翻动"><span class="nav-number">3.5.</span> <span class="nav-text">less (一页一页翻动)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据截取"><span class="nav-number">3.6.</span> <span class="nav-text">数据截取</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#head"><span class="nav-number">3.6.1.</span> <span class="nav-text">head</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#tail"><span class="nav-number">3.6.2.</span> <span class="nav-text">tail</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改文件时间或建置新档：-touch"><span class="nav-number">3.7.</span> <span class="nav-text">修改文件时间或建置新档： touch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-文件与目录的默认权限与隐藏权限"><span class="nav-number">4.</span> <span class="nav-text">0x03 文件与目录的默认权限与隐藏权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件默认权限：umask"><span class="nav-number">4.1.</span> <span class="nav-text">文件默认权限：umask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umask的利用与重要性"><span class="nav-number">4.2.</span> <span class="nav-text">umask的利用与重要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件的隐藏属性"><span class="nav-number">4.3.</span> <span class="nav-text">文件的隐藏属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#chattr-配置文件隐藏属性"><span class="nav-number">4.3.1.</span> <span class="nav-text">chattr (配置文件隐藏属性)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lsattr-显示文件隐藏属性"><span class="nav-number">4.3.2.</span> <span class="nav-text">lsattr (显示文件隐藏属性)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件特殊权限-SUID-SGID-SBIT"><span class="nav-number">4.4.</span> <span class="nav-text">文件特殊权限:SUID,SGID,SBIT</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Set-UID"><span class="nav-number">4.4.1.</span> <span class="nav-text">Set UID</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SGID"><span class="nav-number">4.4.2.</span> <span class="nav-text">SGID</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SBIT-Sticky-Bit"><span class="nav-number">4.4.3.</span> <span class="nav-text">SBIT(Sticky Bit)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SUID-SDIG-SBIT权限配置"><span class="nav-number">4.4.4.</span> <span class="nav-text">SUID/SDIG/SBIT权限配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-命令与文件的搜索"><span class="nav-number">5.</span> <span class="nav-text">0x04 命令与文件的搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查找命令文件-which"><span class="nav-number">5.1.</span> <span class="nav-text">查找命令文件 which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找文件-whereis-locate-find"><span class="nav-number">5.2.</span> <span class="nav-text">查找文件 whereis locate find</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#whereis"><span class="nav-number">5.2.1.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#locate"><span class="nav-number">5.2.2.</span> <span class="nav-text">locate</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">5.3.</span> <span class="nav-text">find</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#选项与参数-与时间有关的选项"><span class="nav-number">5.3.1.</span> <span class="nav-text">选项与参数:与时间有关的选项:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#选项与参数-与文件权限及名称有关的参数"><span class="nav-number">5.3.2.</span> <span class="nav-text">选项与参数:与文件权限及名称有关的参数:</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find-的开挂技能action"><span class="nav-number">5.4.</span> <span class="nav-text">find 的开挂技能action</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后find也支持通配符查找"><span class="nav-number">5.5.</span> <span class="nav-text">最后find也支持通配符查找</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-权限与命令间的关系"><span class="nav-number">6.</span> <span class="nav-text">0x05 权限与命令间的关系</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

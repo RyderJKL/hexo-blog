@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,DOM,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 document.getElment系列 查找元素obj.getElementById(“idname”)通过元素 ID 来获得唯一元素。 obj.getElementsByTagName(“tagname”)通过标签名查找元素，返回一个 HTMLCollection，我们可以使用 [] 语法或者 item() 方法来访问该对象中的项。 123var images = document.">
+<meta name="keywords" content="JavaScript,DOM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS-DOM(5)获取元素的方法">
+<meta property="og:url" content="http://yoursite.com/2016/11/02/5.获取元素的方法/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 document.getElment系列 查找元素obj.getElementById(“idname”)通过元素 ID 来获得唯一元素。 obj.getElementsByTagName(“tagname”)通过标签名查找元素，返回一个 HTMLCollection，我们可以使用 [] 语法或者 item() 方法来访问该对象中的项。 123var images = document.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS-DOM(5)获取元素的方法">
+<meta name="twitter:description" content="0x00 document.getElment系列 查找元素obj.getElementById(“idname”)通过元素 ID 来获得唯一元素。 obj.getElementsByTagName(“tagname”)通过标签名查找元素，返回一个 HTMLCollection，我们可以使用 [] 语法或者 item() 方法来访问该对象中的项。 123var images = document.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/02/5.获取元素的方法/">
+
+
+
+
+
+  <title>JS-DOM(5)获取元素的方法 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/02/5.获取元素的方法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS-DOM(5)获取元素的方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-02T00:00:00+08:00">
+                2016-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-document-getElment系列"><a href="#0x00-document-getElment系列" class="headerlink" title="0x00 document.getElment系列"></a>0x00 document.getElment系列</h3><hr>
+<h4 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h4><h5 id="obj-getElementById-“idname”"><a href="#obj-getElementById-“idname”" class="headerlink" title="obj.getElementById(“idname”)"></a>obj.getElementById(“idname”)</h5><p>通过元素 <code>ID</code> 来获得唯一元素。</p>
+<h5 id="obj-getElementsByTagName-“tagname”"><a href="#obj-getElementsByTagName-“tagname”" class="headerlink" title="obj.getElementsByTagName(“tagname”)"></a>obj.getElementsByTagName(“tagname”)</h5><p>通过标签名查找元素，返回一个 HTMLCollection，我们可以使用 <code>[]</code> 语法或者 <code>item()</code> 方法来访问该对象中的项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var images = document.getElementsByTagName(&quot;images&quot;);</span><br><span class="line">alert(images[0].src);</span><br><span class="line">alert(images.item(0).src);</span><br></pre></td></tr></table></figure>
+<p>此外，HTMLCollection 对象还要一个方法，<strong>namedItem()</strong>,该方法可以通过 name 特性取得集合中的第一项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;myimage.jif&quot; name = &quot;myImage&quot;&gt;</span><br><span class="line">var myImage = images.namedItem(&quot;myImage&quot;);</span><br></pre></td></tr></table></figure>
+<p>对命名的项也可以使用 <code>[]</code> 来访问，但是只是针对 HTMLCollection 集合中的第一项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var myImage = images[&quot;myImage&quot;];</span><br></pre></td></tr></table></figure>
+<p>对 HTMLCollttion 而言，可以使用方括号传入数值或者字符串。在后台，对数值索引会调用 item(), 对字符串索引会调用 namedItem()。</p>
+<blockquote>
+<p>通过命名项，即是通过元素的 name 属性值去访问一个具体的元素，就是一个坑，大大坑！</p>
+</blockquote>
+<h5 id="obj-getElementsByName-“elementname”"><a href="#obj-getElementsByName-“elementname”" class="headerlink" title="obj.getElementsByName(“elementname”)"></a>obj.getElementsByName(“elementname”)</h5><p>最常使用 <code>getElementsByName()</code> 的情况是取得单项按钮的时候。<br>通过 <code>name</code> 来获得对象，返回的是一HTMLCollection 对象，通过元素的 <code>value</code> 来区分单个元素。</p>
+<h5 id="obj-getElementsByClassName-“classname”"><a href="#obj-getElementsByClassName-“classname”" class="headerlink" title="obj.getElementsByClassName(“classname”)"></a>obj.getElementsByClassName(“classname”)</h5><p>通过 <code>class</code>  来获得对象，返回的是一HTMLCollection 对象，可通过 <code>innerHTML</code> 来区分单个元素。</p>
+<hr>
+<h3 id="0x01-选择符-API"><a href="#0x01-选择符-API" class="headerlink" title="0x01 选择符 API"></a>0x01 选择符 API</h3><p>Selectors API 致力于让浏览器支持 <strong>原生CSS 查询</strong>，以提高解析和数查询的性能。其两个核心方法是: <strong>querySelector()</strong> 和 <strong>querySelectorAll()</strong>,而它们接受的参数是 CSS选择符。</p>
+<h6 id="querySelector"><a href="#querySelector" class="headerlink" title="querySelector()"></a>querySelector()</h6><p>querySelector() 返回的是与该模式匹配的第个元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var body = document.querySelector(&quot;body&quot;);</span><br><span class="line">// 取得 body</span><br><span class="line">var img = document.querySelector(&quot;img.button&quot;);</span><br><span class="line">// 取得类为 button 的第一个图片元素</span><br><span class="line">var selected = document.querySelector(&quot;.selected&quot;);</span><br><span class="line">// 取得 selected 类的第一元素</span><br></pre></td></tr></table></figure>
+<h6 id="querySelectorAll"><a href="#querySelectorAll" class="headerlink" title="querySelectorAll()"></a>querySelectorAll()</h6><p>querySelectorAll() 方法返回的是一个 Static NodeList 实例而不是 HTMLCollection 类型，NodeList对象有个length属性和item()方法，这意味着我们可以通过对<strong>item()</strong> 传入索引(Number | String)去访问具体的节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var ems = document.getElementById(&quot;myDiv&quot;).querySelectorAll(&quot;em&quot;);</span><br><span class="line">// 取得 div 中 的 所有 em 元素</span><br><span class="line">var strongs = document.querySelector(&quot;p strong&quot;);</span><br><span class="line">// 取得 p 中的所有 strong 元素</span><br><span class="line">var allImg = document.querySelectorAll(&quot;#wrapper img&quot;)</span><br><span class="line">// 查找 ID 为 wrapper 下的所有 img 标签</span><br></pre></td></tr></table></figure>
+<p>实际上，querySelectorAll 返回的是一个 Static NodeList 对象，而 getElementsBy 系列的返回的是一个动态的 HTMLCollection 对象。</p>
+<p>一个经典的的栗子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Demo 1</span><br><span class="line">var ul = document.querySelectorAll(&apos;ul&apos;)[0],</span><br><span class="line">    lis = ul.querySelectorAll(&quot;li&quot;);</span><br><span class="line">for(var i = 0; i &lt; lis.length ; i++)&#123;</span><br><span class="line">//lis.lenght 不会改变</span><br><span class="line">    ul.appendChild(document.createElement(&quot;li&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Demo 2</span><br><span class="line">var ul = document.getElementsByTagName(&apos;ul&apos;)[0], </span><br><span class="line">    lis = ul.getElementsByTagName(&quot;li&quot;); </span><br><span class="line">for(var i = 0; i &lt; lis.length ; i++)&#123;</span><br><span class="line">//死循环，lis.length总是在动态的改变着</span><br><span class="line">    ul.appendChild(document.createElement(&quot;li&quot;)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x02-元素遍历"><a href="#0x02-元素遍历" class="headerlink" title="0x02 元素遍历"></a>0x02 元素遍历</h3><h6 id="childElementCount"><a href="#childElementCount" class="headerlink" title="childElementCount"></a>childElementCount</h6><p>返回子元素的个数</p>
+<h6 id="firstElementChild"><a href="#firstElementChild" class="headerlink" title="firstElementChild"></a>firstElementChild</h6><p>返回第一个子元素</p>
+<h6 id="lastElementChild"><a href="#lastElementChild" class="headerlink" title="lastElementChild"></a>lastElementChild</h6><p>返回最后一个子元素</p>
+<h6 id="previousElementSibling"><a href="#previousElementSibling" class="headerlink" title="previousElementSibling"></a>previousElementSibling</h6><p>返回前一个同辈元素</p>
+<h6 id="nextElementSibling"><a href="#nextElementSibling" class="headerlink" title="nextElementSibling"></a>nextElementSibling</h6><p>返回后一个同辈元素</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/DOM/" rel="tag"># DOM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/02/4.获取节点的内容/" rel="next" title="JS-DOM(4)获取节点的内容">
+                <i class="fa fa-chevron-left"></i> JS-DOM(4)获取节点的内容
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/08/JS服务器编程(4)JSON/" rel="prev" title="JS服务器编程(4)JSON">
+                JS服务器编程(4)JSON <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-document-getElment系列"><span class="nav-number">1.</span> <span class="nav-text">0x00 document.getElment系列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查找元素"><span class="nav-number">1.1.</span> <span class="nav-text">查找元素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#obj-getElementById-“idname”"><span class="nav-number">1.1.1.</span> <span class="nav-text">obj.getElementById(“idname”)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#obj-getElementsByTagName-“tagname”"><span class="nav-number">1.1.2.</span> <span class="nav-text">obj.getElementsByTagName(“tagname”)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#obj-getElementsByName-“elementname”"><span class="nav-number">1.1.3.</span> <span class="nav-text">obj.getElementsByName(“elementname”)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#obj-getElementsByClassName-“classname”"><span class="nav-number">1.1.4.</span> <span class="nav-text">obj.getElementsByClassName(“classname”)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-选择符-API"><span class="nav-number">2.</span> <span class="nav-text">0x01 选择符 API</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#querySelector"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">querySelector()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#querySelectorAll"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">querySelectorAll()</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-元素遍历"><span class="nav-number">3.</span> <span class="nav-text">0x02 元素遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#childElementCount"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">childElementCount</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#firstElementChild"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">firstElementChild</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#lastElementChild"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">lastElementChild</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#previousElementSibling"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">previousElementSibling</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#nextElementSibling"><span class="nav-number">3.0.0.5.</span> <span class="nav-text">nextElementSibling</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

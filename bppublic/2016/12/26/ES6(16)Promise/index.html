@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ES6,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 初见 PromisePromise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。 在传统的 Node 异步编程中，比如按照一定顺序去读取多个文件进行异步操作时，很容易陷入 回调地狱。 12345678910var fs = require(&amp;apos;fs&amp;apos;);fs.readFile(&amp;quot;fileName1&amp;quot;, functi">
+<meta name="keywords" content="ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6(16)Promise">
+<meta property="og:url" content="http://yoursite.com/2016/12/26/ES6(16)Promise/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 初见 PromisePromise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。 在传统的 Node 异步编程中，比如按照一定顺序去读取多个文件进行异步操作时，很容易陷入 回调地狱。 12345678910var fs = require(&amp;apos;fs&amp;apos;);fs.readFile(&amp;quot;fileName1&amp;quot;, functi">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6(16)Promise">
+<meta name="twitter:description" content="0x00 初见 PromisePromise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。 在传统的 Node 异步编程中，比如按照一定顺序去读取多个文件进行异步操作时，很容易陷入 回调地狱。 12345678910var fs = require(&amp;apos;fs&amp;apos;);fs.readFile(&amp;quot;fileName1&amp;quot;, functi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/26/ES6(16)Promise/">
+
+
+
+
+
+  <title>ES6(16)Promise | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/26/ES6(16)Promise/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ES6(16)Promise</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-26T00:00:00+08:00">
+                2016-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-初见-Promise"><a href="#0x00-初见-Promise" class="headerlink" title="0x00 初见 Promise"></a>0x00 初见 Promise</h3><p><code>Promise</code> 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。</p>
+<p>在传统的 Node 异步编程中，比如按照一定顺序去读取多个文件进行异步操作时，很容易陷入 <em>回调地狱</em>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">fs.readFile(&quot;fileName1&quot;, function (err, data) &#123;</span><br><span class="line">	if (!err)&#123;</span><br><span class="line">		fs.readFile(&quot;fileName1&quot;, function (err,data) &#123;</span><br><span class="line">			if (!err)&#123;</span><br><span class="line">			//	......</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>本节不会去深究 Promise 的底层实现，而是讨论如何使用 Promise 对象去进行异步操作。</p>
+<p>Promise 的两个特点:</p>
+<ul>
+<li>对象的状态不受外界影响。Promise对象代表一个异步操作，有三种状态：<code>Pending</code>（进行中）、<code>Resolved</code>（已完成，又称 <code>Fulfilled</code>）和<code>Rejected</code>（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。</li>
+<li>一旦状态改变，就不会在变，任何时候都可以得到这个结果。Promise对象的状态改变，只有两种可能：从<code>Pending</code>变为<code>Resolved</code>和从<code>Pending</code>变为<code>Rejected</code>。</li>
+</ul>
+<p>有了 Promise 对象，便可以将异步操作以同步操作的流程表达出来，避免回调地狱。</p>
+<p>当然，Promise 也是有缺点的，就是在于其状态的不可中断特性。因为在实际的开发过程中，是很有可能需要去中断这个状态的。</p>
+<hr>
+<h3 id="0x01-使用-Promise"><a href="#0x01-使用-Promise" class="headerlink" title="0x01 使用 Promise"></a>0x01 使用 Promise</h3><p>ES6规定，Promise对象是一个构造函数，用来生成Promise实例。其接受两个<code>resolve</code> 和 <code>reject</code> 函数作为参数。</p>
+<p><code>resolve</code> 函数的在异步操作成功时调用，并将异步操作成功的结果作为参数传递出去。而 <code>reject</code> 函数在异步操作失败时调用，并将异步操作失败时返回的结果作为参数传递出去。这两个函数，由JavaScript引擎提供，不用自己部署。</p>
+<p>以下代码创建 Promise 实例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let promise = new Promise(function (resolve, reject)&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<p>Promise实例生成以后，可以用<code>then</code>方法分别指定R<code>esolved</code>状态和<code>Reject</code>状态的回调函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">promise.then(function (value) &#123;</span><br><span class="line">//	success</span><br><span class="line">&#125;,function (err) &#123;</span><br><span class="line">//	error</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>then</code> 接受两个回调函数作为参数。第一个回调函数是Promise对象的状态变为<code>Resolved</code>时调用，第二个回调函数是Promise对象的状态变为<code>Reject</code>时调用,而第二个参数是可选的。<strong>这两个函数都接受Promise对象传出的值作为参数。</strong></p>
+<p>Promise 一旦创建便会立即执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let promise = new Promise(function (resolve, reject)&#123;</span><br><span class="line">	console.log(&apos;Promise&apos;);</span><br><span class="line">	resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">promise.then(function (value) &#123;</span><br><span class="line">//	success</span><br><span class="line">	console.log(&quot;Resolved&quot;);</span><br><span class="line">&#125;,function (err) &#123;</span><br><span class="line">//	error</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(&quot;hi&quot;);</span><br><span class="line">//Promise</span><br><span class="line">//hi</span><br><span class="line">//Resolved</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="使用-Promise-发送-Ajax-请求"><a href="#使用-Promise-发送-Ajax-请求" class="headerlink" title="使用 Promise 发送 Ajax 请求"></a>使用 Promise 发送 Ajax 请求</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">let getJSON = function (url) &#123;</span><br><span class="line">	return new Promise(function (resolve, reject) &#123;</span><br><span class="line">		let client = new XMLHttpRequest();</span><br><span class="line">		client.open(&quot;GET&quot;, url, true);</span><br><span class="line">		client.onreadystatechange = handler;</span><br><span class="line">		client.responseType = &quot;json&quot;;</span><br><span class="line">		client.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)</span><br><span class="line">		client.send();</span><br><span class="line"></span><br><span class="line">		function handler () &#123;</span><br><span class="line">			if (this.readyState!== 4)&#123;</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			if (this.status === 200)&#123;</span><br><span class="line">				resolve(this.response);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				reject(new Error(this.statusText));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">getJSON(url).then(function (json) &#123;</span><br><span class="line">	console.log(&quot;Contents: &quot; + json);</span><br><span class="line">&#125;, function (err) &#123;</span><br><span class="line">	console.log(&quot;Error: &quot; + err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意，在 <code>getJSON</code> 内部，在 <code>then</code> 方法中，调用函数 <code>resolve</code> 和函数 <code>reject</code> 时都带有参数，而在这些参数都将会被传递个回调函数。reject函数的参数通常是 <code>Error</code> 对象的实例，表示抛出的错误；<code>resolve</code> 函数的参数除了正常的值以外，还可能是另一个 Promise 实例。</p>
+<p><a href="https://github.com/onejustone/JavaScript/tree/master/Promise_demo" target="_blank" rel="noopener">源代码</a></p>
+<hr>
+<h4 id="Promise-prototype-then"><a href="#Promise-prototype-then" class="headerlink" title="Promise.prototype.then()"></a>Promise.prototype.then()</h4><p><code>then()</code> 方法的作用是为 Promise 实例添加状态改变时的回调函数。在函数执行完成以后<code>then</code> 方法会返回一个新的 Promise 实例，以形成链式调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">getJSON(url).then( value =&gt; value.commentURl)</span><br><span class="line">.then(</span><br><span class="line">	value =&gt; console.log(vlaue),</span><br><span class="line">	err =&gt; console.log(err)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Promise-prototype-catch"><a href="#Promise-prototype-catch" class="headerlink" title="Promise.prototype.catch()"></a>Promise.prototype.catch()</h4><p><code>catch()</code> 方法是 <code>then(null, rejection)</code> 方法的别名。通常来说，我们并不建议直接在 <code>then()</code> 方法中去处理异步操作可能产生的错误，即不要在 <code>then</code> 方法里面定义 <code>Reject</code> 状态的回调函数（即then的第二个参数）而是使用 <code>catch</code> 方法去捕获错误。</p>
+<p>首先，Promise 对象中的错误具有冒泡性质，错误会一直向后传递。其次，Promise 对象中的错误也不会传递到外层代码中去，如果不使用 <code>catch</code> 方法，是不会捕获到错误的。这跟传统的 <code>try/catch</code> 代码块不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">promise</span><br><span class="line">  .then(function(data) &#123;</span><br><span class="line">    // success</span><br><span class="line">  &#125;, function(err) &#123;</span><br><span class="line">    // error</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">promise</span><br><span class="line">  .then(function(data) &#123; //cb</span><br><span class="line">    // success</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(function(err) &#123;</span><br><span class="line">    // error</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p> Node 中的 <code>unhandledRejection</code> 事件，专门用来监听为处理的 <code>reject</code> 错误:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">process.on(&apos;unhandledRejection&apos;, function (err, p) &#123;</span><br><span class="line">  console.error(err.stack)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>其接受两个参数,第一个是错误对象，第二个是报错的Promise实例。</p>
+<hr>
+<h3 id="0x02-不存在与-ES6-中的-Promise-方法"><a href="#0x02-不存在与-ES6-中的-Promise-方法" class="headerlink" title="0x02 不存在与 ES6 中的 Promise 方法"></a>0x02 不存在与 ES6 中的 Promise 方法</h3><hr>
+<h4 id="done"><a href="#done" class="headerlink" title="done()"></a>done()</h4><p><code>done()</code> 方法用于捕获 Promise 回调链尾部可能抛出的任何错误:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Promise.prototype.done = function (resolve, reject) &#123;</span><br><span class="line">	this.then(resolve, reject)</span><br><span class="line">	.catch(function (reason)&#123;</span><br><span class="line">	// 抛出一个全局错误</span><br><span class="line">		setTimeout( () =&gt; &#123; throw reason;&#125;, 0);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="finally"><a href="#finally" class="headerlink" title="finally()"></a>finally()</h4><p><code>finally()</code> 方法用于指定不管Promise对象最后状态如何，都会执行的操作。其接受一个普遍的回调函数作为参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Promise.prototype.finally = function (callback)&#123;</span><br><span class="line">	let P = this.constructor;</span><br><span class="line">	return this.then(&#123;</span><br><span class="line">		value =&gt; P.resolve(callback()).then( () =&gt; value),</span><br><span class="line">		reason =&gt; P.resolve(callback()).then( () =&gt; &#123;throw reason&#125;)</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-应用"><a href="#0x03-应用" class="headerlink" title="0x03 应用"></a>0x03 应用</h3><hr>
+<h4 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h4><p>将图片的加载写成一个Promise，一旦加载完成，Promise的状态就发生变化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const  preLoadImagePro = function (path) &#123;</span><br><span class="line">    return new Promise(function (resolve, reject) &#123;</span><br><span class="line">        let image = new Image();</span><br><span class="line">        image.onload = resolve;</span><br><span class="line">        image.onerror = reject;</span><br><span class="line">        image.src = path;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="构建顺序执行异步任务"><a href="#构建顺序执行异步任务" class="headerlink" title="构建顺序执行异步任务"></a>构建顺序执行异步任务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var sequence = Promise.resolve();</span><br><span class="line">array.forEach(function(item) &#123;</span><br><span class="line">	sequence = sequence.then(//deal item)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/26/ ES6(8)函数/" rel="next" title="ES6(8)函数">
+                <i class="fa fa-chevron-left"></i> ES6(8)函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/26/ http(2)模块之服务器端/" rel="prev" title="http模块(2)之服务器端">
+                http模块(2)之服务器端 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-初见-Promise"><span class="nav-number">1.</span> <span class="nav-text">0x00 初见 Promise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-使用-Promise"><span class="nav-number">2.</span> <span class="nav-text">0x01 使用 Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Promise-发送-Ajax-请求"><span class="nav-number">2.1.</span> <span class="nav-text">使用 Promise 发送 Ajax 请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise-prototype-then"><span class="nav-number">2.2.</span> <span class="nav-text">Promise.prototype.then()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise-prototype-catch"><span class="nav-number">2.3.</span> <span class="nav-text">Promise.prototype.catch()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-不存在与-ES6-中的-Promise-方法"><span class="nav-number">3.</span> <span class="nav-text">0x02 不存在与 ES6 中的 Promise 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#done"><span class="nav-number">3.1.</span> <span class="nav-text">done()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#finally"><span class="nav-number">3.2.</span> <span class="nav-text">finally()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-应用"><span class="nav-number">4.</span> <span class="nav-text">0x03 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加载图片"><span class="nav-number">4.1.</span> <span class="nav-text">加载图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建顺序执行异步任务"><span class="nav-number">4.2.</span> <span class="nav-text">构建顺序执行异步任务</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

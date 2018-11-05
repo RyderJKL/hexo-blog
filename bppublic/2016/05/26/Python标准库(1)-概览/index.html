@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python标准库,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 概览Python标准库(Standard Library)会随着Python解释器一起安装于电脑，这些标准库是Python的利器，可以让编程事半功倍，我们主要使用标准库中三个方向的包(package):  Python增强 系统互动 网络编程   0x01 Python增强 文字处理Python的string类提供了对字符串的处理方法，更进一步，标准库的re包，可以使用正则表达式(reg">
+<meta name="keywords" content="Python标准库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python标准库(1)概览">
+<meta property="og:url" content="http://yoursite.com/2016/05/26/Python标准库(1)-概览/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 概览Python标准库(Standard Library)会随着Python解释器一起安装于电脑，这些标准库是Python的利器，可以让编程事半功倍，我们主要使用标准库中三个方向的包(package):  Python增强 系统互动 网络编程   0x01 Python增强 文字处理Python的string类提供了对字符串的处理方法，更进一步，标准库的re包，可以使用正则表达式(reg">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python标准库(1)概览">
+<meta name="twitter:description" content="0x00 概览Python标准库(Standard Library)会随着Python解释器一起安装于电脑，这些标准库是Python的利器，可以让编程事半功倍，我们主要使用标准库中三个方向的包(package):  Python增强 系统互动 网络编程   0x01 Python增强 文字处理Python的string类提供了对字符串的处理方法，更进一步，标准库的re包，可以使用正则表达式(reg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/26/Python标准库(1)-概览/">
+
+
+
+
+
+  <title>Python标准库(1)概览 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/26/Python标准库(1)-概览/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python标准库(1)概览</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-26T22:30:00+08:00">
+                2016-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-概览"><a href="#0x00-概览" class="headerlink" title="0x00 概览"></a>0x00 概览</h2><p>Python标准库(Standard Library)会随着Python解释器一起安装于电脑，这些标准库是Python的利器，可以让编程事半功倍，我们主要使用标准库中三个方向的包(package):</p>
+<ul>
+<li>Python增强</li>
+<li>系统互动</li>
+<li>网络编程</li>
+</ul>
+<hr>
+<h2 id="0x01-Python增强"><a href="#0x01-Python增强" class="headerlink" title="0x01 Python增强"></a>0x01 Python增强</h2><hr>
+<h4 id="文字处理"><a href="#文字处理" class="headerlink" title="文字处理"></a>文字处理</h4><p>Python的string类提供了对字符串的处理方法，更进一步，标准库的re包，可以使用正则表达式(regular expression)来处理字符串。此外，Python标准库还为字符串的输出提供更加丰富的格式，比如:string包，textwrap包。</p>
+<h4 id="数据对象"><a href="#数据对象" class="headerlink" title="数据对象"></a>数据对象</h4><p>Pyhton标准库除了定义了如表，词典之外的对象以外，还提供了数组(Array),队列(Queue)等数据对象，此外，我们也经常使用copy包，以复制对象。</p>
+<h4 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h4><p>Python标准库对时间和日期的管理比较完善(利用time包管理时间，利用datatime包管理日期和时间)，可以进行日期和时间的查询和变换，可以对时间进行运算，还可以根据需要控制时间输出的文本格式</p>
+<h4 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h4><p>Python中定义了一些新的数字类型(decimal包，fractions包),以弥补之前数字类型可能的不足，同时也包含了random包，用于处理随机数相关的功能，math包也补充了一些重要的数学常数和数学函数</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>Python除了简单文本的输入输出外，还可以输入输出任意的对象。这些对象可以通过标准库中的pickle包转换为二进制格式(binary)，然后存储于文件中，也可以反向从二进制文件中读取对象。</p>
+<hr>
+<h2 id="0x02-系统互动"><a href="#0x02-系统互动" class="headerlink" title="0x02 系统互动"></a>0x02 系统互动</h2><p>主要是指Python和操作系统，文件系统的互动，Python可以实现操作系统的许多功能，能够像bash脚本一样管理操作系统，这也是Python有时被称为脚本语言的原因。</p>
+<hr>
+<h4 id="Python运行控制"><a href="#Python运行控制" class="headerlink" title="Python运行控制"></a>Python运行控制</h4><p>sys包用于管理Python本身的运行环境。其另一个重要的功能是和Python自己的命令行互动，从命令行读取命令和参数。</p>
+<h4 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h4><p>os包是Python与操作系统的接口，os包可以实现操作系统的很多功能，但是os包是建立在Linux基础上的，所有许多功能在Windows上是无法实现的。</p>
+<p>subprocess包用于执行外部命令，其功能相当于我们在操作系统的命令行中输入命令执行，还可以是可以在命令行中执行的程序。</p>
+<h4 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h4><p>Python支持多线程(threading包)运行和多线程(multiprocessing包)运行。通过多线程和多进程，可以提高系统资源的利用率，提高计算机的处理速度。</p>
+<hr>
+<h2 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h2><hr>
+<h4 id="基于socket层的网络应用"><a href="#基于socket层的网络应用" class="headerlink" title="基于socket层的网络应用"></a>基于socket层的网络应用</h4><p>socket是网络可编程部分的底层。通过socket包，我们可以直接管理socket，如将socket赋予某个port，连接远程端口，以及通过连接传输数据。我们也可以利用socketserver包方便的建立服务器。此外，通过asyncore包实现异步处理，也是改善服务器性能的一个方案。</p>
+<h4 id="互联网应用"><a href="#互联网应用" class="headerlink" title="互联网应用"></a>互联网应用</h4><p>Python标准库中有http的服务端和客户端的应用支持(BaseHTTPServer包；urllib包；urllib2包)，并且可以通过urlparse包对url进行理解和操作</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python标准库/" rel="tag"># Python标准库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/26/搭建Hexo博客站点/" rel="next" title="Hexo建站笔记">
+                <i class="fa fa-chevron-left"></i> Hexo建站笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/26/Python标准库(4)-文件与路径/" rel="prev" title="Python标准库(4)文件与路径">
+                Python标准库(4)文件与路径 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-概览"><span class="nav-number">1.</span> <span class="nav-text">0x00 概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Python增强"><span class="nav-number">2.</span> <span class="nav-text">0x01 Python增强</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文字处理"><span class="nav-number">2.0.1.</span> <span class="nav-text">文字处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据对象"><span class="nav-number">2.0.2.</span> <span class="nav-text">数据对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期和时间"><span class="nav-number">2.0.3.</span> <span class="nav-text">日期和时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数学运算"><span class="nav-number">2.0.4.</span> <span class="nav-text">数学运算</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#存储"><span class="nav-number">3.</span> <span class="nav-text">存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-系统互动"><span class="nav-number">4.</span> <span class="nav-text">0x02 系统互动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Python运行控制"><span class="nav-number">4.0.1.</span> <span class="nav-text">Python运行控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作系统"><span class="nav-number">4.0.2.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程与线程"><span class="nav-number">4.0.3.</span> <span class="nav-text">进程与线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络编程"><span class="nav-number">5.</span> <span class="nav-text">网络编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基于socket层的网络应用"><span class="nav-number">5.0.1.</span> <span class="nav-text">基于socket层的网络应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#互联网应用"><span class="nav-number">5.0.2.</span> <span class="nav-text">互联网应用</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Node.js,fs模块,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 fsjavascript 内置的 fs 模块就是文件系统模块，用于操作文件。不同于 Node.js 其它模块，fs 支持同步和异步操作。  0x01 查询文件信息 fs.stat()fs.stat(path, callback) 用于查询文件的大小、创建时间、权限等相关信息。 fs.stat() 是异步方法，还有一个同步方法 fs.statSync(path) 。示例如下： 123fs.">
+<meta name="keywords" content="Node.js,fs模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fs模块(1)基本文件操作">
+<meta property="og:url" content="http://yoursite.com/2016/12/23/fs模块(1)基本文件操作/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 fsjavascript 内置的 fs 模块就是文件系统模块，用于操作文件。不同于 Node.js 其它模块，fs 支持同步和异步操作。  0x01 查询文件信息 fs.stat()fs.stat(path, callback) 用于查询文件的大小、创建时间、权限等相关信息。 fs.stat() 是异步方法，还有一个同步方法 fs.statSync(path) 。示例如下： 123fs.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fs模块(1)基本文件操作">
+<meta name="twitter:description" content="0x00 fsjavascript 内置的 fs 模块就是文件系统模块，用于操作文件。不同于 Node.js 其它模块，fs 支持同步和异步操作。  0x01 查询文件信息 fs.stat()fs.stat(path, callback) 用于查询文件的大小、创建时间、权限等相关信息。 fs.stat() 是异步方法，还有一个同步方法 fs.statSync(path) 。示例如下： 123fs.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/23/fs模块(1)基本文件操作/">
+
+
+
+
+
+  <title>fs模块(1)基本文件操作 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/fs模块(1)基本文件操作/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">fs模块(1)基本文件操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-23T22:45:00+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-fs"><a href="#0x00-fs" class="headerlink" title="0x00 fs"></a>0x00 fs</h3><p>javascript 内置的 <code>fs</code> 模块就是文件系统模块，用于操作文件。不同于 Node.js 其它模块，<code>fs</code> 支持同步和异步操作。</p>
+<hr>
+<h3 id="0x01-查询文件信息-fs-stat"><a href="#0x01-查询文件信息-fs-stat" class="headerlink" title="0x01 查询文件信息 fs.stat()"></a>0x01 查询文件信息 fs.stat()</h3><p><code>fs.stat(path, callback)</code> 用于查询文件的大小、创建时间、权限等相关信息。 <code>fs.stat()</code> 是异步方法，还有一个同步方法 <code>fs.statSync(path)</code> 。示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs.stat(&apos;sample.txt&apos;, function (err, stats) &#123;</span><br><span class="line">        console.log(stats)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123; dev: 438983934,</span><br><span class="line">  mode: 33206,</span><br><span class="line">  nlink: 1,</span><br><span class="line">  uid: 0,</span><br><span class="line">  gid: 0,</span><br><span class="line">  rdev: 0,</span><br><span class="line">  blksize: undefined,</span><br><span class="line">  ino: 1125899906928368,</span><br><span class="line">  size: 272,</span><br><span class="line">  blocks: undefined,</span><br><span class="line">  atime: 2016-12-23T14:47:12.378Z,</span><br><span class="line">  mtime: 2016-12-23T14:47:12.380Z,</span><br><span class="line">  ctime: 2016-12-23T14:47:12.407Z,</span><br><span class="line">  birthtime: 2016-12-23T14:46:59.200Z &#125;</span><br></pre></td></tr></table></figure>
+<p>执行 <code>fs.stat()</code> 后会返回一个 <code>stats</code> 对象给回调函数，通过 <code>stats</code> 对象的属性和方法可以判断文件类型:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs.stat(&apos;sample.txt&apos;, function (err, stats) &#123;</span><br><span class="line">        console.log(stats.isFile())</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="stats-对象中的方法"><a href="#stats-对象中的方法" class="headerlink" title="stats 对象中的方法"></a>stats 对象中的方法</h4><ul>
+<li>stats.isFile()</li>
+<li>stats.isDirectory()</li>
+<li>stats.isBlockDevice() 如果hi块设备，返回 true</li>
+<li>stats.isCharacterDevice() 如果是字符设备，返回 true</li>
+<li>stats.isSymbolicLink() 如果是符号链接(软连接，快捷方式)，返回 true</li>
+<li>stats.isFIFO()</li>
+<li>stats.isSocket()</li>
+</ul>
+<hr>
+<h3 id="0x02-打开文件-fs-open"><a href="#0x02-打开文件-fs-open" class="headerlink" title="0x02 打开文件 fs.open()"></a>0x02 打开文件 fs.open()</h3><p>标准的文件操作流程是先选择目标进行 <code>fs.open()</code> 操作，然后再对其进行读写访问。</p>
+<p><code>fs.open(path, flags[, mode], callback)</code></p>
+<p><code>fs.open()</code> 方法第一个参数是文件路径。第二个参数是标志位，标志位表示文件的打开模式。标志含义与 UNIX中 <code>open</code> 的标识位相同：</p>
+<ul>
+<li><code>r</code>:以只读方式打开文件，数据流的初始位置在文件开始  </li>
+<li><code>r+</code>:以可读写方式打开文件，数据流的初始位置在文件开始  </li>
+<li><code>w</code>:如果文件存在，则将文件长度清0，即该文件内容会丢失。如果不存在，则尝试创建它。数据流的初始位置在文件开始  </li>
+<li><code>w+</code>以可读写方式打开文件，如果文件不存在，则尝试创建它。如果文件存在，则将文件长度清0，即该文件内容会丢失。数据流的初始位置在文件开始  </li>
+<li><code>a</code>:以只写方式打开文件，如果文件不存在，则尝试创建它，数据流的初始位置在文件末尾，随后的每次写操作都会将数据追加到文件后面。  </li>
+<li><code>a+</code>:以可读写方式打开文件，如果文件不存在，则尝试创建它，数据流的初始位置在文件末尾，随后的每次写操作都会将数据追加到文件后面。</li>
+</ul>
+<hr>
+<h3 id="0x03-读取文件数据-fs-read"><a href="#0x03-读取文件数据-fs-read" class="headerlink" title="0x03 读取文件数据 fs.read()"></a>0x03 读取文件数据 fs.read()</h3><p><code>fs.read(fd, buffer, offset, length, position, callback)</code></p>
+<p>文件打开后，就可以使用 <code>fs.read()</code> 方法进行读取，读取前需要创建一个用于保存文件数据的缓冲区。缓冲区数据最终会被传递到回调函数中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by onejustone on 2016/12/23.</span><br><span class="line"> */</span><br><span class="line">&apos;use strict&apos;;</span><br><span class="line"> </span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">// 导入 fs 模块</span><br><span class="line"></span><br><span class="line">fs.open(&apos;sample.txt&apos;,&apos;r&apos;,function (err, fd) &#123;</span><br><span class="line">    // 打开文件</span><br><span class="line">    if(err)&#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        var readBuffer = new Buffer(102),</span><br><span class="line">            // 创建保存数据的缓冲区 readBuffer</span><br><span class="line">            offset = 0,</span><br><span class="line">            // 读取文件的偏移量</span><br><span class="line">            len = readBuffer.length,</span><br><span class="line">            // 读取文件的长度</span><br><span class="line">            filePosition = 100;</span><br><span class="line">            // 读取文件的起始位置</span><br><span class="line">        fs.read(fd, readBuffer, offset, len, filePosition, function (err, dataBuffer) &#123;</span><br><span class="line">            // 开始读取文件数据(二进制内容)</span><br><span class="line">            if (err)&#123;</span><br><span class="line">                console.log(err)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                console.log(readBuffer)</span><br><span class="line">                // 直接以二进制形式输出内容</span><br><span class="line">                console.log(&apos;获取得数据:&apos;+&apos; &apos;+readBuffer)</span><br><span class="line">                // 以人类可读的形式输出内容</span><br><span class="line">                console.log(&apos;读取的总字节数:&apos; +&apos; &apos;+ dataBuffer + &apos;bytes&apos;);</span><br><span class="line">                // 获得总的数据长度</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Buffer ae e7 9a 84 20 60 61...&gt;</span><br><span class="line">获取得数据: 的 `fs` 模块就是文件系统模块，用于操作文件。不同于 Node.js 其它模块，`fs` </span><br><span class="line">读取的总字节数: 102bytes</span><br></pre></td></tr></table></figure>
+<p>如上，文件 <code>open</code> 以后会从第 100 个字节开始，读取其后的 102 个字节的数据。读取完成后，<code>fs.read()</code> 会回调最后一个回调方法，然后就可以可以处理读取到的的缓冲的数据了。</p>
+<p><code>fs.openSync()</code> 是 <code>fs.open()</code> 方法的同步版本。</p>
+<hr>
+<h3 id="0x04-写入文件数据-fs-write"><a href="#0x04-写入文件数据-fs-write" class="headerlink" title="0x04 写入文件数据 fs.write()"></a>0x04 写入文件数据 fs.write()</h3><p><code>fs.write(fd, buffer, offset, length[, position], callback)</code>  </p>
+<p>文件打开后，可以通过 <code>fs.write()</code> 方法传递一个数据缓冲区，以向打开的文件中写入数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by onejustone on 2016/12/23.</span><br><span class="line"> */</span><br><span class="line">&apos;use strict&apos;;</span><br><span class="line"> </span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">// 导入 fs 模块</span><br><span class="line"></span><br><span class="line">//写入数据</span><br><span class="line">fs.open(&apos;sample.txt&apos;, &apos;a&apos;, function (err, fd) &#123;</span><br><span class="line">    var writerBuffer = new Buffer(&quot;夜色中静悄悄，----&quot;),</span><br><span class="line">        offset = 0,</span><br><span class="line">        len = writerBuffer.length,</span><br><span class="line">        filePosition = null;</span><br><span class="line"></span><br><span class="line">    fs.write(fd, writerBuffer, offset, len, filePosition, function (err, writeBytes) &#123;</span><br><span class="line">        if(err)&#123;</span><br><span class="line">            console.log(err)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            console.log(&apos;yes, write data successful!&apos;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>fs.writeSync()</code> 是 <code>fs.write()</code> 方法的同步版本。</p>
+<hr>
+<h3 id="0x05-关闭文件"><a href="#0x05-关闭文件" class="headerlink" title="0x05 关闭文件"></a>0x05 关闭文件</h3><p><code>fs.close</code> 用于关闭打开的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fs.open(&apos;sample&apos;,&apos;a+&apos;,function (err, fd) &#123;</span><br><span class="line">    // Do something</span><br><span class="line">    </span><br><span class="line">    // close file</span><br><span class="line">    fs.close(fd, function (err) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x06-目录操作-fs-readdir-fs-mkdir-fs-rmdir"><a href="#0x06-目录操作-fs-readdir-fs-mkdir-fs-rmdir" class="headerlink" title="0x06 目录操作 fs.readdir(),fs.mkdir(),fs.rmdir()"></a>0x06 目录操作 fs.readdir(),fs.mkdir(),fs.rmdir()</h3><p><code>fs</code> 模块对目录的操作主要有：<code>fs.readdir()</code>，读取文件夹下所有文件名。<code>fs.mkdir()</code>，创建目录。<code>fs.rmdir()</code>，删除目录。</p>
+<p><code>fs.readdir(path, callback)</code><br><code>fs.mkdir(path[, mode], callback)</code><br><code>fs.rmdir(path, callback)</code>   </p>
+<p><code>fs.mkdir()</code> 创建目录时有第二个可选参数用于指定目录权限，不指定是权限为 <code>0777</code>。这三个方法都有 <code>sync</code> 同步方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// 目录操作</span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">// 导入 fs 模块</span><br><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line">// 导入 path 模块</span><br><span class="line">// 读取目标文件内容</span><br><span class="line">fs.readdir(&apos;./&apos;, function (err, files) &#123;</span><br><span class="line">    if(err)&#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">       console.log(files)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 创建目录</span><br><span class="line">fs.mkdir(path.join(__dirname, &apos;./test&apos;), function (err) &#123;</span><br><span class="line">    if(err)&#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(&apos;make dir successful!&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 删除目录</span><br><span class="line">fs.rmdir(path.join(__dirname, &apos;./test&apos;), function (err) &#123;</span><br><span class="line">    if(err)&#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else&#123;</span><br><span class="line">        console.log(&apos;remove successful!&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x07-异步读取-封装的-fs-readFile"><a href="#0x07-异步读取-封装的-fs-readFile" class="headerlink" title="0x07 异步读取 封装的 fs.readFile()"></a>0x07 异步读取 封装的 fs.readFile()</h3><hr>
+<h4 id="异步读取文本文件"><a href="#异步读取文本文件" class="headerlink" title="异步读取文本文件"></a>异步读取文本文件</h4><p>Node.js 异步读取文本文件的代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by onejustone on 2016/12/23.</span><br><span class="line"> */</span><br><span class="line">&apos;use strict&apos;;</span><br><span class="line"> </span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">// 导入 fs 模块</span><br><span class="line"></span><br><span class="line">fs.readFile(&apos;sample.txt&apos;, &apos;utf-8&apos;, function (err, data) &#123;</span><br><span class="line">    if (err)&#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>异步读取时，传入的回调函数接收两个参数，当正常读取时，<code>err</code> 参数为 <code>null</code>，<code>data</code> 参数为读取到的 <code>String</code> 。当读取发生错误时，<code>err</code> 参数代表一个错误对象，<code>data</code> 为 <code>undefined</code>。</p>
+<p>这也是Node.js标准的回调函数：第一个参数代表错误信息，第二个参数代表结果。</p>
+<hr>
+<h4 id="异步读取二进制文件"><a href="#异步读取二进制文件" class="headerlink" title="异步读取二进制文件"></a>异步读取二进制文件</h4><p>使用 Node.js 读取二进制文件，比如一张图片:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(&apos;1.jpg&apos;, function (err, data) &#123;</span><br><span class="line">    if (err) &#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(data)</span><br><span class="line">        console.log(data.length + &apos;bytes&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>当读取二进制文件时，不传入文件编码时，回调函数的data参数将返回一个<code>Buffer</code> 对象。在 Node.js 中，<code>Buffer</code> 对象就是一个包含零个或任意个字节的数组（注意和Array不同）。 </p>
+<p><code>Buffer</code> 对象和 <code>String</code> 可以互换:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Buffer -&gt; String</span><br><span class="line">vat text = data.toString(&quot;utf-8&quot;)</span><br><span class="line"></span><br><span class="line">// String -&gt; Buffer</span><br><span class="line">var buf = new Buffer(text, &quot;utf-8&quot;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="同步读取文件-fs-readFileSync"><a href="#同步读取文件-fs-readFileSync" class="headerlink" title="同步读取文件 fs.readFileSync()"></a>同步读取文件 fs.readFileSync()</h4><p><code>fs</code> 模块中使用 <code>readFileSync</code> 来同步读取文本文件，该方法不接收回调函数，函数直接返回结果。</p>
+<p>用 <code>fs</code> 模块同步读取一个文本文件的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"> </span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">// 导入 fs 模块</span><br><span class="line"></span><br><span class="line">//同步文件操作</span><br><span class="line">//同步读取文本文件</span><br><span class="line">var  data = fs.readFileSync(&apos;sample.txt&apos;,&apos;utf-8&apos;)</span><br><span class="line">console.log(data)</span><br></pre></td></tr></table></figure>
+<p>如果同步读取文件发生错误，则需要用 <code>try...catch</code> 捕获该错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    var data = fs.readFileSync(&apos;sample.txt&apos;, &apos;utf-8&apos;)</span><br><span class="line">    console.log(data)</span><br><span class="line">&#125; catch (err) &#123;</span><br><span class="line">    console.log(&apos;something error&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x08-异步写文件-封装的-fs-writeFile"><a href="#0x08-异步写文件-封装的-fs-writeFile" class="headerlink" title="0x08 异步写文件 封装的 fs.writeFile()"></a>0x08 异步写文件 封装的 fs.writeFile()</h3><p>Node.js 中的 <code>fs</code> 模块通过 <code>fs.writeFile()</code> 来实现异步写文件。</p>
+<p>语法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.writeFile(filename, data, [options], [callback(err)])</span><br></pre></td></tr></table></figure>
+<p>使用 <code>fs.writeFile()</code> 写入数据到文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">var data = &apos;忧郁的一片天，飘零的一片叶&apos;</span><br><span class="line"></span><br><span class="line">fs.writeFile(&apos;sample.txt&apos;, data, function (err) &#123;</span><br><span class="line">    if (err)&#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(&apos;yes&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>和 <code>fs.readFile()</code> 类似，<code>fs.writeFile()</code> 也有一个同步方法，叫 <code>fs.writeFileSync()</code>。</p>
+<hr>
+<h3 id="0x08-文件，目录的重名-移动-与删除"><a href="#0x08-文件，目录的重名-移动-与删除" class="headerlink" title="0x08 文件，目录的重名(移动)与删除"></a>0x08 文件，目录的重名(移动)与删除</h3><hr>
+<h4 id="fs-rename-文件-目录的命名-移动"><a href="#fs-rename-文件-目录的命名-移动" class="headerlink" title="fs.rename() 文件,目录的命名(移动)"></a>fs.rename() 文件,目录的命名(移动)</h4><p><code>fs.rename(oldPath, newPath, callback)</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">// 重命名文件</span><br><span class="line">fs.rename(&apos;sample.txt&apos;,&apos;title.txt&apos;,function (err) &#123;</span><br><span class="line">    if (err)&#123;console.log(err)&#125;</span><br><span class="line">    console.log(&quot;yes&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 移动并重命名文件</span><br><span class="line">fs.rename(&apos;title.txt&apos;,&apos;./ES6/new_sample.txt&apos;,function (err) &#123;</span><br><span class="line">    if (err)&#123;console.log(err)&#125;</span><br><span class="line">    console.log(&quot;yes&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="fs-unlink-删除文件"><a href="#fs-unlink-删除文件" class="headerlink" title="fs.unlink() 删除文件"></a>fs.unlink() 删除文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;)</span><br><span class="line">let file = &apos;out.txt&apos;</span><br><span class="line">fs.unlink(file,function (err) &#123;</span><br><span class="line">    if(err)&#123;console.log(err)&#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        console.log(&apos;yes delete!&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="fs-rmdir-删除目录"><a href="#fs-rmdir-删除目录" class="headerlink" title="fs.rmdir() 删除目录"></a>fs.rmdir() 删除目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s.rmdir(&apos;newDirectory&apos;,function (err) &#123;</span><br><span class="line">    if(err)&#123;console.log(err)&#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        console.log(&apos;yes delete!&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/fs模块/" rel="tag"># fs模块</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/23/模块(1)模块初识/" rel="next" title="模块(1)模块初识">
+                <i class="fa fa-chevron-left"></i> 模块(1)模块初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/24/fs模块(2)两种文件操作方式比较/" rel="prev" title="fs模块(2)两种文件操作方式比较">
+                fs模块(2)两种文件操作方式比较 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-fs"><span class="nav-number">1.</span> <span class="nav-text">0x00 fs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-查询文件信息-fs-stat"><span class="nav-number">2.</span> <span class="nav-text">0x01 查询文件信息 fs.stat()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stats-对象中的方法"><span class="nav-number">2.1.</span> <span class="nav-text">stats 对象中的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-打开文件-fs-open"><span class="nav-number">3.</span> <span class="nav-text">0x02 打开文件 fs.open()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-读取文件数据-fs-read"><span class="nav-number">4.</span> <span class="nav-text">0x03 读取文件数据 fs.read()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-写入文件数据-fs-write"><span class="nav-number">5.</span> <span class="nav-text">0x04 写入文件数据 fs.write()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-关闭文件"><span class="nav-number">6.</span> <span class="nav-text">0x05 关闭文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06-目录操作-fs-readdir-fs-mkdir-fs-rmdir"><span class="nav-number">7.</span> <span class="nav-text">0x06 目录操作 fs.readdir(),fs.mkdir(),fs.rmdir()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x07-异步读取-封装的-fs-readFile"><span class="nav-number">8.</span> <span class="nav-text">0x07 异步读取 封装的 fs.readFile()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异步读取文本文件"><span class="nav-number">8.1.</span> <span class="nav-text">异步读取文本文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步读取二进制文件"><span class="nav-number">8.2.</span> <span class="nav-text">异步读取二进制文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步读取文件-fs-readFileSync"><span class="nav-number">8.3.</span> <span class="nav-text">同步读取文件 fs.readFileSync()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x08-异步写文件-封装的-fs-writeFile"><span class="nav-number">9.</span> <span class="nav-text">0x08 异步写文件 封装的 fs.writeFile()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x08-文件，目录的重名-移动-与删除"><span class="nav-number">10.</span> <span class="nav-text">0x08 文件，目录的重名(移动)与删除</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-rename-文件-目录的命名-移动"><span class="nav-number">10.1.</span> <span class="nav-text">fs.rename() 文件,目录的命名(移动)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-unlink-删除文件"><span class="nav-number">10.2.</span> <span class="nav-text">fs.unlink() 删除文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-rmdir-删除目录"><span class="nav-number">10.3.</span> <span class="nav-text">fs.rmdir() 删除目录</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

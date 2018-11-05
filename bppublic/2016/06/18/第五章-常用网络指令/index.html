@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="鸟哥服务器篇读书笔记,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ifconfig:查询，设置网卡与ip相关参数默认不加参数表示观察所有网络接口12345678910root@jack:~# ifconfigeth0      Link encap:Ethernet  HWaddr 3c:97:0e:80:50:72  lo        Link encap:Local Loopback            inet addr:127.0.0.1  Mask">
+<meta name="keywords" content="鸟哥服务器篇读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用网络指令">
+<meta property="og:url" content="http://yoursite.com/2016/06/18/第五章-常用网络指令/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="ifconfig:查询，设置网卡与ip相关参数默认不加参数表示观察所有网络接口12345678910root@jack:~# ifconfigeth0      Link encap:Ethernet  HWaddr 3c:97:0e:80:50:72  lo        Link encap:Local Loopback            inet addr:127.0.0.1  Mask">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.837Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用网络指令">
+<meta name="twitter:description" content="ifconfig:查询，设置网卡与ip相关参数默认不加参数表示观察所有网络接口12345678910root@jack:~# ifconfigeth0      Link encap:Ethernet  HWaddr 3c:97:0e:80:50:72  lo        Link encap:Local Loopback            inet addr:127.0.0.1  Mask">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/18/第五章-常用网络指令/">
+
+
+
+
+
+  <title>常用网络指令 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/18/第五章-常用网络指令/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">常用网络指令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-18T00:00:00+08:00">
+                2016-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="ifconfig-查询，设置网卡与ip相关参数"><a href="#ifconfig-查询，设置网卡与ip相关参数" class="headerlink" title="ifconfig:查询，设置网卡与ip相关参数"></a>ifconfig:查询，设置网卡与ip相关参数</h4><h5 id="默认不加参数表示观察所有网络接口"><a href="#默认不加参数表示观察所有网络接口" class="headerlink" title="默认不加参数表示观察所有网络接口"></a>默认不加参数表示观察所有网络接口</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 3c:97:0e:80:50:72  </span><br><span class="line">lo        Link encap:Local Loopback  </span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">wlan0     Link encap:Ethernet  HWaddr 54:16:71:a6:a8:39  </span><br><span class="line">          inet addr:100.320.140.34  Bcast:442.230.310.315 Mask:255.255.255.240</span><br><span class="line">          inet6 addr: fe80::a617:31ff:fef6:d859/64 Scope:Lin</span><br><span class="line">          RX bytes:2318382 (2.2 MiB)  TX bytes:1054948 (1.0 MiB)</span><br></pre></td></tr></table></figure>
+<h5 id="给予eth0一个IP："><a href="#给予eth0一个IP：" class="headerlink" title="给予eth0一个IP："></a>给予eth0一个IP：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ifconfig eth0 192.168.1.23</span><br><span class="line">#如不加其他参数，系统会自动依照该IP所在class范围计算出netmask和network，#broadcast等参数</span><br></pre></td></tr></table></figure>
+<h5 id="添加上其他的参数同时设定MTU的值"><a href="#添加上其他的参数同时设定MTU的值" class="headerlink" title="添加上其他的参数同时设定MTU的值"></a>添加上其他的参数同时设定MTU的值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ifconfig eth0 192.168.1.23\</span><br><span class="line">&gt; netmask 255.255.255.0 mtu 8000</span><br></pre></td></tr></table></figure>
+<h5 id="在一张网卡上设置多个ip"><a href="#在一张网卡上设置多个ip" class="headerlink" title="在一张网卡上设置多个ip"></a>在一张网卡上设置多个ip</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ifconfig eth0:0 192.168.0.193</span><br></pre></td></tr></table></figure>
+<h5 id="启动关闭网卡"><a href="#启动关闭网卡" class="headerlink" title="启动关闭网卡"></a>启动关闭网卡</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ifconfig eth0/wlan0  down/up</span><br></pre></td></tr></table></figure>
+<h5 id="恢复系统默认配置，重启网络"><a href="#恢复系统默认配置，重启网络" class="headerlink" title="恢复系统默认配置，重启网络"></a>恢复系统默认配置，重启网络</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# /etc/init.d/network restart</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="路由修改-route"><a href="#路由修改-route" class="headerlink" title="路由修改 route"></a>路由修改 route</h4><h5 id="单纯的观察路由"><a href="#单纯的观察路由" class="headerlink" title="单纯的观察路由"></a>单纯的观察路由</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         172.20.10.1     0.0.0.0         UG    1024   0        0 wlan0</span><br><span class="line">172.20.10.0     0.0.0.0         255.255.255.240 U     0      0        0 wlan0</span><br></pre></td></tr></table></figure>
+<p>Destination, Genmask：这两个就是分别是 network 与netmask<br>Gateway：该网域是通过哪个 gateway 连接出去的<br>Flags：总共有多个旗标，代表的意义如下：<br>U(route is up):该路由是启动的<br>G(use gateway):需要通过外部的主机(gateway)来传递封包</p>
+<h5 id="增加一个路由"><a href="#增加一个路由" class="headerlink" title="增加一个路由"></a>增加一个路由</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# route add -net 192.168.100.1\</span><br><span class="line">&gt; netmask 255.255.255.0 dev eth0</span><br></pre></td></tr></table></figure>
+<h5 id="删除一个路由"><a href="#删除一个路由" class="headerlink" title="删除一个路由"></a>删除一个路由</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# route del -net 192.168.100.1\</span><br><span class="line">&gt; netmask 255.255.255.0 dev eth0</span><br></pre></td></tr></table></figure>
+<h5 id="增加一个默认路由"><a href="#增加一个默认路由" class="headerlink" title="增加一个默认路由"></a>增加一个默认路由</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# route add default gw 192.158.1.250</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="网络参数综合指令-ip"><a href="#网络参数综合指令-ip" class="headerlink" title="网络参数综合指令 ip"></a>网络参数综合指令 ip</h4><p>ip只能在功能上可以说是ifconfig，ifup，ifdown，route的众合指令集，Ip指令后续在了解。<br>pass</p>
+<hr>
+<h4 id="无线网络-iwlist-wiconfig"><a href="#无线网络-iwlist-wiconfig" class="headerlink" title="无线网络 iwlist,wiconfig"></a>无线网络 iwlist,wiconfig</h4><ul>
+<li><p><strong>iwlist:</strong> 利用无线网卡进行无线 AP 的探测与取得相关的数据</p>
+</li>
+<li><p><strong>iwconfig:</strong> 设定无线网卡的相关参数</p>
+</li>
+</ul>
+<hr>
+<h4 id="使用DHCP获得Ip-dhclient"><a href="#使用DHCP获得Ip-dhclient" class="headerlink" title="使用DHCP获得Ip:dhclient"></a>使用DHCP获得Ip:dhclient</h4><p>如果我们的IP是局域网内通过DHCP服务器自动分配的，那么可以直接使用dhclient命令，为网卡取得ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dhclient eth0</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x01-网络排查指令"><a href="#0x01-网络排查指令" class="headerlink" title="0x01 网络排查指令"></a>0x01 网络排查指令</h3><hr>
+<h4 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h4><p>ping主要用来探测两个主机之间的连接状态。</p>
+<h5 id="每间隔1秒发送三个包检查百度主机是否存在"><a href="#每间隔1秒发送三个包检查百度主机是否存在" class="headerlink" title="每间隔1秒发送三个包检查百度主机是否存在"></a>每间隔1秒发送三个包检查百度主机是否存在</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ping -W1 -c3 www.baidu.com</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h4><p>追踪两部主机之间通过的各个节点 (node) 通讯状况。</p>
+<h5 id="使用tcp协议侦测本机到-yahoo-去的各节点联机状态"><a href="#使用tcp协议侦测本机到-yahoo-去的各节点联机状态" class="headerlink" title="使用tcp协议侦测本机到 yahoo 去的各节点联机状态"></a>使用tcp协议侦测本机到 yahoo 去的各节点联机状态</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# traceroute -w 1 -n -T tw.yahoo.com</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="netstat-查看本机网络端口"><a href="#netstat-查看本机网络端口" class="headerlink" title="netstat 查看本机网络端口"></a>netstat 查看本机网络端口</h4><h5 id="列出目前已经启动的网络服务"><a href="#列出目前已经启动的网络服务" class="headerlink" title="列出目前已经启动的网络服务"></a>列出目前已经启动的网络服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# netstat - tulnp</span><br></pre></td></tr></table></figure>
+<h5 id="检查本机的80端口是否监听"><a href="#检查本机的80端口是否监听" class="headerlink" title="检查本机的80端口是否监听"></a>检查本机的80端口是否监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# netstat  -l localhost:80</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="host"><a href="#host" class="headerlink" title="host"></a>host</h4><h5 id="查询某个主机名对应的IP"><a href="#查询某个主机名对应的IP" class="headerlink" title="查询某个主机名对应的IP"></a>查询某个主机名对应的IP</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# host www.baidu.com</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h4><p>与host一样的，同时host与nslooup都可以使用dig命令来代替了</p>
+<hr>
+<h3 id="0x02-远程连接"><a href="#0x02-远程连接" class="headerlink" title="0x02 远程连接"></a>0x02 远程连接</h3><hr>
+<h4 id="telent"><a href="#telent" class="headerlink" title="telent"></a>telent</h4><h5 id="尝试telent-baidu-com"><a href="#尝试telent-baidu-com" class="headerlink" title="尝试telent baidu.com"></a>尝试telent baidu.com</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# telent www.baidu.com 80</span><br></pre></td></tr></table></figure>
+<h5 id="使用telent检查本机端口是否正常开启"><a href="#使用telent检查本机端口是否正常开启" class="headerlink" title="使用telent检查本机端口是否正常开启"></a>使用telent检查本机端口是否正常开启</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# telent localhost:80</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-文字接口网页浏览器"><a href="#0x03-文字接口网页浏览器" class="headerlink" title="0x03 文字接口网页浏览器"></a>0x03 文字接口网页浏览器</h3><hr>
+<h4 id="links-文字接口浏览器"><a href="#links-文字接口浏览器" class="headerlink" title="links:文字接口浏览器"></a>links:文字接口浏览器</h4><h5 id="links查看本机上的html文件"><a href="#links查看本机上的html文件" class="headerlink" title="links查看本机上的html文件"></a>links查看本机上的html文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# links /usr/doc/html/index.html</span><br></pre></td></tr></table></figure>
+<p>通过links+dump参数将sina.com的网页内容整个抓取下来存储</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# links -dump http://sina.com &gt; sina.html</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="wget-文字接口下载器"><a href="#wget-文字接口下载器" class="headerlink" title="wget:文字接口下载器"></a>wget:文字接口下载器</h4><h5 id="wget网页数据的取得"><a href="#wget网页数据的取得" class="headerlink" title="wget网页数据的取得"></a>wget网页数据的取得</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# wget 网站网址</span><br></pre></td></tr></table></figure>
+<p>wget不必透过浏览器，只要知道网址后，立即可以进行档案的下载， 又快速又方便，还可以透过 proxy 来下载，透过修改 /etc/wgetrc 来设定你的代理服务器：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# vim /etc/wgetrc</span><br><span class="line"># You can set the default proxies for Wget to use for http, https, and ftp.</span><br><span class="line"># They will override the value in the environment.</span><br><span class="line">#https_proxy = http://proxy.yoyodyne.com:18023/</span><br><span class="line">#http_proxy = http://proxy.yoyodyne.com:18023/</span><br><span class="line">#ftp_proxy = http://proxy.yoyodyne.com:18023/</span><br><span class="line"># If you do not want to use proxy at all, set this to off.</span><br><span class="line">#use_proxy = on</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="0x04-特殊工具"><a href="#0x04-特殊工具" class="headerlink" title="0x04 特殊工具"></a>0x04 特殊工具</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/鸟哥服务器篇读书笔记/" rel="tag"># 鸟哥服务器篇读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/15/非加密类型协议分析/" rel="next" title="非加密类型协议分析">
+                <i class="fa fa-chevron-left"></i> 非加密类型协议分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/22/函数防抖和函数节流/" rel="prev" title="函数防抖和函数节流">
+                函数防抖和函数节流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ifconfig-查询，设置网卡与ip相关参数"><span class="nav-number">1.</span> <span class="nav-text">ifconfig:查询，设置网卡与ip相关参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#默认不加参数表示观察所有网络接口"><span class="nav-number">1.1.</span> <span class="nav-text">默认不加参数表示观察所有网络接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#给予eth0一个IP："><span class="nav-number">1.2.</span> <span class="nav-text">给予eth0一个IP：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加上其他的参数同时设定MTU的值"><span class="nav-number">1.3.</span> <span class="nav-text">添加上其他的参数同时设定MTU的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在一张网卡上设置多个ip"><span class="nav-number">1.4.</span> <span class="nav-text">在一张网卡上设置多个ip</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#启动关闭网卡"><span class="nav-number">1.5.</span> <span class="nav-text">启动关闭网卡</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#恢复系统默认配置，重启网络"><span class="nav-number">1.6.</span> <span class="nav-text">恢复系统默认配置，重启网络</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路由修改-route"><span class="nav-number">2.</span> <span class="nav-text">路由修改 route</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#单纯的观察路由"><span class="nav-number">2.1.</span> <span class="nav-text">单纯的观察路由</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#增加一个路由"><span class="nav-number">2.2.</span> <span class="nav-text">增加一个路由</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除一个路由"><span class="nav-number">2.3.</span> <span class="nav-text">删除一个路由</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#增加一个默认路由"><span class="nav-number">2.4.</span> <span class="nav-text">增加一个默认路由</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络参数综合指令-ip"><span class="nav-number">3.</span> <span class="nav-text">网络参数综合指令 ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无线网络-iwlist-wiconfig"><span class="nav-number">4.</span> <span class="nav-text">无线网络 iwlist,wiconfig</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用DHCP获得Ip-dhclient"><span class="nav-number">5.</span> <span class="nav-text">使用DHCP获得Ip:dhclient</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-网络排查指令"><span class="nav-number"></span> <span class="nav-text">0x01 网络排查指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ping"><span class="nav-number">1.</span> <span class="nav-text">ping</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#每间隔1秒发送三个包检查百度主机是否存在"><span class="nav-number">1.1.</span> <span class="nav-text">每间隔1秒发送三个包检查百度主机是否存在</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#traceroute"><span class="nav-number">2.</span> <span class="nav-text">traceroute</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用tcp协议侦测本机到-yahoo-去的各节点联机状态"><span class="nav-number">2.1.</span> <span class="nav-text">使用tcp协议侦测本机到 yahoo 去的各节点联机状态</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#netstat-查看本机网络端口"><span class="nav-number">3.</span> <span class="nav-text">netstat 查看本机网络端口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#列出目前已经启动的网络服务"><span class="nav-number">3.1.</span> <span class="nav-text">列出目前已经启动的网络服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#检查本机的80端口是否监听"><span class="nav-number">3.2.</span> <span class="nav-text">检查本机的80端口是否监听</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#host"><span class="nav-number">4.</span> <span class="nav-text">host</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查询某个主机名对应的IP"><span class="nav-number">4.1.</span> <span class="nav-text">查询某个主机名对应的IP</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nslookup"><span class="nav-number">5.</span> <span class="nav-text">nslookup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-远程连接"><span class="nav-number"></span> <span class="nav-text">0x02 远程连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#telent"><span class="nav-number">1.</span> <span class="nav-text">telent</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#尝试telent-baidu-com"><span class="nav-number">1.1.</span> <span class="nav-text">尝试telent baidu.com</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用telent检查本机端口是否正常开启"><span class="nav-number">1.2.</span> <span class="nav-text">使用telent检查本机端口是否正常开启</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-文字接口网页浏览器"><span class="nav-number"></span> <span class="nav-text">0x03 文字接口网页浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#links-文字接口浏览器"><span class="nav-number">1.</span> <span class="nav-text">links:文字接口浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#links查看本机上的html文件"><span class="nav-number">1.1.</span> <span class="nav-text">links查看本机上的html文件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wget-文字接口下载器"><span class="nav-number">2.</span> <span class="nav-text">wget:文字接口下载器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#wget网页数据的取得"><span class="nav-number">2.1.</span> <span class="nav-text">wget网页数据的取得</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-特殊工具"><span class="nav-number">3.</span> <span class="nav-text">0x04 特殊工具</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

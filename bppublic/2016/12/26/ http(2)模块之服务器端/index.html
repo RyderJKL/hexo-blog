@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Node.js,http模块,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 http 模块通过 Node.js  的 http 模块中的 http.createServer 方法我们可以很轻松的创建出一个 http 服务器或者使用 http.request 方法创建出一个 http 客户端。 Node 对 HTTP 协议及其相关的 API 的封装是比较底层的其仅能处理流和消息，对于消息的处理，也仅解析成报文头和报文体，但是不解析实际的报文头和报文体内容。如此使得">
+<meta name="keywords" content="Node.js,http模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http模块(2)之服务器端">
+<meta property="og:url" content="http://yoursite.com/2016/12/26/ http(2)模块之服务器端/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 http 模块通过 Node.js  的 http 模块中的 http.createServer 方法我们可以很轻松的创建出一个 http 服务器或者使用 http.request 方法创建出一个 http 客户端。 Node 对 HTTP 协议及其相关的 API 的封装是比较底层的其仅能处理流和消息，对于消息的处理，也仅解析成报文头和报文体，但是不解析实际的报文头和报文体内容。如此使得">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.883Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="http模块(2)之服务器端">
+<meta name="twitter:description" content="0x00 http 模块通过 Node.js  的 http 模块中的 http.createServer 方法我们可以很轻松的创建出一个 http 服务器或者使用 http.request 方法创建出一个 http 客户端。 Node 对 HTTP 协议及其相关的 API 的封装是比较底层的其仅能处理流和消息，对于消息的处理，也仅解析成报文头和报文体，但是不解析实际的报文头和报文体内容。如此使得">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/26/ http(2)模块之服务器端/">
+
+
+
+
+
+  <title>http模块(2)之服务器端 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/26/ http(2)模块之服务器端/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">http模块(2)之服务器端</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-26T14:45:00+08:00">
+                2016-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-http-模块"><a href="#0x00-http-模块" class="headerlink" title="0x00 http 模块"></a>0x00 http 模块</h3><p>通过 Node.js  的 <code>http</code> 模块中的 <code>http.createServer</code> 方法我们可以很轻松的创建出一个 <code>http</code> 服务器或者使用 <code>http.request</code> 方法创建出一个 <code>http</code> 客户端。 Node 对 HTTP 协议及其相关的 API 的封装是比较底层的其仅能处理流和消息，对于消息的处理，也仅解析成报文头和报文体，但是不解析实际的报文头和报文体内容。如此使得其对 HTTP 的应用更加灵活。</p>
+<hr>
+<h3 id="0x01-http-模块对-HTTP-服务端的支持"><a href="#0x01-http-模块对-HTTP-服务端的支持" class="headerlink" title="0x01 http 模块对 HTTP 服务端的支持"></a>0x01 http 模块对 HTTP 服务端的支持</h3><p>我们需要通过一个 <code>http.Server</code> 对象来创建一个 HTTP 服务器。<br>有两种方式可以创建出 <code>http.Server</code> 对象，<code>http.createServer()</code> 或 <code>new http.Server()</code>。</p>
+<hr>
+<h4 id="http-Server-创建-HTTP-服务器"><a href="#http-Server-创建-HTTP-服务器" class="headerlink" title="http.Server() 创建 HTTP 服务器"></a>http.Server() 创建 HTTP 服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line">let http = require(&apos;http&apos;)</span><br><span class="line"></span><br><span class="line">// 创建 server 对象，并通过 server 对象的 request 事件添加事件监听器</span><br><span class="line">let server = new http.Server()</span><br><span class="line">server.on(&apos;request&apos;,function (req, res) &#123;</span><br><span class="line">    res.writeHead(200, &#123;&apos;Content-Type&apos;:&apos;text/html&apos;&#125;)</span><br><span class="line">    res.end(&quot;&lt;h1&gt;hello world!&lt;/h1&gt;&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(8088)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="http-createServer-requestListener-创建-HTTP-服务器"><a href="#http-createServer-requestListener-创建-HTTP-服务器" class="headerlink" title="http.createServer([requestListener]) 创建 HTTP 服务器"></a>http.createServer([requestListener]) 创建 HTTP 服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line">let http = require(&apos;http&apos;)</span><br><span class="line"></span><br><span class="line">// 创建 server 对象，并添加 request 事件监听器</span><br><span class="line">let server = http.createServer(function (request, response) &#123;</span><br><span class="line">    console.log(request.method+&apos;:&apos;+request.url)</span><br><span class="line">    response.writeHead(200, &#123;&apos;Content-Type&apos;:&apos;text/html&apos;&#125;)</span><br><span class="line">    response.end(&apos;&lt;h1&gt;hello world&lt;/h1&gt;&apos;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(8088)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x02-关于-http-Server-对象"><a href="#0x02-关于-http-Server-对象" class="headerlink" title="0x02 关于 http.Server 对象"></a>0x02 关于 http.Server 对象</h3><p><code>http.Server</code> 对象其实是一个事件发射器 <code>EventEmitter</code>。在其事件监听器中也会创建一些对象，如：<code>request</code> 事件会创建http.<code>IncomingMessage</code>和<code>http.ServerResponse</code>。</p>
+<hr>
+<h4 id="http-Server-对象中的事件"><a href="#http-Server-对象中的事件" class="headerlink" title="http.Server 对象中的事件"></a>http.Server 对象中的事件</h4><p>在此只列出来几个常用的事件。</p>
+<h5 id="request-事件"><a href="#request-事件" class="headerlink" title="request 事件"></a>request 事件</h5><p><code>request</code> 事件监听函数为 <code>function (request, response) {}</code>，其接收的两个参数:<code>request</code> 是一个 <code>http.IncomingMessage</code> 实例，而 <code>response</code> 是一个 <code>http.ServerResponse</code> 实例。</p>
+<h5 id="close-事件"><a href="#close-事件" class="headerlink" title="close 事件"></a>close 事件</h5><p>其监听函数格式为 <code>function () { }</code> ，当此服务器关闭时触发。</p>
+<h5 id="clientError-事件"><a href="#clientError-事件" class="headerlink" title="clientError 事件"></a>clientError 事件</h5><p>其监听函数格式为<code>function (exception, socket) { }</code></p>
+<p>当客户端连接触发了一个<code>error</code>事件时，事件会被传送到这里.</p>
+<hr>
+<h4 id="http-Server-对象中的方法"><a href="#http-Server-对象中的方法" class="headerlink" title="http.Server 对象中的方法"></a>http.Server 对象中的方法</h4><h5 id="server-listen-hostname-port-callbakc"><a href="#server-listen-hostname-port-callbakc" class="headerlink" title="server.listen([hostname],port,callbakc)"></a>server.listen([hostname],port,callbakc)</h5><p>调用 <code>http.Server</code> 对象的 <code>server.listen</code> 事件监听方法以后就可以接受客户端的连接了。</p>
+<h5 id="server-close-callback"><a href="#server-close-callback" class="headerlink" title="server.close([callback])"></a>server.close([callback])</h5><p>服务器停止接收新的连接，保持现有连接。当所有连接结束的时候服务器会关闭，并会触发 <code>close</code> 事件。</p>
+<h5 id="server-setTimeout-msecs-callback"><a href="#server-setTimeout-msecs-callback" class="headerlink" title="server.setTimeout(msecs, callback)"></a>server.setTimeout(msecs, callback)</h5><p>设置 <code>Socket</code> 套接字的超时时间，单位 msecs 为秒。如果一个超时发生，那么Server对象上会分发一个<code>timeout</code> 事件，同时将套接字作为参数传递。Server默认超时时间为 2 分钟，如果超时将会销毁 <code>Socket</code>。</p>
+<hr>
+<h4 id="http-Server-对象中的属性"><a href="#http-Server-对象中的属性" class="headerlink" title="http.Server 对象中的属性"></a>http.Server 对象中的属性</h4><h5 id="server-maxHeadersCount"><a href="#server-maxHeadersCount" class="headerlink" title="server.maxHeadersCount"></a>server.maxHeadersCount</h5><p>最大请求头的数量限制，默认 1000。如果设置为 0，则不做任何限制</p>
+<h5 id="server-timeout"><a href="#server-timeout" class="headerlink" title="server.timeout"></a>server.timeout</h5><p><code>Socket</code> 套接字被判断为超时时间，单位为毫秒，默认 12000（2分钟）。设置为 0后，则不受超时限制。</p>
+<hr>
+<h3 id="0x03-http-ServerResponse-对象"><a href="#0x03-http-ServerResponse-对象" class="headerlink" title="0x03 http.ServerResponse 对象"></a>0x03 http.ServerResponse 对象</h3><p><code>http.ServerResponse</code> 是一个由 <code>http.Server</code> 创建的服务器响应对象。在触发<code>request</code>事件后，做事件回调函数的第二个参数传递给回调函数。<code>http.ServerResponse</code> 实现了Writable Stream接口，它同样也是一个 <code>EventEmitter</code>。</p>
+<hr>
+<h4 id="http-ServerResponse-中的事件"><a href="#http-ServerResponse-中的事件" class="headerlink" title="http.ServerResponse 中的事件"></a>http.ServerResponse 中的事件</h4><h5 id="close-事件-1"><a href="#close-事件-1" class="headerlink" title="close 事件"></a>close 事件</h5><p>事件：<code>close</code>，其监听函数格式为 <code>function () { }</code></p>
+<p>在调用 <code>response.end()</code>，或准备 <code>flush</code> 前触发，触发后底层连接结束。</p>
+<h5 id="finish-事件"><a href="#finish-事件" class="headerlink" title="finish 事件"></a>finish 事件</h5><p>事件：<code>finish</code>，其监听函数格式为 <code>function () { }</code></p>
+<p>发送完响应后（服务器响应完成）触发。响应头和响应体最后一段数据离开操作系统，通过网络来传输时被触发，这并不代表客户端已经收到数据。这个事件之后,<code>http.ServerResponse</code> 不会再触发任何事件。</p>
+<hr>
+<h4 id="http-ServerResponse-中的方法"><a href="#http-ServerResponse-中的方法" class="headerlink" title="http.ServerResponse 中的方法"></a>http.ServerResponse 中的方法</h4><h5 id="response-writeContinue"><a href="#response-writeContinue" class="headerlink" title="response.writeContinue()"></a>response.writeContinue()</h5><p>发送HTTP/1.1 100 Continue 消息给客户端，表示请求体可以发送，会触发 <code>http.Server</code> 的<code>checkContinue</code> 事件。</p>
+<h5 id="response-writeHead-statusCode-statusMessage-headers"><a href="#response-writeHead-statusCode-statusMessage-headers" class="headerlink" title="response.writeHead(statusCode[, statusMessage][, headers])"></a>response.writeHead(statusCode[, statusMessage][, headers])</h5><p>向客户端请求发送一个响应头。<code>statusCode</code> 状态码是 3 位数字，如：404。可通过 <code>statusMessage</code> 设置状态消息。最后一个参数 <code>headers</code> 是响应头。</p>
+<p>该方法方法在当前请求中仅能调用一次，而且必须在 <code>response.end()</code> 前调用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let body = &apos;example.com&apos;</span><br><span class="line">response.writeHead(200, &apos;OK&apos;,&#123;</span><br><span class="line">    &apos;Content-Length&apos;:body.length,</span><br><span class="line">    &apos;Content-Type&apos;:&apos;text/plain&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="response-setHeader-name-value"><a href="#response-setHeader-name-value" class="headerlink" title="response.setHeader(name, value)"></a>response.setHeader(name, value)</h5><p>为默认或者已存在的头设置一条单独的头内容。如果这个头已经存在于，将会覆盖原来的内容。如果想设置多个值， 就使用一个相同名字的字符串数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.setHeader(&apos;Content-Type&apos;, &apos;text/html&apos;)</span><br><span class="line">response.setHeader(&apos;Set-Cookie&apos;, [&apos;userName = jack&apos;,&apos;password=123&apos;])</span><br></pre></td></tr></table></figure>
+<h5 id="response-setTimeout-msecs-callback"><a href="#response-setTimeout-msecs-callback" class="headerlink" title="response.setTimeout(msecs, callback)"></a>response.setTimeout(msecs, callback)</h5><p>设置<code>Socket</code>套接字的超时时间，单位 <code>msecs</code> 为秒。如果提供了回调函数，其将会做为响应对象的<code>timeout</code>事件的监听器。</p>
+<h5 id="response-write-chunk-encoding"><a href="#response-write-chunk-encoding" class="headerlink" title="response.write(chunk, [encoding])"></a>response.write(chunk, [encoding])</h5><p>向响应流发送一个数据块。这个方法可能被调用多次，以提供响应体内容。如果调用了这个方法，但还没有调用 <code>response.writeHead()</code>，将会向响应体提供默认的 <code>header</code>。</p>
+<p>参数chunk可以是字符串或者Buffer缓存。</p>
+<h5 id="response-end-data-encoding"><a href="#response-end-data-encoding" class="headerlink" title="response.end([data], [encoding])"></a>response.end([data], [encoding])</h5><p>当所有的响应报头和报文被发送完成时这个方法将信号发送给服务器，服务器会认为这个消息完成了。 每次响应完成之后必须调用该方法。</p>
+<p>如果指定了参数 <code>data</code>，就相当于先调用 <code>response.write(data, encoding)</code> 再调用 <code>response.end()</code>。</p>
+<hr>
+<h4 id="http-ServerResponse-中的属性"><a href="#http-ServerResponse-中的属性" class="headerlink" title="http.ServerResponse 中的属性"></a>http.ServerResponse 中的属性</h4><h5 id="response-statusCode"><a href="#response-statusCode" class="headerlink" title="response.statusCode"></a>response.statusCode</h5><p>当使用默认 <code>header</code> 时（没有显式地调用 <code>response.writeHead()</code> 来修改 <code>header</code>），这个属性决定 <code>header</code> 更新时被传回客户端的HTTP状态码。当响应头已经被发送回客户端，那么这个属性则表示已经被发送出去的状态码。</p>
+<h5 id="response-headersSent"><a href="#response-headersSent" class="headerlink" title="response.headersSent"></a>response.headersSent</h5><p><code>Boolean</code> 值(只读)，如果 <code>headers</code> 发送完毕，则为 <code>true</code>，否则为 <code>false</code>。</p>
+<h5 id="response-sendDate"><a href="#response-sendDate" class="headerlink" title="response.sendDate"></a>response.sendDate</h5><p>默认值为 <code>true</code>。若为 <code>true</code>，当 <code>headers</code> 里没有 <code>Date</code> 值时，自动生成 <code>Date</code> 并发送。只有在测试环境才能禁用，因为HTTP要求响应包含 <code>Date</code> 头。</p>
+<hr>
+<h3 id="0x04-http-IncomingMessage-对象"><a href="#0x04-http-IncomingMessage-对象" class="headerlink" title="0x04 http.IncomingMessage 对象"></a>0x04 http.IncomingMessage 对象</h3><p><code>IncomingMessage</code> 对象是由 <code>http.Server</code> 或 <code>http.ClientRequest</code> 创建的，并作为第一参数分别传递给 <code>http.Server</code>的 <code>request</code> 事件和 <code>http.ClientRequest</code> 的 <code>response</code> 事件。它也可以用来访问应答的状态、头文件和数据等。 <code>IncomingMessage</code> 对象实现了 <code>Readable Stream</code> 接口，对象中还有一些事件，方法和属性。<code>在http.Server</code> 或 <code>http.ClientRequest</code> 中略有不同。</p>
+<hr>
+<h4 id="http-IncomingMessage-对象中的事件"><a href="#http-IncomingMessage-对象中的事件" class="headerlink" title="http.IncomingMessage 对象中的事件"></a>http.IncomingMessage 对象中的事件</h4><h5 id="close-事件-2"><a href="#close-事件-2" class="headerlink" title="close 事件"></a>close 事件</h5><p><code>close</code> 事件表示在 <code>response.end()</code> 被调用或强制刷新之前，底层的连接已经被终止了。</p>
+<hr>
+<h4 id="http-IncomingMessage-对象中的方法"><a href="#http-IncomingMessage-对象中的方法" class="headerlink" title="http.IncomingMessage 对象中的方法"></a>http.IncomingMessage 对象中的方法</h4><h5 id="message-setTimeout-msecs-callback"><a href="#message-setTimeout-msecs-callback" class="headerlink" title="message.setTimeout(msecs, callback)"></a>message.setTimeout(msecs, callback)</h5><p>设置连接超时，参数 <code>msecs</code> 为超时时间（秒）。该方法本质是调用 <code>message.connection.setTimeout(msecs, callback)</code> 方法。</p>
+<hr>
+<h4 id="http-IncomingMessage-对象中的属性"><a href="#http-IncomingMessage-对象中的属性" class="headerlink" title="http.IncomingMessage 对象中的属性"></a>http.IncomingMessage 对象中的属性</h4><h5 id="message-httpVersion"><a href="#message-httpVersion" class="headerlink" title="message.httpVersion"></a>message.httpVersion</h5><p><code>message.httpVersion</code>：在http.Server中表示客户端向服务器发出请求时，客户端发送的HTTP版本；在http.ClientRequest中表示服务器向客户端返回应答时，服务器的HTTP版本</p>
+<h5 id="message-headers"><a href="#message-headers" class="headerlink" title="message.headers"></a>message.headers</h5><p><code>message.headers</code>: 请求/响应头对象。只读的文件头信息的键值对的集合，全小写。</p>
+<h5 id="message-method"><a href="#message-method" class="headerlink" title="message.method"></a>message.method</h5><p><code>message.method</code>：仅对http.Server有效，表示客户端的HTTP请求方式</p>
+<h5 id="message-url"><a href="#message-url" class="headerlink" title="message.url"></a>message.url</h5><p><code>message.url</code>：仅对http.Server有效，表示客户端请求的URL字符串。</p>
+<h5 id="message-statusCode"><a href="#message-statusCode" class="headerlink" title="message.statusCode"></a>message.statusCode</h5><p><code>message.statusCode</code>：仅对 <code>http.ClientRequest</code> 有效，表示HTTP服务器的响应状态，如：200、404等。</p>
+<h5 id="message-statusCode-1"><a href="#message-statusCode-1" class="headerlink" title="message.statusCode"></a>message.statusCode</h5><p><code>message.statusCode</code>：仅对 <code>http.ClientRequest</code> 有效，表示HTTP服务器的响应状态信息，如：OK、Internal Server Error等。</p>
+<h6 id="message-socket"><a href="#message-socket" class="headerlink" title="message.socket"></a>message.socket</h6><p><code>message.socket</code>：与此连接关联的net.Socket对象</p>
+<hr>
+<h3 id="0x05-完备的-HTTP-服务器"><a href="#0x05-完备的-HTTP-服务器" class="headerlink" title="0x05 完备的 HTTP 服务器"></a>0x05 完备的 HTTP 服务器</h3><h5 id="1-创建一个-http-Server"><a href="#1-创建一个-http-Server" class="headerlink" title="1.创建一个 http.Server"></a>1.创建一个 http.Server</h5><p>不同于 <code>new http.Server()</code> 的方式，使用 <code>http.createServer</code> 方法来创建一个 <code>http.Serve</code> 的实例，不需要为其显示的添加 <code>request</code> 事件处理程序，因为它将会自动在服务端监听来自客户端的  <code>request</code> 事件,然后在其回调函数中会返回一个 <code>http.IncomingMessage(req)</code> 实例和一个  <code>http.ServerResponse(res)</code> 实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by onejustone on 2016/12/26.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Object&#125; req 是一个http.IncomingMessag实例</span><br><span class="line"> * @param &#123;Object&#125; res 是一个http.ServerResponse实例</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">let http = require(&apos;http&apos;)</span><br><span class="line">// 导入 http m模块</span><br><span class="line"></span><br><span class="line">let server = http.createServer(function (req, res) &#123;</span><br><span class="line">// 创建 http server</span><br><span class="line">    res.writeHeader(200, &#123;&apos;Content-Type&apos;:&apos;video/mp4&apos;&#125;)</span><br><span class="line">    // 改写响应的头部信息 </span><br><span class="line">    let rs = require(&apos;fs&apos;).createReadStream(&apos;./臭屁虫2.mp4&apos;)</span><br><span class="line">    // 创建一个流文件，读取 MP4 媒体数据</span><br><span class="line">    rs.pipe(res)</span><br><span class="line">    // 将 MP4 文件流通过管道输送到 HTTP 响应中</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.maxHeadersCount = 1000;</span><br><span class="line">// 设置最大请求头限制</span><br><span class="line">server.setTimeout(1000,function () &#123;</span><br><span class="line">// 设置套接字超时时间</span><br><span class="line">    console.log(&quot;oh, time out~~&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server.listen(8088, function () &#123;</span><br><span class="line">// 监听本地端口。启动服务器</span><br><span class="line">    console.log(&apos;服务器已启动！&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>http.ServerResponse</code> 实例是一个可写流，所以可以将一个文件流转接到 <code>res</code> 响应流中，然后传输给客户端。</p>
+<p>此外，我们还有可以通过 <code>req.headers</code> 来查看客户端的请求信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let server = http.createServer(function (req, res) &#123;</span><br><span class="line">    console.log(req.headers)</span><br><span class="line">    res.writeHeader(200, &#123;&apos;Content-Type&apos;:&apos;text/plain&apos;&#125;)</span><br><span class="line">    res.end()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/http模块/" rel="tag"># http模块</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/26/ES6(16)Promise/" rel="next" title="ES6(16)Promise">
+                <i class="fa fa-chevron-left"></i> ES6(16)Promise
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/27/http模块(1)之客户端/" rel="prev" title="http模块(1)之客户端">
+                http模块(1)之客户端 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-http-模块"><span class="nav-number">1.</span> <span class="nav-text">0x00 http 模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-http-模块对-HTTP-服务端的支持"><span class="nav-number">2.</span> <span class="nav-text">0x01 http 模块对 HTTP 服务端的支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http-Server-创建-HTTP-服务器"><span class="nav-number">2.1.</span> <span class="nav-text">http.Server() 创建 HTTP 服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-createServer-requestListener-创建-HTTP-服务器"><span class="nav-number">2.2.</span> <span class="nav-text">http.createServer([requestListener]) 创建 HTTP 服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-关于-http-Server-对象"><span class="nav-number">3.</span> <span class="nav-text">0x02 关于 http.Server 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http-Server-对象中的事件"><span class="nav-number">3.1.</span> <span class="nav-text">http.Server 对象中的事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#request-事件"><span class="nav-number">3.1.1.</span> <span class="nav-text">request 事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#close-事件"><span class="nav-number">3.1.2.</span> <span class="nav-text">close 事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#clientError-事件"><span class="nav-number">3.1.3.</span> <span class="nav-text">clientError 事件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-Server-对象中的方法"><span class="nav-number">3.2.</span> <span class="nav-text">http.Server 对象中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#server-listen-hostname-port-callbakc"><span class="nav-number">3.2.1.</span> <span class="nav-text">server.listen([hostname],port,callbakc)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#server-close-callback"><span class="nav-number">3.2.2.</span> <span class="nav-text">server.close([callback])</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#server-setTimeout-msecs-callback"><span class="nav-number">3.2.3.</span> <span class="nav-text">server.setTimeout(msecs, callback)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-Server-对象中的属性"><span class="nav-number">3.3.</span> <span class="nav-text">http.Server 对象中的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#server-maxHeadersCount"><span class="nav-number">3.3.1.</span> <span class="nav-text">server.maxHeadersCount</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#server-timeout"><span class="nav-number">3.3.2.</span> <span class="nav-text">server.timeout</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-http-ServerResponse-对象"><span class="nav-number">4.</span> <span class="nav-text">0x03 http.ServerResponse 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http-ServerResponse-中的事件"><span class="nav-number">4.1.</span> <span class="nav-text">http.ServerResponse 中的事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#close-事件-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">close 事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finish-事件"><span class="nav-number">4.1.2.</span> <span class="nav-text">finish 事件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-ServerResponse-中的方法"><span class="nav-number">4.2.</span> <span class="nav-text">http.ServerResponse 中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#response-writeContinue"><span class="nav-number">4.2.1.</span> <span class="nav-text">response.writeContinue()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-writeHead-statusCode-statusMessage-headers"><span class="nav-number">4.2.2.</span> <span class="nav-text">response.writeHead(statusCode[, statusMessage][, headers])</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-setHeader-name-value"><span class="nav-number">4.2.3.</span> <span class="nav-text">response.setHeader(name, value)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-setTimeout-msecs-callback"><span class="nav-number">4.2.4.</span> <span class="nav-text">response.setTimeout(msecs, callback)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-write-chunk-encoding"><span class="nav-number">4.2.5.</span> <span class="nav-text">response.write(chunk, [encoding])</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-end-data-encoding"><span class="nav-number">4.2.6.</span> <span class="nav-text">response.end([data], [encoding])</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-ServerResponse-中的属性"><span class="nav-number">4.3.</span> <span class="nav-text">http.ServerResponse 中的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#response-statusCode"><span class="nav-number">4.3.1.</span> <span class="nav-text">response.statusCode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-headersSent"><span class="nav-number">4.3.2.</span> <span class="nav-text">response.headersSent</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-sendDate"><span class="nav-number">4.3.3.</span> <span class="nav-text">response.sendDate</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-http-IncomingMessage-对象"><span class="nav-number">5.</span> <span class="nav-text">0x04 http.IncomingMessage 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http-IncomingMessage-对象中的事件"><span class="nav-number">5.1.</span> <span class="nav-text">http.IncomingMessage 对象中的事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#close-事件-2"><span class="nav-number">5.1.1.</span> <span class="nav-text">close 事件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-IncomingMessage-对象中的方法"><span class="nav-number">5.2.</span> <span class="nav-text">http.IncomingMessage 对象中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#message-setTimeout-msecs-callback"><span class="nav-number">5.2.1.</span> <span class="nav-text">message.setTimeout(msecs, callback)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-IncomingMessage-对象中的属性"><span class="nav-number">5.3.</span> <span class="nav-text">http.IncomingMessage 对象中的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#message-httpVersion"><span class="nav-number">5.3.1.</span> <span class="nav-text">message.httpVersion</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#message-headers"><span class="nav-number">5.3.2.</span> <span class="nav-text">message.headers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#message-method"><span class="nav-number">5.3.3.</span> <span class="nav-text">message.method</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#message-url"><span class="nav-number">5.3.4.</span> <span class="nav-text">message.url</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#message-statusCode"><span class="nav-number">5.3.5.</span> <span class="nav-text">message.statusCode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#message-statusCode-1"><span class="nav-number">5.3.6.</span> <span class="nav-text">message.statusCode</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#message-socket"><span class="nav-number">5.3.6.1.</span> <span class="nav-text">message.socket</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-完备的-HTTP-服务器"><span class="nav-number">6.</span> <span class="nav-text">0x05 完备的 HTTP 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建一个-http-Server"><span class="nav-number">6.0.1.</span> <span class="nav-text">1.创建一个 http.Server</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

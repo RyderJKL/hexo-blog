@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kali渗透测试,Web渗透测试,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 OWASP_ZAPZend attack proxy 是一款 web application 集成渗透测试和漏洞工具，同样是免费开源跨平台的。 OWASP_ZPA 支持截断代理，主动、被动扫描，Fuzzy，暴力破解并且提供 API。 OWASP_ZPA 是Kali Web Top 10 之一。  0x01 截断代理首次启动 OWASP_ZAP　会提示是否将 session 进行保存，以及">
+<meta name="keywords" content="Kali渗透测试,Web渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OWASP_ZAP">
+<meta property="og:url" content="http://yoursite.com/2016/10/13/OWASP_ZAP/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 OWASP_ZAPZend attack proxy 是一款 web application 集成渗透测试和漏洞工具，同样是免费开源跨平台的。 OWASP_ZPA 支持截断代理，主动、被动扫描，Fuzzy，暴力破解并且提供 API。 OWASP_ZPA 是Kali Web Top 10 之一。  0x01 截断代理首次启动 OWASP_ZAP　会提示是否将 session 进行保存，以及">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-12b42bd8af7fa6e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-b3c465e305dceb25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-2df8796ef181b6ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-afad45d0a1a41e0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-b41477bd15b10371.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-a294236753c872e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-0a08fcde805fb48d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-4aeb397e48e28cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-0f8428e66cb4b065.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-cb7e122e24478897.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-c7f176b0aa8fda50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-e6ea9e1d9783e5bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-bd062a946eba0885.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-0fdf13bb29f320c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-2f88c09ac0516a92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-02a6921e9a3121cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-e57113da6d764ae0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-7d8627ec8c08a324.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-cbdfcbf890069559.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-dbdb60ffb9d8efae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-1b2bce83c4a68d0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-d02c59871442d8ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-e2e13f29c55b8bfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OWASP_ZAP">
+<meta name="twitter:description" content="0x00 OWASP_ZAPZend attack proxy 是一款 web application 集成渗透测试和漏洞工具，同样是免费开源跨平台的。 OWASP_ZPA 支持截断代理，主动、被动扫描，Fuzzy，暴力破解并且提供 API。 OWASP_ZPA 是Kali Web Top 10 之一。  0x01 截断代理首次启动 OWASP_ZAP　会提示是否将 session 进行保存，以及">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1571420-12b42bd8af7fa6e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/13/OWASP_ZAP/">
+
+
+
+
+
+  <title>OWASP_ZAP | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/13/OWASP_ZAP/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OWASP_ZAP</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-13T20:50:00+08:00">
+                2016-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-OWASP-ZAP"><a href="#0x00-OWASP-ZAP" class="headerlink" title="0x00 OWASP_ZAP"></a>0x00 OWASP_ZAP</h3><p>Zend attack proxy 是一款 web application 集成渗透测试和漏洞工具，同样是免费开源跨平台的。</p>
+<p>OWASP_ZPA 支持截断代理，主动、被动扫描，Fuzzy，暴力破解并且提供 API。</p>
+<p>OWASP_ZPA 是Kali Web Top 10 之一。</p>
+<hr>
+<h3 id="0x01-截断代理"><a href="#0x01-截断代理" class="headerlink" title="0x01 截断代理"></a>0x01 截断代理</h3><p>首次启动 OWASP_ZAP　会提示是否将 session 进行保存，以及如何保存。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-12b42bd8af7fa6e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="首次启动页面.png"></p>
+<p>OWASP_ZAP 默认监听的是 8080 端口，并且在启动 ZAP 的时候便会自动开始监听。</p>
+<p>如此，只需设置浏览器代理，ZAP 便会自动爬取所有数据。<br><img src="http://upload-images.jianshu.io/upload_images/1571420-b3c465e305dceb25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Proxy.png"></p>
+<hr>
+<h3 id="0x02-主动扫描"><a href="#0x02-主动扫描" class="headerlink" title="0x02 主动扫描"></a>0x02 主动扫描</h3><p>ZAP 最简单的使用方式便是在首页直接输入目标 Target 然后点击 <strong>攻击</strong> 便会开始主动扫描了。<br><img src="http://upload-images.jianshu.io/upload_images/1571420-2df8796ef181b6ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="scan.png"></p>
+<hr>
+<h3 id="0x03-Fuzzer"><a href="#0x03-Fuzzer" class="headerlink" title="0x03 Fuzzer"></a>0x03 Fuzzer</h3><p>通过右键选择某个特定页面进行 Fuzzer。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-afad45d0a1a41e0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Fuzzer.png"></p>
+<p>此外，也可以选择工具菜单中的 <strong>Fuzz</strong> 进行 Fuzzing 。<br><img src="http://upload-images.jianshu.io/upload_images/1571420-b41477bd15b10371.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-a294236753c872e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Fuzzer.png"></p>
+<hr>
+<h4 id="数据库注入-Fuzzing"><a href="#数据库注入-Fuzzing" class="headerlink" title="数据库注入 Fuzzing"></a>数据库注入 Fuzzing</h4><p>选择可能存在 SQL 注入的可疑字符串，为其添加 PayLoads 记性 SQL Injection Fuzzing。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-0a08fcde805fb48d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=" SQL Injection Fuzzing.png"></p>
+<p>fuzzing 完整以后，可以通过 <code>Code</code> ,<code>Size Resp.Header</code> 等字段属性对 fuzzing 的结果进行筛选。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-4aeb397e48e28cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Fuzzing结果筛选.png"></p>
+<hr>
+<h4 id="页面目录Fuzzing"><a href="#页面目录Fuzzing" class="headerlink" title="页面目录Fuzzing"></a>页面目录Fuzzing</h4><p>首先选中需要替换的字符串，然后点击 <code>Fuzz Locations</code> 中的 <code>Add</code> 选中以选择 fuzzing 的方式。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-0f8428e66cb4b065.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="fileFuzzing.png"></p>
+<p>我们可以使用 字符串，脚本，正则表达式，文本文件或 ZAP 自带的 <strong>File Fuzzer</strong> 去搜索网站目录。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-cb7e122e24478897.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网站目录页面Fuzzing.png"></p>
+<hr>
+<h3 id="0x04-暴力破解"><a href="#0x04-暴力破解" class="headerlink" title="0x04 暴力破解"></a>0x04 暴力破解</h3><p><img src="http://upload-images.jianshu.io/upload_images/1571420-c7f176b0aa8fda50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="暴力破解.png"></p>
+<p>但是，当我们使用一个字典文件去尝试暴力破解的时候，如何去识别出破解成功与不成功的不同差异，便只有依靠上帝了。</p>
+<hr>
+<h3 id="0x05-ZAP-的-API"><a href="#0x05-ZAP-的-API" class="headerlink" title="0x05 ZAP 的 API"></a>0x05 ZAP 的 API</h3><p>API 是一程序开发的接口。ZAP 提供API 一便让开发者使用ZAP 以定制自己的扫描程序。</p>
+<p>ZAP 的 API  使用文档:[ <a href="http://zap]" target="_blank" rel="noopener">http://zap]</a></p>
+<hr>
+<h3 id="0x06-Mode-扫描模式"><a href="#0x06-Mode-扫描模式" class="headerlink" title="0x06 Mode(扫描模式)"></a>0x06 Mode(扫描模式)</h3><p>ZAP 有四种扫描模式 <strong>Safe</strong>, <strong>Protected</strong>, <strong>Standard</strong>, <strong>Attack（攻击似的扫描）</strong>。 扫描所得的漏洞数量以次递增。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-e6ea9e1d9783e5bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Mode"></p>
+<hr>
+<h3 id="0x07-Scan-Policy-扫描策略"><a href="#0x07-Scan-Policy-扫描策略" class="headerlink" title="0x07 Scan Policy (扫描策略)"></a>0x07 Scan Policy (扫描策略)</h3><p>选择特定页面进行 <code>Active Scan</code> :</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-bd062a946eba0885.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Active Scan"></p>
+<p>ZAP 继承了一个默认的扫描策略 <strong>Default Policy</strong>:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-0fdf13bb29f320c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Default Policy"></p>
+<p>当然，我们可以定制自己的扫描策略，在 顶部导航 分析 中的扫描策略(或者Ctrl+P) 打开 <code>Scan Policy Manager</code> 添加或修改自己的扫描策略。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-2f88c09ac0516a92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Scan Policy Manager"></p>
+<p>如此，我们便可以在以后的网站扫描配置中选择自定义的扫描策略了。</p>
+<hr>
+<h3 id="0x08-Anti-CSRF-Tokens"><a href="#0x08-Anti-CSRF-Tokens" class="headerlink" title="0x08 Anti CSRF Tokens"></a>0x08 Anti CSRF Tokens</h3><p>某些应用程序为了防止 CSR 攻击，在每次访问时都会随机生成一个新的 Token。这些由伪随机算法生成的随机数也许大部分的扫描器都不支持。所以我们可以通过 ZAP 的 <code>Anti CSRF Tokens</code> 功能添加该网站的特定的 <strong>Tokens</strong>(如果该网站有 Token 的话)。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-02a6921e9a3121cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Anti CSRF Tokens"></p>
+<blockquote>
+<p>what’s token?<br>在OAuth协议中，token是在输入了用户名和密码之后获取的，只不过是服务器或者说网站帮你生成的临时密码。利用这个token你可以拥有查看或者操作相应的资源的权限。你有这些权限，是因为服务器知道你是谁（authentication）以后赋予你的，所以token这个东西，其实就是你的一个“代表”，或者说完全能代表你的“通行证”。从这个概念来说，“令牌”这个翻译，真的是非常的“信雅达”啊</p>
+</blockquote>
+<hr>
+<h3 id="0x09-HTTP-CA"><a href="#0x09-HTTP-CA" class="headerlink" title="0x09 HTTP -CA"></a>0x09 HTTP -CA</h3><p>首先生成并保存 ZAP 的http 证书。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-e57113da6d764ae0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=" HTTP -CA"></p>
+<p>然后在浏览器中导入 ZAP 的根证书。</p>
+<hr>
+<h3 id="0x0A-ZAP-身份认证"><a href="#0x0A-ZAP-身份认证" class="headerlink" title="0x0A  ZAP 身份认证"></a>0x0A  ZAP 身份认证</h3><p>在 ZAP 中最常用的 身份认证是使用 HTTP Session 的认证方式。当然 ZAP 也是支持其它认证方式的，并且我们可以在 <strong>Session Properities</strong> 中进行配置。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-7d8627ec8c08a324.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Authentication"></p>
+<p>由上图可知，目前 ZAP 支持四种身份认证方法: <code>Form</code>,<code>HTTP/NTLM</code>, <code>Manual</code>,<code>Script-based</code>。</p>
+<p>默认情况下，一个 Muaual 认证方式就足够了，也是最简单易用的方式。</p>
+<hr>
+<h4 id="HTTP-Session"><a href="#HTTP-Session" class="headerlink" title="HTTP Session"></a>HTTP Session</h4><p>ZAP 在默认情况下只会将其内置的几个 session 名称识别为 HTTP Session。但是，某些情况下，有的网站也许会自定义自己的 session 名称，这时我们有必要手动为其添加自定义的 session 标识。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-cbdfcbf890069559.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HTTP Session"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-dbdb60ffb9d8efae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加自定义的 Security"></p>
+<hr>
+<h3 id="0x0B-截断"><a href="#0x0B-截断" class="headerlink" title="0x0B 截断"></a>0x0B 截断</h3><p>ZAP 可以实时截断从客户端发起的请求或者从服务器端回传的响应。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-1b2bce83c4a68d0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Set Break"></p>
+<hr>
+<h3 id="0x0C-隐藏域"><a href="#0x0C-隐藏域" class="headerlink" title="0x0C 隐藏域"></a>0x0C 隐藏域</h3><p>以微软搜索引擎 必应为例，未开启隐藏域时访问的眼如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-d02c59871442d8ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="BiYing"></p>
+<p>开启 ZAP 的隐藏域显示功能:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-e2e13f29c55b8bfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<hr>
+<h3 id="0x0D-总结"><a href="#0x0D-总结" class="headerlink" title="0x0D 总结"></a>0x0D 总结</h3><p>标准扫描工作流程: 设置代理 –&gt; 手动爬网 –&gt; 自动爬网 –&gt; 主动扫描.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kali渗透测试/" rel="tag"># Kali渗透测试</a>
+          
+            <a href="/tags/Web渗透测试/" rel="tag"># Web渗透测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/13/1.DOM基础/" rel="next" title="JS-DOM(1)DOM基础">
+                <i class="fa fa-chevron-left"></i> JS-DOM(1)DOM基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/14/选字小游戏/" rel="prev" title="JS选字小游戏">
+                JS选字小游戏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-OWASP-ZAP"><span class="nav-number">1.</span> <span class="nav-text">0x00 OWASP_ZAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-截断代理"><span class="nav-number">2.</span> <span class="nav-text">0x01 截断代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-主动扫描"><span class="nav-number">3.</span> <span class="nav-text">0x02 主动扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Fuzzer"><span class="nav-number">4.</span> <span class="nav-text">0x03 Fuzzer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库注入-Fuzzing"><span class="nav-number">4.1.</span> <span class="nav-text">数据库注入 Fuzzing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#页面目录Fuzzing"><span class="nav-number">4.2.</span> <span class="nav-text">页面目录Fuzzing</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-暴力破解"><span class="nav-number">5.</span> <span class="nav-text">0x04 暴力破解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-ZAP-的-API"><span class="nav-number">6.</span> <span class="nav-text">0x05 ZAP 的 API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06-Mode-扫描模式"><span class="nav-number">7.</span> <span class="nav-text">0x06 Mode(扫描模式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x07-Scan-Policy-扫描策略"><span class="nav-number">8.</span> <span class="nav-text">0x07 Scan Policy (扫描策略)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x08-Anti-CSRF-Tokens"><span class="nav-number">9.</span> <span class="nav-text">0x08 Anti CSRF Tokens</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x09-HTTP-CA"><span class="nav-number">10.</span> <span class="nav-text">0x09 HTTP -CA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x0A-ZAP-身份认证"><span class="nav-number">11.</span> <span class="nav-text">0x0A  ZAP 身份认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-Session"><span class="nav-number">11.1.</span> <span class="nav-text">HTTP Session</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x0B-截断"><span class="nav-number">12.</span> <span class="nav-text">0x0B 截断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x0C-隐藏域"><span class="nav-number">13.</span> <span class="nav-text">0x0C 隐藏域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x0D-总结"><span class="nav-number">14.</span> <span class="nav-text">0x0D 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

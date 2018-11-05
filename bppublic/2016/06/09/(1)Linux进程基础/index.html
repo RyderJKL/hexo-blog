@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux进程,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x01 程序与进程程序(program)是由指令(instruction)构成，通过程序我们可以让计算机完成复杂的操作。 在Linux中，所有的进程都是通过对init进程的fork建立的。当计算机启动时，内核(kerner)只会建立一个init进程。新的进程主要通过老的进程复制自身得到，这就是for机制。 fork通常作为一个函数被调用。这个函数会有两个返回，将子进程的PID返回给父进程，0返回">
+<meta name="keywords" content="Linux进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(1)Linux进程基础">
+<meta property="og:url" content="http://yoursite.com/2016/06/09/(1)Linux进程基础/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x01 程序与进程程序(program)是由指令(instruction)构成，通过程序我们可以让计算机完成复杂的操作。 在Linux中，所有的进程都是通过对init进程的fork建立的。当计算机启动时，内核(kerner)只会建立一个init进程。新的进程主要通过老的进程复制自身得到，这就是for机制。 fork通常作为一个函数被调用。这个函数会有两个返回，将子进程的PID返回给父进程，0返回">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.834Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="(1)Linux进程基础">
+<meta name="twitter:description" content="0x01 程序与进程程序(program)是由指令(instruction)构成，通过程序我们可以让计算机完成复杂的操作。 在Linux中，所有的进程都是通过对init进程的fork建立的。当计算机启动时，内核(kerner)只会建立一个init进程。新的进程主要通过老的进程复制自身得到，这就是for机制。 fork通常作为一个函数被调用。这个函数会有两个返回，将子进程的PID返回给父进程，0返回">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/09/(1)Linux进程基础/">
+
+
+
+
+
+  <title>(1)Linux进程基础 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/09/(1)Linux进程基础/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">(1)Linux进程基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-09T21:16:00+08:00">
+                2016-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x01-程序与进程"><a href="#0x01-程序与进程" class="headerlink" title="0x01 程序与进程"></a>0x01 程序与进程</h3><p>程序(program)是由指令(instruction)构成，通过程序我们可以让计算机完成复杂的操作。</p>
+<p>在Linux中，所有的进程都是通过对init进程的fork建立的。当计算机启动时，内核(kerner)只会建立一个init进程。新的进程主要通过老的进程复制自身得到，这就是for机制。</p>
+<p>fork通常作为一个函数被调用。这个函数会有两个返回，将子进程的PID返回给父进程，0返回给子进程。</p>
+<hr>
+<h3 id="0x01-子进程的终结"><a href="#0x01-子进程的终结" class="headerlink" title="0x01 子进程的终结"></a>0x01 子进程的终结</h3><p>当子进程终结时，它会通知父进程，清空自己所占据的内存，并在kernel里留下自己的退出信息(exit code，如果顺利运行，则返回0；如果有错误或异常状况，为&gt;0的整数)。之后父进程对该子进程使用wait调用，wait能取出子进程的退出信息，并清空该信息在kernel中所占据的空间。</p>
+<p>但是当父进程早于子进程终结时，子进程就会成为一个孤儿进程。此时子进程会过继给init进程。</p>
+<p>不同于Unix，在Linux中，线程只是一种特殊的进程，多个线程之间可以共享内存空间和I/O接口。但进程是Linux程序的唯一实现方式。</p>
+<hr>
+<h3 id="0x02-Linux信号"><a href="#0x02-Linux信号" class="headerlink" title="0x02 Linux信号"></a>0x02 Linux信号</h3><p>出于进程的保护机制，进程之间是不会相互干扰的。但有时，进程之间的相互通信确是必要的。信号(singal)就是一种向进程传递信息的方式。不同于其它的进程间通信(interprocess communication，如:pipe,shared memory)，signal所能传递的信息比较粗糙，只是一个整数，但也因此而易于对signal进行管理。</p>
+<p>signal通常用于系统管理相关的任务，比如通知进程终结，暂停或者恢复。</p>
+<p>信号由内核管理，所以信号的传递是需要通过内核来完成的。内核对每一进程都有一个表存储相关的进程信息。当内核需要将信号传递给某个进程时，就在该进程相对应的表中的适当位置写入信号，这样，就生成(generate)了信号。进程执行系统调用，系统调用完成退出内核时便会查看该表。若有信号，则执行对应<strong>该信号的操作</strong>(signal action,也叫信号处理:signal disposition),此时叫做<strong>执行(deliver)信号 </strong>。从信号的生成到信号的传递时间，信号处于<strong>等待状态(pending)</strong>(未查看表)。我们可以设计程序，让其生成的进程<strong>阻塞(block)</strong>某些信号，即让这些信号始终处于pending状态，直到<strong>取消阻塞(unblock)</strong>或者无视信号。</p>
+<hr>
+<h3 id="0x03-Linux中的常见信号"><a href="#0x03-Linux中的常见信号" class="headerlink" title="0x03 Linux中的常见信号"></a>0x03 Linux中的常见信号</h3><p>Linux中常见的信号有SIGINT，SIGQUIT，SIGCONT，SIGTSTP，SIGALRM等。</p>
+<ul>
+<li>SIGINT: 当键盘按下CTRL+C从shell中发出信号，信号被传递给shell中前台运行的进程，对应该信号的默认操作是中断 (INTERRUPT) 该进程。</li>
+<li>SIGQUIT  当键盘按下CTRL+\从shell中发出信号，信号被传递给shell中前台运行的进程，对应该信号的默认操作是退出 (QUIT) 该进程。</li>
+<li>SIGTSTP  当键盘按下CTRL+Z从shell中发出信号，信号被传递给shell中前台运行的进程，对应该信号的默认操作是暂停 (STOP) 该进程。</li>
+<li>SIGCONT  用于通知暂停的进程继续。</li>
+<li>SIGALRM  起到定时器的作用，通常是程序在一定的时间之后才生成该信号。</li>
+</ul>
+<hr>
+<h3 id="0x03-信号处理-signal-disposition"><a href="#0x03-信号处理-signal-disposition" class="headerlink" title="0x03 信号处理(signal disposition)"></a>0x03 信号处理(signal disposition)</h3><p>进程决定执行信号时，有下面几种可能:</p>
+<ul>
+<li>无视(ignore)信号，信号被清除，进程本身不采取任何特殊的操作</li>
+<li>默认(default)操作。每个信号对应有一定的默认操作。比如上面SIGCONT用于继续进程。</li>
+<li>自定义操作。也叫做获取 (catch) 信号。执行进程中预设的对应于该信号的操作。</li>
+</ul>
+<p>进程会采取哪种操作，要根据该进程的程序设计。特别是获取信号的情况，程序往往会设置一些比较长而复杂的操作(通常将这些操作放到一个函数中)。</p>
+<h3 id="0x04-进程组与会话"><a href="#0x04-进程组与会话" class="headerlink" title="0x04 进程组与会话"></a>0x04 进程组与会话</h3><hr>
+<h4 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h4><p>每个进程都会属于一个进程组，每个进程组都会包含多个进程。进程组都有一个进程领导进程组(process group leader),领导进程的PID成为进程组的ID(process group ID,PGID),以识别进程组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps -o pid,pgid,ppid,comm | cat</span><br></pre></td></tr></table></figure>
+<p>将进程归为进程组的一个原因是我们可以将信号发送个一个进程组。而进程组中的所有进程都会收到该信号。</p>
+<hr>
+<h4 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h4><p>多个进程组还可以构成一个会话(session),bash(Bourne-Again shell)支持工作控制(job control),而sh(Bourne shell)并不支持。</p>
+<p>会话是由进程组中的进程建立的，该进程叫做会话的领导进程(session leader)。会话领导进程的PID成为识别会话的SID(session ID)。会话中的每一个进程组称为一个工作(jod),</p>
+<p>会话可以有一个进程组成为会话的前台工作(foreground),而其它的进程组是后台工作(background)。每个会话可以连接一个终端(control terminal)。当控制终端有输入输出时，都传递给该会话的前台进程组。</p>
+<p>会话的意义在于将多个工作囊括在一个终端，并取其中的一个工作作为前台，来直接接收该终端的输入输出以及终端信号。 其他工作在后台运行。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux进程/" rel="tag"># Linux进程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/08/(2)Linux进程空间/" rel="next" title="(2)Linux进程空间">
+                <i class="fa fa-chevron-left"></i> (2)Linux进程空间
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/10/SMTP扫描/" rel="prev" title="SMTP扫描">
+                SMTP扫描 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-程序与进程"><span class="nav-number">1.</span> <span class="nav-text">0x01 程序与进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-子进程的终结"><span class="nav-number">2.</span> <span class="nav-text">0x01 子进程的终结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-Linux信号"><span class="nav-number">3.</span> <span class="nav-text">0x02 Linux信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Linux中的常见信号"><span class="nav-number">4.</span> <span class="nav-text">0x03 Linux中的常见信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-信号处理-signal-disposition"><span class="nav-number">5.</span> <span class="nav-text">0x03 信号处理(signal disposition)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-进程组与会话"><span class="nav-number">6.</span> <span class="nav-text">0x04 进程组与会话</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程组"><span class="nav-number">6.1.</span> <span class="nav-text">进程组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话"><span class="nav-number">6.2.</span> <span class="nav-text">会话</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

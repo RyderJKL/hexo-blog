@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kali第六章,被动信息收集,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="DIG很多方面的特性和nclookup是相似的，但是DIG本身是比nslookup更强大的,使用也很方便，不用像nslookup总是set不停！Dig是Domain Information Groper的缩写，知道了来源想必大家也就容易记住这条命令了。  ox00 DIG简单使用最简单最常用的查询是查询一台主机，但是默认情况下，Dig的输出信息很详细，有时我们你不需要那么多的的输出，但它确实值得知">
+<meta name="keywords" content="Kali第六章,被动信息收集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS信息收集-DIG">
+<meta property="og:url" content="http://yoursite.com/2016/03/21/DNS信息收集-DIG/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="DIG很多方面的特性和nclookup是相似的，但是DIG本身是比nslookup更强大的,使用也很方便，不用像nslookup总是set不停！Dig是Domain Information Groper的缩写，知道了来源想必大家也就容易记住这条命令了。  ox00 DIG简单使用最简单最常用的查询是查询一台主机，但是默认情况下，Dig的输出信息很详细，有时我们你不需要那么多的的输出，但它确实值得知">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.975Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DNS信息收集-DIG">
+<meta name="twitter:description" content="DIG很多方面的特性和nclookup是相似的，但是DIG本身是比nslookup更强大的,使用也很方便，不用像nslookup总是set不停！Dig是Domain Information Groper的缩写，知道了来源想必大家也就容易记住这条命令了。  ox00 DIG简单使用最简单最常用的查询是查询一台主机，但是默认情况下，Dig的输出信息很详细，有时我们你不需要那么多的的输出，但它确实值得知">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/03/21/DNS信息收集-DIG/">
+
+
+
+
+
+  <title>DNS信息收集-DIG | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/21/DNS信息收集-DIG/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DNS信息收集-DIG</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-21T19:34:00+08:00">
+                2016-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>DIG很多方面的特性和nclookup是相似的，但是DIG本身是比nslookup更强大的,使用也很方便，不用像nslookup总是set不停！<br>Dig是Domain Information Groper的缩写，知道了来源想必大家也就容易记住这条命令了。</p>
+<hr>
+<h3 id="ox00-DIG简单使用"><a href="#ox00-DIG简单使用" class="headerlink" title="ox00 DIG简单使用"></a>ox00 DIG简单使用</h3><p>最简单最常用的查询是查询一台主机，但是默认情况下，Dig的输出信息很详细，有时我们你不需要那么多的的输出，但它确实值得知道。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@jack:/# dig www.baidu.com</span><br><span class="line"></span><br><span class="line">输出:</span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.9.5-9+deb8u5-Debian &lt;&lt;&gt;&gt; www.baidu.com</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36238</span><br><span class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line">;; WHEN: Fri Mar 11 09:16:16 CST 2016</span><br><span class="line">;; MSG SIZE  rcvd: 101</span><br></pre></td></tr></table></figure>
+<h4 id="参数：any"><a href="#参数：any" class="headerlink" title="参数：any"></a>参数：any</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig sina.com any</span><br><span class="line"></span><br><span class="line">返回结果:</span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.9.5-9+deb8u5-Debian &lt;&lt;&gt;&gt; sina.com any</span><br><span class="line">;; global options: +cmd</span><br><span class="line">sina.com.		97	IN	MX	10 freemx3.sinamail.sina.com.cn.</span><br><span class="line">sina.com.		97	IN	MX	10 freemx2.sinamail.sina.com.cn.</span><br><span class="line">sina.com.		204	IN	A	66.102.251.33</span><br></pre></td></tr></table></figure>
+<h4 id="参数-noall-answer"><a href="#参数-noall-answer" class="headerlink" title="参数: noall + answer"></a>参数: noall + answer</h4><p>查询163邮箱的邮件服务器记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +noall +answer mail. 163.com</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line">mail.			0	IN	A	219.147.255.138</span><br><span class="line">163.com.		383	IN	A	123.58.180.8</span><br><span class="line">163.com.		383	IN	A	123.58.180.7</span><br></pre></td></tr></table></figure>
+<h5 id="查询主机记录并管道过滤"><a href="#查询主机记录并管道过滤" class="headerlink" title="查询主机记录并管道过滤"></a>查询主机记录并管道过滤</h5><p>查询163邮箱的邮件服务器记录，并使用管道命令进行过滤！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  root@jack:~# dig +noall +answer mail 163.com any | awk &apos;&#123;print $5&#125;&apos;</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line">219.147.255.138</span><br><span class="line">123.58.180.7</span><br><span class="line">123.58.180.8</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="反向域名解析-PTR记录-dig参数-x的使用-："><a href="#反向域名解析-PTR记录-dig参数-x的使用-：" class="headerlink" title="反向域名解析(PTR记录)[dig参数-x的使用]："></a>反向域名解析(PTR记录)[dig参数-x的使用]：</h4><h5 id="首先dig-163的mx记录"><a href="#首先dig-163的mx记录" class="headerlink" title="首先dig 163的mx记录"></a>首先dig 163的mx记录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +noall +answer 163.com mx</span><br><span class="line"></span><br><span class="line">返回结果</span><br><span class="line">1.163.com.		14869	IN	MX	10 163mx02.mxmail.netease.com.</span><br><span class="line">2.163.com.		14869	IN	MX	10 163mx03.mxmail.netease.com.</span><br><span class="line">3.163.com.		14869	IN	MX	50 163mx00.mxmail.netease.com.</span><br><span class="line">4.163.com.		14869	IN	MX	10 163mx01.mxmail.netease.com.</span><br></pre></td></tr></table></figure>
+<h5 id="查找CNAME对应IP"><a href="#查找CNAME对应IP" class="headerlink" title="查找CNAME对应IP"></a>查找CNAME对应IP</h5><p>选择第一个CNAME记录查询其对应的IP地址：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +noall +answer 163mx02.mxmail.netease.com.</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line">163mx02.mxmail.netease.com. 563	IN	A	220.181.14.155</span><br><span class="line">163mx02.mxmail.netease.com. 563	IN	A	220.181.14.147</span><br></pre></td></tr></table></figure></p>
+<h5 id="对IP进行反向解析"><a href="#对IP进行反向解析" class="headerlink" title="对IP进行反向解析"></a>对IP进行反向解析</h5><p>对第一个ip进行反向解析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +noall +answer -x 220.181.14.155</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line">155.14.181.220.in-addr.arpa. 86385 IN	PTR	m14-155.188.com.</span><br></pre></td></tr></table></figure></p>
+<p>从最后的返回结果我们会发现，ptr解析记录和最初所查询的域名并不一致，这是很正常的，因为ip和域名之间通常的都是一对多的。</p>
+<hr>
+<h3 id="0x03-Dig特性"><a href="#0x03-Dig特性" class="headerlink" title="0x03 Dig特性"></a>0x03 Dig特性</h3><hr>
+<h4 id="查询DNS-bind的版本信息："><a href="#查询DNS-bind的版本信息：" class="headerlink" title="查询DNS bind的版本信息："></a>查询DNS bind的版本信息：</h4><p><strong>{ Usage $: dig +noall +answer <a href="http://www.xx.com" target="_blank" rel="noopener">www.xx.com</a> }</strong></p>
+<p>大部分的厂商使用的DNS服务器所使用的都是BIND，查询bind的目的，从我们之前的查询已经知道了，每个域名会对应许多个记录，对渗透目标最完美的DNS查询结果就是将其注册的所有DNS注册记录都查询出来，www/news/adc.sian.com，再将这些fqdn对应的所有IP地址全部都解析出来。但是当使用dig命令时，我们是不能直接查询不出它所有的fqdn记录的，却可以借用dig查询的到它的bind信息，如果bind是比较老的，且有漏洞的，便可以通过入侵bind获得dns的记录！</p>
+<p>下面是强大的dig bind命令:</p>
+<hr>
+<h4 id="dig网站NS记录"><a href="#dig网站NS记录" class="headerlink" title="dig网站NS记录"></a>dig网站NS记录</h4><p>首先获得sina.com的NS记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +answer sina.com</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;sina.com.			IN	NS</span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">sina.com.		59596	IN	NS	ns1.sina.com.cn.</span><br><span class="line">sina.com.		59596	IN	NS	ns3.sina.com.</span><br><span class="line">sina.com.		59596	IN	NS	ns2.sina.com.cn.</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="查询dns的bind版本"><a href="#查询dns的bind版本" class="headerlink" title="查询dns的bind版本"></a>查询dns的bind版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +noall +answer txt chaos VERSION.BIND ns1.sina.com.cn.</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line"></span><br><span class="line">VERSION.BIND.		0	CH	TXT	&quot;Why query me?Your IP had been logged!&quot;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到返回的结果为空，这是因为sina DNS服务器设置了保护模式，我们不能通过此方式查询！bind信息对于黑客是很感兴趣的，所有现在绝大多数的互联网公司都会隐藏的的bind信息！</p>
+<hr>
+<h3 id="0x04-DNS追踪"><a href="#0x04-DNS追踪" class="headerlink" title="0x04  DNS追踪"></a>0x04  DNS追踪</h3><p><strong>{ Usage $: [dig +trace example.com] }</strong></p>
+<p>直接运行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig +trace www.sina.com</span><br><span class="line"></span><br><span class="line">返回结果：</span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.9.5-9+deb8u2-Debian &lt;&lt;&gt;&gt; +trace www.sina.com</span><br><span class="line">;; global options: +cmd</span><br><span class="line">.			19560	IN	NS	m.root-servers.net.</span><br><span class="line">.			19560	IN	NS	f.root-servers.net.</span><br><span class="line">.			19560	IN	NS	g.root-servers.net.</span><br><span class="line">.			19560	IN	NS	d.root-servers.net.</span><br><span class="line">.			19560	IN	NS	a.root-servers.net.</span><br><span class="line">.			19560	IN	NS	e.root-servers.net.</span><br><span class="line">.			19560	IN	NS	j.root-servers.net.</span><br><span class="line">.			19560	IN	NS	k.root-servers.net.</span><br><span class="line">.			19560	IN	NS	l.root-servers.net.</span><br><span class="line">.			19560	IN	NS	b.root-servers.net.</span><br><span class="line">.			19560	IN	NS	h.root-servers.net.</span><br><span class="line">.			19560	IN	NS	c.root-servers.net.</span><br><span class="line">.			19560	IN	NS	i.root-servers.net.</span><br><span class="line">;; Received 239 bytes from 112.100.100.100#53(112.100.100.100) in 82 ms</span><br><span class="line">&lt;a&gt;首先trace通过本机访问13个根（.）服务器,随机挑选一个查询.com域的NS记录&lt;/a&gt;</span><br><span class="line">com.			172800	IN	NS	a.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	b.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	c.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	d.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	e.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	f.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	g.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	h.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	i.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	j.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	k.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	l.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	m.gtld-servers.net.</span><br><span class="line">com.			86400	IN	DS	30909 8 2 E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CF C41A5766</span><br><span class="line">com.			86400	IN	RRSIG	DS 8 1 86400 20160403050000 20160324040000 54549 . ZySdwNEXufOygOza5asIf7Aa4JZSVuaNDAW+fJhd9w5F1w29hO8ffNYs mUf4FsC5dHgZOYSikbyZJeyKryqTnvCqU+2OQcbYxvF8l9ahETNxJE8m FTnEVtaQJK+e72h+9BDAyO022v6wAo8P9+OC0u9P2yooIbUr7Ys/ODHc SfE=</span><br><span class="line">;; Received 736 bytes from 192.58.128.30#53(j.root-servers.net) in 210 ms</span><br><span class="line">&lt;a&gt;再从获得的从com域名中随机挑选一个查询sina.com的NS记录&lt;/a&gt;</span><br><span class="line">sina.com.		172800	IN	NS	ns1.sina.com.cn.</span><br><span class="line">sina.com.		172800	IN	NS	ns2.sina.com.cn.</span><br><span class="line">sina.com.		172800	IN	NS	ns3.sina.com.cn.</span><br><span class="line">sina.com.		172800	IN	NS	ns1.sina.com.</span><br><span class="line">sina.com.		172800	IN	NS	ns2.sina.com.</span><br><span class="line">sina.com.		172800	IN	NS	ns4.sina.com.</span><br><span class="line">sina.com.		172800	IN	NS	ns3.sina.com.</span><br><span class="line">CK0POJMG874LJREF7EFN8430QVIT8BSM.com. 86400 IN NSEC3 1 1 0 - CK0Q1GIN43N1ARRC9OSM6QPQR81H5M9A NS SOA RRSIG DNSKEY NSEC3PARAM</span><br><span class="line">CK0POJMG874LJREF7EFN8430QVIT8BSM.com. 86400 IN RRSIG NSEC3 8 2 86400 20160331045906 20160324034906 28259 com. bHlKyZIPRgtRjaONiuYtTtkWRNb08sDePoBAoTw49t9YRU6KYSJgn7se +OfmBIA1rvCx3YIE82z0Q9A64s4z7XwRAhWqjW++lDACLsIzJ/tUP3TO DBucmG/NOBmAXUpRwo91zFjukbPOZ1PeYVpBjTmaRaI23MGJ0ANHbFUW oDs=</span><br><span class="line">TGAFTKK08BOUSKO3P3B8A4U84C84DTHM.com. 86400 IN NSEC3 1 1 0 - TGAIGAA7UE2B06LAN5KC5MT51RE8U42A NS DS RRSIG</span><br><span class="line">TGAFTKK08BOUSKO3P3B8A4U84C84DTHM.com. 86400 IN RRSIG NSEC3 8 2 86400 20160330043912 20160323032912 28259 com. UfPPJ9326mLBJIz60EgkDgT6fif4fOcgieasgz4a752Gc9e6LKTtMPvF KpLu2R4lfKMj/edVf637U4eQKo8C+Mvatv1qVxvqufiQRM15uOqdvejb muvJncBomFxfgjAOTmIHD0dIE5ho/R/8RW4xjCxAYrYkdumoDgvg1tc9 s44=</span><br><span class="line">;; Received 727 bytes from 192.26.92.30#53(c.gtld-servers.net) in 429 ms</span><br><span class="line">&lt;a&gt;再从获得的sina.com域名中随机挑选一个查询www.sina.com的NS记录，此后将会一次逐级解析下去，知道全部记录解析完毕！&lt;/a&gt;</span><br><span class="line">www.sina.com.		60	IN	CNAME	us.sina.com.cn.</span><br><span class="line">us.sina.com.cn.		60	IN	CNAME	news.sina.com.cn.</span><br><span class="line">news.sina.com.cn.	60	IN	CNAME	jupiter.sina.com.cn.</span><br><span class="line">jupiter.sina.com.cn.	3600	IN	CNAME	hydra.sina.com.cn.</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.183</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.184</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.185</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.186</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.187</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.188</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.189</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.190</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.191</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.192</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.180</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.181</span><br><span class="line">hydra.sina.com.cn.	60	IN	A	218.30.108.182</span><br><span class="line">sina.com.cn.		86400	IN	NS	ns3.sina.com.cn.</span><br><span class="line">sina.com.cn.		86400	IN	NS	ns1.sina.com.cn.</span><br><span class="line">sina.com.cn.		86400	IN	NS	ns2.sina.com.cn.</span><br><span class="line">sina.com.cn.		86400	IN	NS	ns4.sina.com.cn.</span><br><span class="line">;; Received 474 bytes from 123.125.29.99#53(ns3.sina.com.cn) in 36 ms</span><br></pre></td></tr></table></figure></p>
+<p><strong>从上的追踪过程其实就是所谓的迭代查询过程！</strong><br>下面我们来看看递归查询的结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# dig sina.com</span><br></pre></td></tr></table></figure>
+<p>从wireshark所获得的抓包数据我们可以看到关于dns的记录就两条！<br>关于递归查询与迭代查询请参考相关资料。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kali第六章/" rel="tag"># Kali第六章</a>
+          
+            <a href="/tags/被动信息收集/" rel="tag"># 被动信息收集</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/27/第六章-文件权限与目录配置/" rel="next" title="第六章-文件权限与目录配置">
+                <i class="fa fa-chevron-left"></i> 第六章-文件权限与目录配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/24/DNS区域传输，字典爆破，注册信息/" rel="prev" title="DNS区域传输，字典爆破，注册信息">
+                DNS区域传输，字典爆破，注册信息 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ox00-DIG简单使用"><span class="nav-number">1.</span> <span class="nav-text">ox00 DIG简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数：any"><span class="nav-number">1.1.</span> <span class="nav-text">参数：any</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-noall-answer"><span class="nav-number">1.2.</span> <span class="nav-text">参数: noall + answer</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查询主机记录并管道过滤"><span class="nav-number">1.2.1.</span> <span class="nav-text">查询主机记录并管道过滤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反向域名解析-PTR记录-dig参数-x的使用-："><span class="nav-number">1.3.</span> <span class="nav-text">反向域名解析(PTR记录)[dig参数-x的使用]：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先dig-163的mx记录"><span class="nav-number">1.3.1.</span> <span class="nav-text">首先dig 163的mx记录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查找CNAME对应IP"><span class="nav-number">1.3.2.</span> <span class="nav-text">查找CNAME对应IP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对IP进行反向解析"><span class="nav-number">1.3.3.</span> <span class="nav-text">对IP进行反向解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Dig特性"><span class="nav-number">2.</span> <span class="nav-text">0x03 Dig特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询DNS-bind的版本信息："><span class="nav-number">2.1.</span> <span class="nav-text">查询DNS bind的版本信息：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dig网站NS记录"><span class="nav-number">2.2.</span> <span class="nav-text">dig网站NS记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询dns的bind版本"><span class="nav-number">2.3.</span> <span class="nav-text">查询dns的bind版本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-DNS追踪"><span class="nav-number">3.</span> <span class="nav-text">0x04  DNS追踪</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

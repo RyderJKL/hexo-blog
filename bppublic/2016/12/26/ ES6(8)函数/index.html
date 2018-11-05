@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ES6,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 参数默认值ES6 可以直接为函数的参数指定一个默认值： 1234function Poing ( x = 0, y = 5)&amp;#123;    this.x = x;    this.y = y;&amp;#125; 如此一来，使得得函数的书写更简洁，也便于阅读，更有利于将来的代码维护。 需要注意的是，参数变量是默认声明的 所以不能再用 let 或者 const 再次声明。  0x01 参数默认">
+<meta name="keywords" content="ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6(8)函数">
+<meta property="og:url" content="http://yoursite.com/2016/12/26/ ES6(8)函数/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 参数默认值ES6 可以直接为函数的参数指定一个默认值： 1234function Poing ( x = 0, y = 5)&amp;#123;    this.x = x;    this.y = y;&amp;#125; 如此一来，使得得函数的书写更简洁，也便于阅读，更有利于将来的代码维护。 需要注意的是，参数变量是默认声明的 所以不能再用 let 或者 const 再次声明。  0x01 参数默认">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.710Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6(8)函数">
+<meta name="twitter:description" content="0x00 参数默认值ES6 可以直接为函数的参数指定一个默认值： 1234function Poing ( x = 0, y = 5)&amp;#123;    this.x = x;    this.y = y;&amp;#125; 如此一来，使得得函数的书写更简洁，也便于阅读，更有利于将来的代码维护。 需要注意的是，参数变量是默认声明的 所以不能再用 let 或者 const 再次声明。  0x01 参数默认">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/26/ ES6(8)函数/">
+
+
+
+
+
+  <title>ES6(8)函数 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/26/ ES6(8)函数/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ES6(8)函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-26T00:00:00+08:00">
+                2016-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-参数默认值"><a href="#0x00-参数默认值" class="headerlink" title="0x00 参数默认值"></a>0x00 参数默认值</h3><p>ES6 可以直接为函数的参数指定一个默认值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function Poing ( x = 0, y = 5)&#123;</span><br><span class="line">    this.x = x;</span><br><span class="line">    this.y = y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如此一来，使得得函数的书写更简洁，也便于阅读，更有利于将来的代码维护。</p>
+<p>需要注意的是，<em>参数变量是默认声明的</em> 所以不能再用 <code>let</code> 或者 <code>const</code> 再次声明。</p>
+<hr>
+<h3 id="0x01-参数默认值解构赋值"><a href="#0x01-参数默认值解构赋值" class="headerlink" title="0x01 参数默认值解构赋值"></a>0x01 参数默认值解构赋值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Point( &#123;x =1, y = 5&#125;)&#123;</span><br><span class="line">    this.x = x;</span><br><span class="line">    this.y = y;</span><br><span class="line">    console.log(x * y)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var p = new Point(&#123;x:200, y:40&#125;)</span><br><span class="line">// 双重默认值，2000 和 40 将会覆盖原始默认值</span><br><span class="line">// 8000</span><br><span class="line"></span><br><span class="line">Point()</span><br><span class="line">// TypeError</span><br><span class="line"></span><br><span class="line">Ponit(&#123;&#125;)</span><br><span class="line">// 5</span><br></pre></td></tr></table></figure>
+<p>如上，函数的参数是一个对象， 参数变量 <code>x</code> 和 <code>y</code> 通过解构赋值而生成。</p>
+<p>当传递给函数的参数不是一个对象时，将会报错。</p>
+<p>请注意以下写法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function fetch(url, &#123; body = &apos;&apos;, method = &apos;GET&apos;, headers = &#123;&#125; &#125; = &#123;&#125;) &#123;</span><br><span class="line">   alert(method)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetch(&apos;https://www.sina.com/page/1&apos;)</span><br></pre></td></tr></table></figure>
+<p><code>fetch</code> 函数的第二参数可以省略，因为已经在声明函数的同时结合结构对第二个参数进行了默认赋初值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function fetch1(url, &#123; body = &apos;&apos;, method = &apos;GET&apos;, headers = &#123;&#125; &#125;) &#123;</span><br><span class="line">   alert(method)</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">fetch(&apos;https://ww.sian.com/page/1&apos;,&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>fetch1</code> 函数的第二参数是一个对象，在调用该函数时不可省略，其和第一个参数 <code>url</code> 的性质是一样的。</p>
+<p>在看以下两种写法的差别:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 写法一</span><br><span class="line">function m1 ( &#123; x = 0, y = 0&#125; = &#123;&#125;)&#123;</span><br><span class="line">    return [x, y]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 写法二</span><br><span class="line">function m2 ( &#123;x, y&#125; = &#123;x:0, y:0&#125;)&#123;</span><br><span class="line">    return [x, y]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 函数没有参数的情况</span><br><span class="line">m1() // [0, 0]</span><br><span class="line">m2() // [0, 0]</span><br><span class="line"></span><br><span class="line">// x和y都无值的情况</span><br><span class="line">m1(&#123;&#125;) // [0, 0];</span><br><span class="line">m2(&#123;&#125;) // [undefined, undefined]</span><br></pre></td></tr></table></figure>
+<p>上面两种写法都对函数的参数设定了默认值，区别是写法一函数参数的默认值是空对象，但是设置了对象解构赋值的默认值；写法二函数参数的默认值是一个有具体属性的对象，但是没有设置对象解构赋值的默认值。</p>
+<blockquote>
+<p>一旦函数有多个参数并指定了默认值，那么调用函数时，便不能省略非尾部的参数</p>
+</blockquote>
+<hr>
+<h4 id="函数作用域小探"><a href="#函数作用域小探" class="headerlink" title="函数作用域小探"></a>函数作用域小探</h4><p>来看一个复杂点的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var x = 1</span><br><span class="line">function foo(x, y = function () &#123; x = 2&#125;)&#123;</span><br><span class="line">    console.log(x)</span><br><span class="line">    var x = 3</span><br><span class="line">    y()</span><br><span class="line">    console.log(x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo()</span><br><span class="line">// undefined</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
+<p>如上，函数 <code>foo</code> 的参数 y 的默认值是一个匿名函数。函数<code>foo</code>调用时，它的参数 <code>x</code> 的值为 <code>undefined</code>，所以 y 函数内部的 x 一开始是 <code>undefined</code> ，后来被重新赋值 2。但是，函数 <code>foo</code> 内部重新声明了一个 <code>x</code>，值为3，这两个 <code>x</code> 是不一样的，互相不产生影响，因此最后输出 3。</p>
+<hr>
+<h3 id="0x02-rest-参数"><a href="#0x02-rest-参数" class="headerlink" title="0x02 rest 参数"></a>0x02 rest 参数</h3><p>ES6引入 <code>rest</code> 参数（形式为“…变量名”），用于获取函数的多余参数，这样就不需要使用 <code>arguments</code> 对象了。<code>rest</code> 参数中的变量代表一个数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function  add(...values) &#123;</span><br><span class="line">    let sum = 0;</span><br><span class="line">    for( let val of values)&#123;</span><br><span class="line">        sum += val</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return sum</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add(3,45,56,6)</span><br></pre></td></tr></table></figure>
+<h4 id="使用-rest-参数替代-arguments"><a href="#使用-rest-参数替代-arguments" class="headerlink" title="使用 rest 参数替代 arguments"></a>使用 rest 参数替代 arguments</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// arguments 对象写法</span><br><span class="line">function sortNumbers() &#123;</span><br><span class="line">        return Array.prototype.slice.call(arguments).sort()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// rest 参数写法</span><br><span class="line">const sortNumbers1 = (...numbers) =&gt; numbers.sort()</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-扩展运算符-…"><a href="#0x03-扩展运算符-…" class="headerlink" title="0x03 扩展运算符 …"></a>0x03 扩展运算符 …</h3><p><strong>扩展运算符</strong>（spread）是三个点 (…)。我们将其看作 <strong>rest</strong> 参数的逆操作，该运算符将一个数组，变为参数序列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function add(x, y) &#123;</span><br><span class="line">    return x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var numbers = [4, 38]</span><br><span class="line">add(...numbers) //42</span><br></pre></td></tr></table></figure>
+<p>扩展运算符与正常的函数参数可以结合使用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f(u, v, w, x, y) &#123;&#125;</span><br><span class="line">var args = [0, 1]</span><br><span class="line">f(-1, ...args, 2, ...[3])</span><br></pre></td></tr></table></figure>
+<h5 id="替代数组-apply-方法"><a href="#替代数组-apply-方法" class="headerlink" title="替代数组 apply 方法"></a>替代数组 apply 方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var arr1 = [0, 1, 2]</span><br><span class="line">var arr2 = [3, 4, 5]</span><br><span class="line"></span><br><span class="line">// ES5</span><br><span class="line">Array.prototype.push.apply(arr1, arr2)</span><br><span class="line"></span><br><span class="line">// ES6</span><br><span class="line">arr1.push(...arr2)</span><br></pre></td></tr></table></figure>
+<p><code>push</code> 方法的参数不能是数组，所以只好通过 <code>apply</code> 方法变通使用 <code>push</code>方法。有了 <strong>扩展运算符</strong>，就可以直接将数组传入 <code>push</code> 方法.</p>
+<h5 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var arr1 = [&apos;a&apos;, &apos;b&apos;];</span><br><span class="line">var arr2 = [&apos;c&apos;];</span><br><span class="line">var arr3 = [&apos;d&apos;, &apos;e&apos;];</span><br><span class="line"></span><br><span class="line">// ES5的合并数组</span><br><span class="line">arr1.concat(arr2, arr3);</span><br><span class="line">// [ &apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos; ]</span><br><span class="line"></span><br><span class="line">// ES6的合并数组</span><br><span class="line">[...arr1, ...arr2, ...arr3]</span><br><span class="line">// [ &apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos; ]</span><br></pre></td></tr></table></figure>
+<h5 id="与解构赋值结合"><a href="#与解构赋值结合" class="headerlink" title="与解构赋值结合"></a>与解构赋值结合</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const [first, ...rest] = [1, 2, 3, 4]</span><br><span class="line">first // 1</span><br><span class="line">rest  // [2, 3, 4]</span><br></pre></td></tr></table></figure>
+<h4 id="将字符串转换为数组"><a href="#将字符串转换为数组" class="headerlink" title="将字符串转换为数组"></a>将字符串转换为数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...&apos;Hello&apos;]</span><br><span class="line">// [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]</span><br></pre></td></tr></table></figure>
+<h5 id="将-Iterator-接口的对象转换为数组"><a href="#将-Iterator-接口的对象转换为数组" class="headerlink" title="将 Iterator 接口的对象转换为数组"></a>将 Iterator 接口的对象转换为数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var nodeList = document.querySelector(&apos;div&apos;)</span><br><span class="line">var array = [...nodeList]</span><br></pre></td></tr></table></figure>
+<p>如下，我们将一个 <code>nodeList</code> 对象转换为了一个数组。</p>
+<p>但是，扩展运算符无法转换那些没有部署 <code>Iterator</code> 接口的类似数组的对象。在这种情况下，可以改为使用 <code>Array.from</code> 方法将 <code>arrayLike</code> 转为真正的数组。</p>
+<hr>
+<h3 id="0x04-箭头函数"><a href="#0x04-箭头函数" class="headerlink" title="0x04 箭头函数"></a>0x04 箭头函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var f = v =&gt; v;</span><br><span class="line"></span><br><span class="line">//等同于:</span><br><span class="line">var f = function (v) &#123; return v;&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果没有参数或者需要多个参数，就使用一个圆括号代表参数部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var f = () =&gt; 5;</span><br><span class="line">// 等同于 </span><br><span class="line">var f = function () &#123; return 5;&#125;;</span><br><span class="line"></span><br><span class="line">var sum = (sum1, sum2) =&gt; &#123;sum1 + sum2;&#125;;</span><br><span class="line">// 等同于</span><br><span class="line">var sum = function (sum1 + sum2) &#123;return sum1 + sum2&#125;</span><br></pre></td></tr></table></figure>
+<p>如上，当函数体多于一条语句的时候便使用大括号 <code>{}</code> 将其括起。 </p>
+<hr>
+<h4 id="箭头函数使用场景"><a href="#箭头函数使用场景" class="headerlink" title="箭头函数使用场景"></a>箭头函数使用场景</h4><p>下面是一些箭头函数使用的场景:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3].map( x =&gt; x * x);</span><br><span class="line"></span><br><span class="line">// 对数组排序</span><br><span class="line">var result = values.sort((a, b) =&gt; a - b)</span><br><span class="line"></span><br><span class="line">// 结合 rest 参数</span><br><span class="line">const numbers = (...nums) =&gt; nums;</span><br><span class="line">numbers(1, 2, 4, 5)</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="箭头函数注意点"><a href="#箭头函数注意点" class="headerlink" title="箭头函数注意点"></a>箭头函数注意点</h4><ol>
+<li>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。箭头函数中，<code>this</code> 它是固定的。</li>
+<li>不可以当作构造函数，也就是说，不可以使用 <code>new</code> 命令。</li>
+<li>不可以使用 <code>arguments</code> 对象，该对象在函数体内不存在。如果要用，可以用 <code>Rest</code> 参数代替。</li>
+<li>不可以使用 <code>yield</code> 命令，因此箭头函数不能用作 <code>Generator</code> 函数。</li>
+</ol>
+<p>由于箭头函数没有自己的 <code>this</code>，所以当然也就不能用<code>call()</code>、<code>apply()</code>、<code>bind()</code>这些方法去改变 <code>this</code> 的指向。</p>
+<p>###</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/26/ES6(7)数组的扩展/" rel="next" title="ES6(7)数组的扩展">
+                <i class="fa fa-chevron-left"></i> ES6(7)数组的扩展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/26/ES6(16)Promise/" rel="prev" title="ES6(16)Promise">
+                ES6(16)Promise <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-参数默认值"><span class="nav-number">1.</span> <span class="nav-text">0x00 参数默认值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-参数默认值解构赋值"><span class="nav-number">2.</span> <span class="nav-text">0x01 参数默认值解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数作用域小探"><span class="nav-number">2.1.</span> <span class="nav-text">函数作用域小探</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-rest-参数"><span class="nav-number">3.</span> <span class="nav-text">0x02 rest 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-rest-参数替代-arguments"><span class="nav-number">3.1.</span> <span class="nav-text">使用 rest 参数替代 arguments</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-扩展运算符-…"><span class="nav-number">4.</span> <span class="nav-text">0x03 扩展运算符 …</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#替代数组-apply-方法"><span class="nav-number">4.0.1.</span> <span class="nav-text">替代数组 apply 方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#合并数组"><span class="nav-number">4.0.2.</span> <span class="nav-text">合并数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#与解构赋值结合"><span class="nav-number">4.0.3.</span> <span class="nav-text">与解构赋值结合</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将字符串转换为数组"><span class="nav-number">4.1.</span> <span class="nav-text">将字符串转换为数组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#将-Iterator-接口的对象转换为数组"><span class="nav-number">4.1.1.</span> <span class="nav-text">将 Iterator 接口的对象转换为数组</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-箭头函数"><span class="nav-number">5.</span> <span class="nav-text">0x04 箭头函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#箭头函数使用场景"><span class="nav-number">5.1.</span> <span class="nav-text">箭头函数使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#箭头函数注意点"><span class="nav-number">5.2.</span> <span class="nav-text">箭头函数注意点</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

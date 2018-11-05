@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SQL查询的艺术,存储过程与函数,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00SQL调用例程是一个能被SQL调用的过程和函数。函数和过程都是预先定义的SQL语句，能够执行一定的操作。函数和过程本质上并没有太大的区别。 下面主要以SQL Server中存储过程为例，对于Oracle数据库只做简单介绍。  0x01 SQL Server中的控制流语句 begin—end 语句定义一串由顺序执行的SQL语句构成的块。  IF—ELSE 语句有条件的执行某些语句。 例如在s">
+<meta name="keywords" content="SQL查询的艺术,存储过程与函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL存储过程">
+<meta property="og:url" content="http://yoursite.com/2016/07/05/存储过程与函数/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00SQL调用例程是一个能被SQL调用的过程和函数。函数和过程都是预先定义的SQL语句，能够执行一定的操作。函数和过程本质上并没有太大的区别。 下面主要以SQL Server中存储过程为例，对于Oracle数据库只做简单介绍。  0x01 SQL Server中的控制流语句 begin—end 语句定义一串由顺序执行的SQL语句构成的块。  IF—ELSE 语句有条件的执行某些语句。 例如在s">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL存储过程">
+<meta name="twitter:description" content="0x00SQL调用例程是一个能被SQL调用的过程和函数。函数和过程都是预先定义的SQL语句，能够执行一定的操作。函数和过程本质上并没有太大的区别。 下面主要以SQL Server中存储过程为例，对于Oracle数据库只做简单介绍。  0x01 SQL Server中的控制流语句 begin—end 语句定义一串由顺序执行的SQL语句构成的块。  IF—ELSE 语句有条件的执行某些语句。 例如在s">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/05/存储过程与函数/">
+
+
+
+
+
+  <title>SQL存储过程 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/05/存储过程与函数/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQL存储过程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-05T09:26:00+08:00">
+                2016-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h3><p>SQL调用例程是一个能被SQL调用的过程和函数。函数和过程都是预先定义的SQL语句，能够执行一定的操作。函数和过程本质上并没有太大的区别。</p>
+<p>下面主要以SQL Server中存储过程为例，对于Oracle数据库只做简单介绍。</p>
+<hr>
+<h3 id="0x01-SQL-Server中的控制流语句"><a href="#0x01-SQL-Server中的控制流语句" class="headerlink" title="0x01 SQL Server中的控制流语句"></a>0x01 SQL Server中的控制流语句</h3><hr>
+<h4 id="begin—end-语句"><a href="#begin—end-语句" class="headerlink" title="begin—end 语句"></a>begin—end 语句</h4><p>定义一串由顺序执行的SQL语句构成的块。</p>
+<hr>
+<h4 id="IF—ELSE-语句"><a href="#IF—ELSE-语句" class="headerlink" title="IF—ELSE 语句"></a>IF—ELSE 语句</h4><p>有条件的执行某些语句。</p>
+<h5 id="例如在student表中查询学号110学生的成绩状况。"><a href="#例如在student表中查询学号110学生的成绩状况。" class="headerlink" title="例如在student表中查询学号110学生的成绩状况。"></a>例如在student表中查询学号110学生的成绩状况。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (select min(mark) from student where sno=&apos;110&apos;) &gt; 90</span><br><span class="line">    pjrint &apos;该生成绩全部优秀&apos;</span><br><span class="line">else</span><br><span class="line">if (select min(mark) from student where sno=&apos;110&apos;) &gt; 60</span><br><span class="line">    print &apos;该生成绩全部合格&apos;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="while，break和continue-语句"><a href="#while，break和continue-语句" class="headerlink" title="while，break和continue 语句"></a>while，break和continue 语句</h4><p>在student表中，如果110学生的平均成绩小于75，则将该生的每门成绩以5%的比例提高，当平均成绩都大于60时，终止操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">while (select avg (mark) from student where sno=&apos;110&apos;) &lt; 75</span><br><span class="line">    begin </span><br><span class="line">        update student</span><br><span class="line">        set mark = mark*1.05</span><br><span class="line">        if (select min (mark) from student where sno=&apos;110&apos; ) &gt;=60</span><br><span class="line">            break</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="declare-语句"><a href="#declare-语句" class="headerlink" title="declare 语句"></a>declare 语句</h4><p>declare用来定义一个局部变量，可用select语句为该变量赋值，这个变量必须用@开头跟着一个标识符。</p>
+<h5 id="在student表中查询学号110学生的成绩状况"><a href="#在student表中查询学号110学生的成绩状况" class="headerlink" title="在student表中查询学号110学生的成绩状况"></a>在student表中查询学号110学生的成绩状况</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">declare @verygood int</span><br><span class="line">    select @verygood = min(mark)</span><br><span class="line">    from student</span><br><span class="line">    where sno=&apos;110&apos;</span><br><span class="line">    if @verygood &gt; 60</span><br><span class="line">    print &apos;成绩合格&apos;</span><br></pre></td></tr></table></figure>
+<p>全局变量在形式上与局部变量不同，它们冠以两个@符号，如@@error。</p>
+<p>局部变量的定义和使用必须在同一个存储过程中。</p>
+<hr>
+<h4 id="goto-label-语句"><a href="#goto-label-语句" class="headerlink" title="goto label 语句"></a>goto label 语句</h4><p>goto label语句用来无条件将语句的执行顺序转到用户定义的标号(label)处，语法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label1:</span><br><span class="line">goto label</span><br></pre></td></tr></table></figure>
+<h5 id="goto输出四个’hello’"><a href="#goto输出四个’hello’" class="headerlink" title="goto输出四个’hello’"></a>goto输出四个’hello’</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">declare @count_int int</span><br><span class="line">select @count_int =1</span><br><span class="line">restart:</span><br><span class="line">print &apos;hello&apos;</span><br><span class="line">select @count_int=@count_int+1</span><br><span class="line">while @count_int&lt;=4</span><br><span class="line">goto restart</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="waitfor"><a href="#waitfor" class="headerlink" title="waitfor"></a>waitfor</h4><p>用来定义某天中的一个时刻，执行一个语句块。</p>
+<p>语法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">waitfor &#123; delay &apos;time&apos; | time &apos;time&apos; &#125;</span><br></pre></td></tr></table></figure>
+<p>delay说明了SQL server 执行语句要等待时间。<br>time说明了要等到哪个时刻。</p>
+<h5 id="在晚上22-20点执行存储过程uodate-all-stats"><a href="#在晚上22-20点执行存储过程uodate-all-stats" class="headerlink" title="在晚上22:20点执行存储过程uodate_all_stats"></a>在晚上22:20点执行存储过程uodate_all_stats</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begin</span><br><span class="line">	waitfor time &apos;22:20&apos;</span><br><span class="line">	execute updata_all_stats</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x02-SQL-Server中的存储过程和函数"><a href="#0x02-SQL-Server中的存储过程和函数" class="headerlink" title="0x02 SQL Server中的存储过程和函数"></a>0x02 SQL Server中的存储过程和函数</h3><p>在SQL Server中，存储过程分为两类:系统提供的存储过程和用户自定义的存储过程。系统存储过程主要存储在master数据库中，以sp_为前缀，主要是从系统表中获得信息。</p>
+<p>主要有:</p>
+<ul>
+<li><strong>目录存储过程</strong></li>
+<li><strong>复制类存储过程</strong></li>
+<li><strong>安全管理类存储过程</strong></li>
+<li><strong>分布查询存储过程</strong></li>
+</ul>
+<hr>
+<h4 id="创建存储过程"><a href="#创建存储过程" class="headerlink" title="创建存储过程"></a>创建存储过程</h4><h5 id="Create-procedure"><a href="#Create-procedure" class="headerlink" title="Create procedure"></a>Create procedure</h5><p>在SQL Server中我们可以使用Create Procedure创建，编译存储过程。</p>
+<p>创建存储过程usp_show_teacher，用于查询所有教师信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create procedure usp_show_teacher</span><br><span class="line">as</span><br><span class="line">select * from teacher</span><br></pre></td></tr></table></figure>
+<p>创建存储过程，usp_select_teacher，查询特定系教师的信息，判断教师的年龄结构并将该系教师的平均年龄和最大年龄传递给用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">create procedure usp_select_teacher @depart char(10),@avg_age int OUTPUT,@max_avg int OUTPUT</span><br><span class="line">as</span><br><span class="line">select * from teacher</span><br><span class="line">where dname=@depart</span><br><span class="line">select @max_age=MAX(AGE)</span><br><span class="line">from teacher</span><br><span class="line">where dname=AVG(AGE)</span><br><span class="line">from teacher</span><br><span class="line">where dname=@dapart</span><br><span class="line">if @avg_age&lt;=30</span><br><span class="line">select &apos;年龄结构偏轻&apos;,&apos;平均年龄&apos;=@avg_age</span><br><span class="line">if @avg_age &gt;30</span><br><span class="line">select &apos;年龄结构合理&apos;,&apos;平均年龄&apos;=@avg_age</span><br></pre></td></tr></table></figure>
+<p>其中OUTPUT代表该参数是游标(cursor)数据类型，如果参数为游标类型，则该参数必须被指定为VARING和OUTPUT类型，OUTPUT表明该参数是一个返回参数，可以向调用者返回信息，但是TEXT类型的参数不能用作OUTPUT类型。</p>
+<h5 id="execute调用存储过程"><a href="#execute调用存储过程" class="headerlink" title="execute调用存储过程"></a>execute调用存储过程</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare @avgage int,@maxage int</span><br><span class="line">execute usp_select_teacher &apos;计算机&apos;,@avgage OUTPUT,@maxge OUTPUT</span><br><span class="line">select @avgage,@maxage/*输出平均年龄与最大年龄*/</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="创建函数"><a href="#创建函数" class="headerlink" title="创建函数"></a>创建函数</h4><p>函数不能执行insert，update和delete操作。SQL Server中有三种类型的自定义函数:标量函数(Scalar Functions)，内联值型函数(Inline Table-valued Functions)，多声明表值型函数(Muti-statement Tabel-valued Functions)</p>
+<hr>
+<h4 id="修改和删除存储过程"><a href="#修改和删除存储过程" class="headerlink" title="修改和删除存储过程"></a>修改和删除存储过程</h4><h5 id="sp-helptext-查看存储过程源代码"><a href="#sp-helptext-查看存储过程源代码" class="headerlink" title="sp_helptext 查看存储过程源代码"></a>sp_helptext 查看存储过程源代码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sp_helptext sp_name</span><br></pre></td></tr></table></figure>
+<p>sp_name为存储过程的名称。</p>
+<h5 id="sp-rename重命名存储过程"><a href="#sp-rename重命名存储过程" class="headerlink" title="sp_rename重命名存储过程"></a>sp_rename重命名存储过程</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sp_rename old_name,new_name</span><br></pre></td></tr></table></figure>
+<h6 id="drop删除存储过程"><a href="#drop删除存储过程" class="headerlink" title="drop删除存储过程"></a>drop删除存储过程</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop sp_name</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL查询的艺术/" rel="tag"># SQL查询的艺术</a>
+          
+            <a href="/tags/存储过程与函数/" rel="tag"># 存储过程与函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/03/NIkto/" rel="next" title="Nikto">
+                <i class="fa fa-chevron-left"></i> Nikto
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/05/完整性约束/" rel="prev" title="SQL完整性约束">
+                SQL完整性约束 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00"><span class="nav-number">1.</span> <span class="nav-text">0x00</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-SQL-Server中的控制流语句"><span class="nav-number">2.</span> <span class="nav-text">0x01 SQL Server中的控制流语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#begin—end-语句"><span class="nav-number">2.1.</span> <span class="nav-text">begin—end 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IF—ELSE-语句"><span class="nav-number">2.2.</span> <span class="nav-text">IF—ELSE 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#例如在student表中查询学号110学生的成绩状况。"><span class="nav-number">2.2.1.</span> <span class="nav-text">例如在student表中查询学号110学生的成绩状况。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#while，break和continue-语句"><span class="nav-number">2.3.</span> <span class="nav-text">while，break和continue 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#declare-语句"><span class="nav-number">2.4.</span> <span class="nav-text">declare 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在student表中查询学号110学生的成绩状况"><span class="nav-number">2.4.1.</span> <span class="nav-text">在student表中查询学号110学生的成绩状况</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#goto-label-语句"><span class="nav-number">2.5.</span> <span class="nav-text">goto label 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#goto输出四个’hello’"><span class="nav-number">2.5.1.</span> <span class="nav-text">goto输出四个’hello’</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#waitfor"><span class="nav-number">2.6.</span> <span class="nav-text">waitfor</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在晚上22-20点执行存储过程uodate-all-stats"><span class="nav-number">2.6.1.</span> <span class="nav-text">在晚上22:20点执行存储过程uodate_all_stats</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-SQL-Server中的存储过程和函数"><span class="nav-number">3.</span> <span class="nav-text">0x02 SQL Server中的存储过程和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建存储过程"><span class="nav-number">3.1.</span> <span class="nav-text">创建存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Create-procedure"><span class="nav-number">3.1.1.</span> <span class="nav-text">Create procedure</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#execute调用存储过程"><span class="nav-number">3.1.2.</span> <span class="nav-text">execute调用存储过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建函数"><span class="nav-number">3.2.</span> <span class="nav-text">创建函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改和删除存储过程"><span class="nav-number">3.3.</span> <span class="nav-text">修改和删除存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sp-helptext-查看存储过程源代码"><span class="nav-number">3.3.1.</span> <span class="nav-text">sp_helptext 查看存储过程源代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sp-rename重命名存储过程"><span class="nav-number">3.3.2.</span> <span class="nav-text">sp_rename重命名存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#drop删除存储过程"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">drop删除存储过程</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

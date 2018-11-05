@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="鸟哥的Linux读书笔记基础篇,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 关于BASH管理整个计算机硬件的其实是操作系统的核心 (kernel)，这个核心是需要被保护的！ 所以我们一般使用者就只能透过 shell 来跟核心沟通，以让核心达到我们所想要达到的工作。 Shell其实就是能够操作应用程序的接口的壳程序！ 但是shell的版本是很多的，比如Bourne SHell(sh),C SHell,商业上常用的K SHell，以及Bourn Again SHel">
+<meta name="keywords" content="鸟哥的Linux读书笔记基础篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十一章-BASH">
+<meta property="og:url" content="http://yoursite.com/2016/04/10/第十一章-认识与学习BASH/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 关于BASH管理整个计算机硬件的其实是操作系统的核心 (kernel)，这个核心是需要被保护的！ 所以我们一般使用者就只能透过 shell 来跟核心沟通，以让核心达到我们所想要达到的工作。 Shell其实就是能够操作应用程序的接口的壳程序！ 但是shell的版本是很多的，比如Bourne SHell(sh),C SHell,商业上常用的K SHell，以及Bourn Again SHel">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第十一章-BASH">
+<meta name="twitter:description" content="0x00 关于BASH管理整个计算机硬件的其实是操作系统的核心 (kernel)，这个核心是需要被保护的！ 所以我们一般使用者就只能透过 shell 来跟核心沟通，以让核心达到我们所想要达到的工作。 Shell其实就是能够操作应用程序的接口的壳程序！ 但是shell的版本是很多的，比如Bourne SHell(sh),C SHell,商业上常用的K SHell，以及Bourn Again SHel">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/10/第十一章-认识与学习BASH/">
+
+
+
+
+
+  <title>第十一章-BASH | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/10/第十一章-认识与学习BASH/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第十一章-BASH</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-10T22:22:52+08:00">
+                2016-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-关于BASH"><a href="#0x00-关于BASH" class="headerlink" title="0x00 关于BASH"></a>0x00 关于BASH</h3><p>管理整个计算机硬件的其实是操作系统的核心 (kernel)，这个核心是需要被保护的！ 所以我们一般使用者就只能透过 shell 来跟核心沟通，以让核心达到我们所想要达到的工作。</p>
+<p>Shell其实就是能够操作应用程序的接口的壳程序！</p>
+<p>但是shell的版本是很多的，比如Bourne SHell(sh),C SHell,商业上常用的K SHell，以及Bourn Again SHell(bash)这个是Bourne SHell的增强版！</p>
+<p>而bash 是 GNU 计划中重要的工具软件之一，目前也是 Linux distributions 的标准 shell 。 bash 主要兼容于 sh ，并且依据一些使用者需求，而加强的 shell 版本。不论你使用的是那个 distribution ，你都难逃需要学习 bash 的宿命啦！</p>
+<p>查看/etc/shells文件看看我们的电脑可以使用哪些shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cat /etc/shells </span><br><span class="line"># /etc/shells: valid login shells</span><br><span class="line">/bin/sh</span><br><span class="line">/bin/dash</span><br><span class="line">/bin/bash</span><br><span class="line">/bin/rbash</span><br><span class="line">/usr/bin/screen</span><br><span class="line">/usr/bin/tmux</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="Bash-shell的功能"><a href="#Bash-shell的功能" class="headerlink" title="Bash shell的功能:"></a>Bash shell的功能:</h4><p><strong>命令记忆功能:</strong><br>bash最棒的一个功能就是能记住你过去使用过的命令，默认可以记住1000条，它会将所有记住的命令存放在你的加目录.bash_history中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cat .bash_history</span><br></pre></td></tr></table></figure></p>
+<p>但需要知道的是，~/.bash_history 记录的是前一次登陆以前所运行过的命令，而至于这一次登陆所运行的命令都被缓存在内存中，当你成功的注销系统后，该命令记忆才会记录到 .bash_history 当中！</p>
+<p><strong>命令别名配置功能:(alias)</strong><br>我们可以个一些常用的同时又很复杂的命令设置别名，比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# alias lm=&apos;ls -al&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>通配符:</strong><br>bash还支持许多的通配符来帮助用户查询与命令下达:<br>例如:<strong>{ $ ls -l /usr/bin/X* }</strong>查询/usr/bin下以X开头的文件.</p>
+<p><strong>小插曲:</strong>命令的下达</p>
+<p>使用(反斜杠)来跳脱:当我们下达的命令太长需要两行时:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cp /var/spool/mail/root/etc/crontab\</span><br><span class="line">&gt; /etc/bin /root</span><br></pre></td></tr></table></figure></p>
+<p>将三个文件复制到/root下。</p>
+<hr>
+<h3 id="0x01-shell的变量功能"><a href="#0x01-shell的变量功能" class="headerlink" title="0x01 shell的变量功能"></a>0x01 shell的变量功能</h3><hr>
+<h4 id="变量的取用与配置"><a href="#变量的取用与配置" class="headerlink" title="变量的取用与配置"></a>变量的取用与配置</h4><p>首先我们来取出变量的内容出来看看，这样我们便要用到echo命令了，当然echo的可不止这一个哈，后面我们会慢慢道来，变量在被取用时，前面必须要加上美元符号”$”,或者用”${PATH}”来读取！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">root@jack:~# echo $&#123;PATH&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="在shell中配置一个变量"><a href="#在shell中配置一个变量" class="headerlink" title="在shell中配置一个变量"></a>在shell中配置一个变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# echo $myname</span><br><span class="line">root@jack:~# myname=jack</span><br><span class="line">root@jack:~# echo $myname</span><br><span class="line">jack</span><br></pre></td></tr></table></figure>
+<p>若你有一个常去的工作目录名称为：『/cluster/server/work/taiwan_2005/003/』，如何进行该目录的简化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~#  work=&quot;/cluster/server/work/taiwan_2005/003/&quot;</span><br><span class="line">root@jack:~# cd $work</span><br></pre></td></tr></table></figure></p>
+<h4 id="变量的配置规则"><a href="#变量的配置规则" class="headerlink" title="变量的配置规则:"></a>变量的配置规则:</h4><ul>
+<li><p>变量内容若有空格符号可以使用双引号(“)或单引号(‘)将变量内容结合起来，但:</p>
+<ul>
+<li>双引号内的特殊字符如 $ 等，可以保有原本的特性，如下所示：『var=”lang is $LANG”』则『echo $var』可得『lang is en_US』</li>
+<li>单引号内的特殊字符则仅为一般字符 (纯文本)，如下所示：『var=’lang is $LANG’』则『echo $var』可得『lang is $LANG』</li>
+</ul>
+</li>
+<li><p>可用跳脱字符『 \ 』将特殊符号(如 [Enter], $, \, 空格符, ‘等)变成一般字符；</p>
+</li>
+<li><p>在一串命令中，还需要藉由其他的命令提供的信息，可以使用反单引号『`命令`』或『$(命令)』。特别注意，那个 ` 是键盘上方的数字键 1 左边那个按键，而不是单引号！例如想要取得核心版本的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# uname -r</span><br><span class="line">4.0.0-kali1-amd64</span><br><span class="line">root@jack:~# versoin=$(uname -r)</span><br><span class="line">root@jack:~# echo $versoin </span><br><span class="line">4.0.0-kali1-amd64</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>已知locate命令可以列出所有的相关文件来，但是如果我想知道所有文件的权限呢?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls -l `locate sina`</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>若该变量为扩增变量内容时，则可用 “$变量名称” 或 ${变量} 累加内容，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# version=$&#123;version&#125;yes</span><br><span class="line">root@jack:~# echo $version</span><br><span class="line">4.0.0-kali1-amd64yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若该变量需要在其他子程序运行，则需要以 export 来使变量变成环境变量：<br>『export PATH』</p>
+</li>
+<li><p>取消变量的方法为使用 unset 『unset变量名称』例如取消 myname 的配置:unset myname</p>
+</li>
+</ul>
+<hr>
+<h3 id="0x02-环境变量的功能"><a href="#0x02-环境变量的功能" class="headerlink" title="0x02 环境变量的功能"></a>0x02 环境变量的功能</h3><p>我们可以使用env和export两个命令来查看目前我的shell环境中有多少默认的环境变量!</p>
+<hr>
+<h4 id="env观察环境变量与常用环境变量"><a href="#env观察环境变量与常用环境变量" class="headerlink" title="env观察环境变量与常用环境变量:"></a>env观察环境变量与常用环境变量:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# env</span><br><span class="line">XDG_VTNR=7</span><br><span class="line">GPG_AGENT_INFO=/run/user/0/keyring/gpg:0:1</span><br><span class="line">SHELL=/bin/bash &#123; 代表目前使用的shell&#125;</span><br><span class="line">TERM=xterm</span><br><span class="line">LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;</span><br><span class="line">.........(省略)</span><br><span class="line">USERNAME=root</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &#123; 这个就是运行文件搜索的路径啦，目录与目录之间用冒号隔开&#125;</span><br><span class="line">DESKTOP_SESSION=default</span><br><span class="line">QT_IM_MODULE=fcitx</span><br><span class="line">PWD=/root</span><br><span class="line">HOME=/root &#123; 代表用户的家目录，很多程序都可能会取用到这个变量的值!&#125;</span><br></pre></td></tr></table></figure>
+<p>env是(enviroment)的缩写，上面的意思是列出所有的环境变量来，当然export其中的一个功能也是可以这样的！</p>
+<hr>
+<h4 id="set观察所有变量-包括环境变量与自定义变量"><a href="#set观察所有变量-包括环境变量与自定义变量" class="headerlink" title="set观察所有变量(包括环境变量与自定义变量)"></a>set观察所有变量(包括环境变量与自定义变量)</h4><p>set 除了环境变量之外， 还会将其他在 bash 内的变量通通显示出来，下面仅列出几个重要的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# set</span><br><span class="line">GTK_IM_MODULE=fcitx</span><br><span class="line">HISTCONTROL=ignoreboth</span><br><span class="line">HISTFILE=/root/.bash_history</span><br><span class="line">HISTFILESIZE=2000</span><br><span class="line">HISTSIZE=1000</span><br><span class="line">HOME=/root</span><br><span class="line">HOSTNAME=jack</span><br><span class="line">HOSTTYPE=x86_64</span><br><span class="line">IFS=$&apos; \t\n&apos;</span><br><span class="line">LANG=zh_CN.UTF-8</span><br><span class="line">LINES=24</span><br><span class="line">LOGNAME=root</span><br></pre></td></tr></table></figure>
+<p>基本上，在 Linux默认的情况中，使用{大写的字母}来配置的变量一般为系统内定需要的变量，比较重要的有以下几个:</p>
+<h5 id="PS1-提示字符的配置"><a href="#PS1-提示字符的配置" class="headerlink" title="PS1:提示字符的配置"></a>PS1:提示字符的配置</h5><p>这是 PS1 (数字的 1 不是英文字母)，这个东西就是我们的『命令提示字符』喔！当我们每次按下 [Enter] 按键去运行某个命令后，最后要再次出现提示字符时，    就会主动去读取这个变量值了</p>
+<pre><code>* \d ：可显示出『星期 月 日』的日期格式，如：&quot;Mon Feb 2&quot;
+* \H ：完整的主机名。举例来说，鸟哥的练习机为『www.vbird.tsai』
+* \h ：仅取主机名在第一个小数点之前的名字，如鸟哥主机则为『www』后面省略 
+*  \t ：显示时间，为 24 小时格式的『HH:MM:SS』
+*  \T ：显示时间，为 12 小时格式的『HH:MM:SS』
+* \A ：显示时间，为 24 小时格式的『HH:MM』
+* \@ ：显示时间，为 12 小时格式的『am/pm』样式
+* \u ：目前使用者的账号名称，如『root』；
+* \v ：BASH 的版本信息，如鸟哥的测试主板本为 3.2.25(1)，仅取『3.2』显示
+* \w ：完整的工作目录名称，由根目录写起的目录名称。但家目录会以 ~ 取代；
+* \W ：利用 basename 函数取得工作目录名称，所以仅会列出最后一个目录名。
+* \# ：下达的第几个命令。
+* \$ ：提示字符，如果是 root 时，提示字符为 # ，否则就是 $ 啰～
+</code></pre><p>配置我的字符提示变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# PS1=&apos;[\u@\h \w \A #\#]\$ &apos;</span><br><span class="line">[root@jack ~ 15:27 #2]# ls</span><br></pre></td></tr></table></figure></p>
+<h5 id="export-自定义变量转换成环境变量"><a href="#export-自定义变量转换成环境变量" class="headerlink" title="export 自定义变量转换成环境变量"></a>export 自定义变量转换成环境变量</h5><p>其实所谓的环境变量(也可以理解为全局变量)与自定义变量(也可以理解为局部变量)的区别便是，<strong>该变量是否会被子程序所继续引用</strong>。当我们登录Linux并取得一个bash后，我们得到的bash就是一个独立的程序，接下来在这个bash底下所下达的任何命令都是由这个bash衍生出来的，那些被下达的命令就被成为子程序了，在shell中，<strong>子程序仅会继承父程序的环境变量，而不会继承父程序的自定义变量</strong>,所以这时export命令就很有用了！export主要用在<strong>分享自己的变量配置给后来呼叫的文件或其他程序</strong>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@jack ~ 15:46 #4]# export 变量名</span><br></pre></td></tr></table></figure></p>
+<p>这里关于如何就爱那个环境变量转换成自定义变量将在后续的declare里介绍！</p>
+<hr>
+<h3 id="0x03-变量键盘读取，数组，声明-read-array-declare"><a href="#0x03-变量键盘读取，数组，声明-read-array-declare" class="headerlink" title="0x03 变量键盘读取，数组，声明:read,array,declare"></a>0x03 变量键盘读取，数组，声明:read,array,declare</h3><hr>
+<h4 id="read"><a href="#read" class="headerlink" title="read"></a>read</h4><p> 用来读取来自键盘的输入的变量，用法如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">选与参数:&#123; USE $: read [-pt] variable &#125;</span><br><span class="line">-p:后面可以接提示字符</span><br><span class="line">-t:后面接等待的&quot;秒数&quot;</span><br></pre></td></tr></table></figure></p>
+<p>从键盘输入一内容，并将该内容赋值给test变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# read test</span><br><span class="line">this is test   &quot;&#123;此时光标会等待你输入，此处我输入的是&quot;this is test&quot;&#125;&quot;</span><br><span class="line">root@jack:~# echo $test</span><br><span class="line">this is test</span><br></pre></td></tr></table></figure></p>
+<p>提示用户在30秒内输入自己的名字，并将该内容赋值给变量named<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# read -p &quot;please input your name:&quot; -t 30 named</span><br><span class="line">please input your name:jack &quot;&#123; 看，此时会有提示字符哟！&#125;&quot;</span><br><span class="line">root@jack:~# echo $named</span><br><span class="line">jack</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="declare-typeset"><a href="#declare-typeset" class="headerlink" title="declare/typeset"></a>declare/typeset</h4><p>declare或typeset是一样的功能，就是<strong>声明变量的类型</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选项与参数:&#123;USE $: declare [-aixr] variable &#125;</span><br><span class="line">-a:将变量定义为数组类型(array)</span><br><span class="line">-i:将变量定义为整数类型(integer)</span><br><span class="line">-x:用法与export一样，就是将变量变成环境变量</span><br><span class="line">-r:将变量配置为readonly类型，该变量不可被更改，也不能unset</span><br></pre></td></tr></table></figure></p>
+<p>需要知道的是，在默认情况下，bash对于变量有几个基本的定义:</p>
+<ul>
+<li>变量类型默认为<strong>字符串</strong>，所以若是不指定变量类型，则1+2为一个字符而不是数学表达式</li>
+<li>bash环境中的数值运算，默认只能达到整数形态，所以1/3结果是0</li>
+</ul>
+<p>让变量sum进行100+300+50的计算<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# declare -i sum=100+300+50</span><br><span class="line">root@jack:~# echo $sum</span><br><span class="line">450</span><br></pre></td></tr></table></figure></p>
+<p>将sum变成环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# declare -x sum</span><br><span class="line">root@jack:~# export | grep sum</span><br><span class="line">declare -ix sum=&quot;450&quot;</span><br></pre></td></tr></table></figure></p>
+<p>让sum变成只读属性，不可更改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# declare -r sum</span><br><span class="line">root@jack:~# sum=dkfd</span><br><span class="line">bash: sum: 只读变量</span><br></pre></td></tr></table></figure></p>
+<p>让sum变回去，变成自定义变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# declare +x sum   &quot;&#123; 将-变成+就可以进行取消了 &#125;&quot;</span><br><span class="line">root@jack:~# declare +p sum   &quot;&#123; -p可以单独列出变量类型 &#125;&quot;</span><br><span class="line">declare -ir sum=&quot;450&quot;         &quot;&#123; 看，现在只剩下i，r属性了，不在具备x了 &#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>declare结合数组的在一起是很有用的，但有趣的是，一旦将变量的配置为<strong>只读</strong>通常得要注销再重新登陆才能该变量的类型！</p>
+<hr>
+<h4 id="数组-array-变量类型"><a href="#数组-array-变量类型" class="headerlink" title="数组(array)变量类型"></a>数组(array)变量类型</h4><p>在bash里数组的声明方式是:<strong>var[number]=content</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# var[1]=&quot;small min&quot;</span><br><span class="line">root@jack:~# var[2]=&quot;big min&quot;</span><br><span class="line">root@jack:~# var[3]=&quot;nice min&quot;</span><br><span class="line">root@jack:~# echo &quot;$&#123;var[1]&#125;,$&#123;var[2]&#125;,$&#123;var[3]&#125;&quot;</span><br><span class="line">small min,big min,nice min</span><br></pre></td></tr></table></figure></p>
+<p>对于数组的读取，一般建议使用<strong>${数组}的方式来读取</strong></p>
+<hr>
+<h3 id="0x04-文件系统与程序的限制关系-ulimit"><a href="#0x04-文件系统与程序的限制关系-ulimit" class="headerlink" title="0x04 文件系统与程序的限制关系:ulimit"></a>0x04 文件系统与程序的限制关系:ulimit</h3><p>通过ulimit命令，bash可以<strong>限制某些用户的某些系统资源，包括可以开启的文件数量，可以使用的cpu时间，可以使用的内存总量等</strong></p>
+<p><strong>ulimit</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">选项与参数:&#123; use $: ulimit [-SHacdfltu] 配额 &#125;</span><br><span class="line">-a ：后面不接任何选项与参数，可列出所有的限制额度；</span><br><span class="line">-f ：此 shell 可以创建的最大文件容量(一般可能配置为 2GB)单位为 Kbytes</span><br><span class="line">-u ：单一用户可以使用的最大程序(process)数量。</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x05-变量的删除取代与替换"><a href="#0x05-变量的删除取代与替换" class="headerlink" title="0x05 变量的删除取代与替换"></a>0x05 变量的删除取代与替换</h3><hr>
+<h4 id="变量内容的删除"><a href="#变量内容的删除" class="headerlink" title="变量内容的删除"></a>变量内容的删除</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">变量配置方式</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">${变量#关键字}</td>
+<td style="text-align:center">若变量内容从头开始的数据符合[关键字]，则将符合的最短数据删除</td>
+</tr>
+<tr>
+<td style="text-align:center">${变量##关键字}</td>
+<td style="text-align:center">若变量内容从头开始的数据符合[关键字]，则将符合的最长数据删除</td>
+</tr>
+<tr>
+<td style="text-align:center">${变量%关键字}</td>
+<td style="text-align:center">若变量内容从尾向前的数据符合[关键字]，则将符合的最短数据删除</td>
+</tr>
+<tr>
+<td style="text-align:center">${变量%%关键字}</td>
+<td style="text-align:center">若变量内容从尾向前的数据符合[关键字]，则将符合的最长数据删除</td>
+</tr>
+<tr>
+<td style="text-align:center">${变量/旧字符串/新字符串}</td>
+<td style="text-align:center">若变量内容符合[旧字符串]，则[第一个字符串将会被新字符串所取代]</td>
+</tr>
+<tr>
+<td style="text-align:center">${变量//旧字符串//新字符串}</td>
+<td style="text-align:center">若变量内容符合[旧字符串]，则[全部字符串将会被新字符串所取代]</td>
+</tr>
+</tbody>
+</table>
+<p>实例:<br>根据需要删除path路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# path=$&#123;PATH&#125;</span><br><span class="line">#先让小写path获得PATH变量内容</span><br><span class="line">root@jack:~# echo path</span><br><span class="line">path</span><br><span class="line">root@jack:~# echo $path</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">#删除前四个目录</span><br><span class="line">root@jack:~# echo $&#123;path#/*usr/bin:&#125;</span><br><span class="line">/sbin:/bin</span><br></pre></td></tr></table></figure></p>
+<p>删除前面的所有目录，只保留最后一个目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# echo $&#123;path##/*:&#125;</span><br><span class="line">/bin</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="变量的测试与内容替换"><a href="#变量的测试与内容替换" class="headerlink" title="变量的测试与内容替换"></a>变量的测试与内容替换</h4><p>有时候我们需要判断某个变量是否存在，Bash Shell可以进行变量的条件替换,既只有某种条件发生时才进行替换：</p>
+<ul>
+<li>(1) ${value:-word} 当变量未定义或者值为空时,返回值为word的内容,否则返回变量的值.<ul>
+<li>(2) ${value:=word}与前者类似,只是若变量未定义或者值为空时,在返回word的值的同时将word赋值给value　</li>
+<li>(3) ${value:?message}若变量以赋值的话,正常替换.否则将消息message送到标准错误输出(若此替换出现在Shell程序中,那么该程序将终止运行)　　</li>
+<li>(4) ${value:+word}若变量以赋值的话,其值才用word替换,否则不进行任<br>何替换</li>
+<li>(5) ${value:offset}　${value:offset:length}从变量中提取子串,这里offset和length可以是算术表达式.<br>以上变量测试也是可以通过shell script内的if…then…来处理的，既然bash有提供这么简单的方法我们也可以吸收一下下！</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="0x06-命令别名与历史命令"><a href="#0x06-命令别名与历史命令" class="headerlink" title="0x06 命令别名与历史命令"></a>0x06 命令别名与历史命令</h3><hr>
+<h4 id="命令别名配置-alias-unalias"><a href="#命令别名配置-alias-unalias" class="headerlink" title="命令别名配置:alias,unalias"></a>命令别名配置:alias,unalias</h4><p>使用alias我们可以为一个很长的命令配置一简短的命令别名来取代既有的命令！</p>
+<p><strong>使用方法:{ use $: alis 别名=’命令 选项…’ }</strong></p>
+<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# alias vi=&apos;vim&apos;</span><br><span class="line">root@jack:~# alias lm=&apos;ls -al | more&apos;</span><br><span class="line">root@jack:~# alias rm=&apos;rm -i&apos;</span><br></pre></td></tr></table></figure></p>
+<p>然后使用alias查看目前有哪些命令别名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# alias</span><br><span class="line">alias lm=&apos;ls -al | more&apos;</span><br><span class="line">alias ls=&apos;ls --color=auto&apos;</span><br><span class="line">alias rm=&apos;rm -i&apos;</span><br><span class="line">alias vi=&apos;vim&apos;</span><br></pre></td></tr></table></figure></p>
+<p>至于如果想要缺消别名的话，就使用unalias:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# unalias lm</span><br></pre></td></tr></table></figure></p>
+<p>但是我们添加的alias会在没开机以后就没有了，如果想要永久生效，那么需要在.bashrc文件最后添加alias命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# vim .bashrc</span><br><span class="line"></span><br><span class="line">alias ffx=&apos;firefox &gt; /tmp/firefox.txt 2&gt;&amp;1 &amp;&apos;</span><br><span class="line">alias fuck-gwf=&apos;bash /software/shadowsocks-gui-0.6.4-linux-x64/start.sh &gt; /tmp/gwf.txt 2&gt;&amp;1 &amp;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>或者新建立一个文件名为.bash_aliases的文件用来专门存放我们的alias命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# vim .bash_aliases</span><br><span class="line">alias ffx=&apos;firefox &gt; /tmp/firefox.txt 2&gt;&amp;1 &amp;&apos;</span><br><span class="line">alias fuck-gwf=&apos;bash /software/shadowsocks-gui-0.6.4-linux-x64/start.sh &gt; /tmp/gwf.txt 2&gt;&amp;1 &amp;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>然后，更新下:source .bashrc文件！{ 对了上面两个命令，懂的自然懂，哈哈！！}</p>
+<hr>
+<h4 id="历史命令-history"><a href="#历史命令-history" class="headerlink" title="历史命令 history"></a>历史命令 history</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">选项与参数:&#123; use $: history [n][-c]/[-raw] histfiles &#125;__</span><br><span class="line">n:数字，列出最近的n笔命令</span><br><span class="line">-c:将目前shell中的所有的history内容全部消除</span><br><span class="line">-a:将目前新增的histoty命令新曾到histfiles中，如没有加histfiles则默认写入～/.bash_histoty</span><br><span class="line">-r:将histfiles的内容读到目前这个shell的history中</span><br><span class="line">-w:将目前的history记录写入到histfiles</span><br></pre></td></tr></table></figure>
+<p>history除了能记录历史命令外，还能帮助我们利用相关功能运行命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# !n</span><br><span class="line">root@jack:~# !command</span><br><span class="line">root@jack:~# !!</span><br><span class="line">选项与参数:</span><br><span class="line">n:运行history中第几个命令</span><br><span class="line">command:运行命令开头为command的命令</span><br><span class="line">!!:运行上一个命令</span><br></pre></td></tr></table></figure></p>
+<p>其实history的用途是很多的，尤其是root的历史记录文件，是黑客的最爱，一旦解析该文件，便极有可能在～/.bash_history中获得重要数据！</p>
+<hr>
+<h3 id="0x07-Bash-shell的操作环境"><a href="#0x07-Bash-shell的操作环境" class="headerlink" title="0x07 Bash shell的操作环境"></a>0x07 Bash shell的操作环境</h3><hr>
+<h4 id="路径与命令搜索顺序"><a href="#路径与命令搜索顺序" class="headerlink" title="路径与命令搜索顺序"></a>路径与命令搜索顺序</h4><p>1.以相对/绝对路径运行命令，例如『 /bin/ls 』或『 ./ls 』；<br>2.由 alias 找到该命令来运行；<br>3.由 bash 内建的 (builtin) 命令来运行；<br>4.透过 $PATH 这个变量的顺序搜寻到的第一个命令来运行。</p>
+<hr>
+<h4 id="环境配置文件"><a href="#环境配置文件" class="headerlink" title="环境配置文件"></a>环境配置文件</h4><p>bash的环境配置文件有全局配置文件和个人配置文件之分，需要注意的是我们前面谈到的命令的别名，自定义的变量啊，在注销bash以后就会失效，如果想要保留配置，就得将这些配置写入配置文件！</p>
+<h5 id="login-shell"><a href="#login-shell" class="headerlink" title="login shell"></a>login shell</h5><p>login shell会读取两个配置文件:</p>
+<ul>
+<li>etc/profile:这个是系统的整体配置文件<br>每个使用者登录取得bash时一定会读取的配置文件</li>
+<li>～/.bash_profile or ~/.bash_login or ~/.profile:个人配置文件</li>
+</ul>
+<p>bash在读完了整体环境配置/etc/profile并由此呼叫其它配置文件后，才会读取使用者的个人配置文件,依序是:</p>
+<ul>
+<li>~/.bash_profile</li>
+<li>~/.bash_login</li>
+<li>~/.profile</li>
+</ul>
+<p>其实bash的login shell配置只会读取以上三个文中的一个，而读取的顺序是依照上面的顺序!</p>
+<h5 id="source-更新环境配置文件的命令"><a href="#source-更新环境配置文件的命令" class="headerlink" title="source 更新环境配置文件的命令"></a>source 更新环境配置文件的命令</h5><p> 由于 /etc/profile 与 ~/.bash_profile 都是在取得 login shell 的时候才会读取的配置文件，所以， 如果你将自己的偏好配置写入上述的文件后，通常都是得注销再登陆后，该配置才会生效。但是我们可以使用source或者小数点(.)命令都可以将配置文件的内容读进来目前的shell环境中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# source ~/.bashrc</span><br><span class="line">root@jack:~# .  ~/.bashrc</span><br></pre></td></tr></table></figure></p>
+<h5 id="non-login-shell"><a href="#non-login-shell" class="headerlink" title="non-login shell"></a>non-login shell</h5><p>non-login shell这种非登录的取得的配置文件就是~/.bashrc</p>
+<ul>
+<li>其它相关配置文件<ul>
+<li>/etc/man.config<br>规范了使用 man 的时候， man page 的路径到哪里去寻找！』所以说的简单一点，这个文件规定了下达man 的时候，该去哪里查看数据的路径配置！当以 tarball 的方式来安装你的数据，那么你的 man page 可能会放置在 /usr/local/softpackage/man 里头，那个 softpackage 是你的软件名称， 这个时候你就得以手动的方式将该路径加到 /etc/man.config 里头，否则使用 man 的时候就会找不到相关的说明档啰。</li>
+<li>~/.bash_history<br>记录历史命令的文件，每次登录shell后，bash会先读取这个文件，将所有的历史命令读入内存！</li>
+<li>~/.bash_logout<br>该文件则记录了当我注销bash后，系统再帮我做完什么动作以后才离开!</li>
+</ul>
+</li>
+</ul>
+<h4 id="终端机的环境配置-stty-set"><a href="#终端机的环境配置-stty-set" class="headerlink" title="终端机的环境配置:stty,set"></a>终端机的环境配置:stty,set</h4><p> 一般来讲，linux都帮我们做好了最好的使用者环境了，所以我们不用担心操作环境的问题，倒是了解了解总是可以的，比如如何在终端机中查询快捷键使用，或者更改终端机中的快捷键！</p>
+<p> 我们可以使用<strong>stty -a</strong>来列出目前环境中所有的按键，^表示Ctrl的意思:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# stty -a</span><br><span class="line">speed 38400 baud; rows 18; columns 80; line = 0;</span><br><span class="line">intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = M-^?; eol2 = M-^?;</span><br><span class="line">swtch = M-^?; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W;</span><br><span class="line">lnext = ^V; flush = ^O; min = 1; time = 0;</span><br></pre></td></tr></table></figure></p>
+<p>几个重要的代表意义是:</p>
+<ul>
+<li>eof: end of file,输入结束，例如邮件结束是，{ ^D }</li>
+<li>erase:向后删除字符,{ ^? }</li>
+<li>intr:送出一个interrupt(中断)的讯号给目前正run的程序，终止目前命令,{ ^C }</li>
+<li>kill:删除在目前命令上的所有文字，在提示符下，将整列命令删除，{ ^U }</li>
+<li>quit:送出一个quit讯号给目前正在run的程序,{ ^\ }</li>
+<li>start:在某个程序停止后，重新启动其他的output,，恢复屏幕输出，{ ^Q }</li>
+<li>stop:暂停目前屏幕的输出,{ ^S }</li>
+<li>susp:送出一个terminal stop的讯号给正在run的程序,暂停目前的命令，{ ^Z }</li>
+</ul>
+<h5 id="通配符与特殊符号"><a href="#通配符与特殊符号" class="headerlink" title="通配符与特殊符号"></a>通配符与特殊符号</h5><p>bash下通配符(wildcard)可以帮我更加方便的处理数据，下面是一些常用的通配符:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:left">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:left">代表<strong>0到无穷多个</strong>任意字符</td>
+</tr>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:left">代表<strong>一定有一个</strong>任意字符</td>
+</tr>
+<tr>
+<td style="text-align:center">[ ]</td>
+<td style="text-align:left">代表<strong>一定有一个在括号内</strong>的字符(非任意)，例如 [abcd]代表一定有一个字符，可能是a，b，c，d中的任一个</td>
+</tr>
+<tr>
+<td style="text-align:center">[ - ]</td>
+<td style="text-align:left">若有减号在中括号内时，代表<strong>在编码顺序内的所有字符</strong>.例如 [0-9] 代表 0 到 9 之间的所有数字，因为数字的语系编码是连续的！</td>
+</tr>
+<tr>
+<td style="text-align:center">[ ^ ]</td>
+<td style="text-align:left">若中括号内的第一个字符为指数符号 (^) ，那表示<strong>反向选择</strong>,例如 [^abc] 代表 一定有一个字符，只要是非 a, b, c 的其他字符就接受的意思。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是几个使用通配符查看文件的用例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls -d /etc/gro* </span><br><span class="line">#查找/etc下以gro开头的目录</span><br><span class="line">root@jack:~# ls -d /etc/?????</span><br><span class="line">#查找刚好是五个字母的目录</span><br><span class="line">root@jack:~# ls  /etc/*[0-9]*</span><br><span class="line">#查找文件名含有数字的文件</span><br></pre></td></tr></table></figure></p>
+<p>当然，linux下除了通配符外还有一些特殊的符号，整理如下:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center">跳脱符号：将『特殊字符或通配符』还原成一般字符</td>
+</tr>
+<tr>
+<td style="text-align:center">;</td>
+<td style="text-align:center">连续命令下达分隔符：连续性命令的界定 (注意！与管线命令并不相同)</td>
+</tr>
+<tr>
+<td style="text-align:center">~</td>
+<td style="text-align:center">用户的家目录</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:center">取用变量前导符：亦即是变量之前需要加的变量取代值</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;,&gt;&gt;</td>
+<td style="text-align:center">数据流重导向：输出导向，分别是<strong>取代</strong>\与<strong>累加</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;,&lt;&lt;</td>
+<td style="text-align:center">数据流重导向：输入导向</td>
+</tr>
+<tr>
+<td style="text-align:center">‘ ‘</td>
+<td style="text-align:center">单引号，不具有变量置换的功能</td>
+</tr>
+<tr>
+<td style="text-align:center">“ “</td>
+<td style="text-align:center">具有变量置换的功能！</td>
+</tr>
+<tr>
+<td style="text-align:center">` `</td>
+<td style="text-align:center">两个<strong> ` </strong>中间为可以先运行的命令，亦可使用 $( )</td>
+</tr>
+</tbody>
+</table>
+<p>文件名尽量不要使用到上述的字符！</p>
+<hr>
+<h3 id="0x08-数据流重定向"><a href="#0x08-数据流重定向" class="headerlink" title="0x08 数据流重定向"></a>0x08 数据流重定向</h3><p>数据流重定向(redirect)就是将某个命令运行以后应该要出现在屏幕上的数据，给传输到其他地方去，在我们想要将某些数据存储下来时，超级有用！！！</p>
+<hr>
+<h4 id="standard-output-and-standard-error-output"><a href="#standard-output-and-standard-error-output" class="headerlink" title="standard output and standard error output"></a>standard output and standard error output</h4><p> 在学习数据流重定向之前我们先来了解下何为标准输出以及标准错误输出:<br>标准输出(standard output)指的是:命令行所回传的错误信息，而标准错误输出(standard error output)是:命令运行后，所回传的错误信息</p>
+<p> 通过重定向我们可以将standard output(简称stdout)与standard error output(简称stderr)分别传送到其它的文件或者装置中，而不是打印到屏幕上，而分别传送所用的特殊字符如下所示:<br>1.标准输入(stdin):代码为0，使用&lt;或&lt;&lt;;<br>2.标准输出(stdout):代码为1，使用&gt;或&gt;&gt;;<br>3.标准错误输出(stderr):代码为2，使用2&gt;或2&gt;&gt;;<br>(数字与重定向符号之间没有空空)</p>
+<p> 其中:</p>
+<ul>
+<li>1&gt;:以覆盖的方法将<strong>正确的数据</strong>输出到指定的文件或装置上</li>
+<li>1&gt;&gt;:以覆盖的方法将<strong>正确的数据</strong>输出到指定的文件或装置上</li>
+<li>2&gt;:以覆盖的方法将<strong>错误的数据</strong>输出到指定的文件或装置上</li>
+<li><p>2&gt;&gt;:以累加的方法将<strong>错误的数据</strong>输出到指定的文件或装置上</p>
+<p>实例:将一个命令的执行返回结果产生的stdout与stderr分别存到不同的文件中去:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /home -name .bashrc &gt;list_right 2&gt;list_error</span><br><span class="line">root@jack:~#</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意，此时<strong>屏幕上不会出现任何信息</strong>，所有的信息都被放进了那两个文件中！</p>
+<p> 进一步如果我知道错误信息是会发生，倒是要将其忽略掉而不显示或者存储呢？这时就可以使用黑洞装置了/dev/null,这个/dev/null可以吃掉任何导向这个装置的信息:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /home -name .bashrc 2&gt;/dev/null </span><br><span class="line">/home/.Trash-0/files/chrome/.bashrc</span><br></pre></td></tr></table></figure></p>
+<p>如此，stdout会显示到屏幕上，而stderr被丢弃了！</p>
+<p> 那要将所有的正确和错误的信息写入到同一个文件中呢？使用<strong>&amp;&gt;filename</strong>就ok<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /home -name .bashrc &amp;&gt;list</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="standard-input-lt-and-lt-lt"><a href="#standard-input-lt-and-lt-lt" class="headerlink" title="standard input : &lt; and &lt;&lt;"></a>standard input : &lt; and &lt;&lt;</h4><p> standard input &lt;就是原本需要<strong>由键盘输入的数据，改由文件内容来取代</strong>，而<strong>&lt;&lt;</strong>代表的是<strong>结束的输入字符关键字</strong></p>
+<p> 利用cat来创建一个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cat &gt; catfile</span><br><span class="line">one man&apos;s dream </span><br><span class="line">to be or not to be</span><br><span class="line">root@jack:~# cat catfile </span><br><span class="line">one man&apos;s dream </span><br><span class="line">to be or not to be</span><br></pre></td></tr></table></figure></p>
+<p>用stdin代替键盘输入以创建文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cat &gt; catfile &lt;~/.bashrc</span><br></pre></td></tr></table></figure></p>
+<p>使用重定向创建文件，并且输入关键字”eof”代表结束<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cat &gt; catfile &lt;&lt;&quot;eof&quot;</span><br><span class="line">&gt; this is a test</span><br><span class="line">&gt; ok now stop</span><br><span class="line">&gt; eof</span><br><span class="line">root@jack:~#</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="命令输出导向的意义"><a href="#命令输出导向的意义" class="headerlink" title="命令输出导向的意义"></a>命令输出导向的意义</h4><ul>
+<li>屏幕输出的信息很重要，而且我们需要将他存下来的时候；</li>
+<li>背景运行中的程序，不希望他干扰屏幕正常的输出结果时；</li>
+<li>一些系统的例行命令 (例如写在 /etc/crontab 中的文件) 的运行结果，希望他可以存下来时；</li>
+<li>一些运行命令的可能已知错误信息时，想以『 2&gt; /dev/null 』将他丢掉时；</li>
+<li>错误信息与正确信息需要分别输出时。</li>
+</ul>
+<hr>
+<h4 id="命令运行的判断依据-amp-amp"><a href="#命令运行的判断依据-amp-amp" class="headerlink" title="命令运行的判断依据: ;,&amp;&amp;,||"></a>命令运行的判断依据: ;,&amp;&amp;,||</h4><p> 使用<strong>;</strong>来分隔命令从而达到一次执行多个命令的目的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# sync;sync;shutdown -h now</span><br><span class="line">#先运行两次 sync 同步化写入磁盘后才 shutdown 计算机</span><br></pre></td></tr></table></figure></p>
+<p>换个角度，若我想实现两个命令之间的相关性呢？就是前一个命令执行的成功与否决定后一个命令是否执行，这时就要用到&amp;&amp;或||了</p>
+<ul>
+<li><strong>$?(命令回传值)与&amp;&amp;或||</strong><br>在linux中<strong>若前一个命令的运行结果为正确，会回传一个$?=0的值</strong>,然后我便可以借助<strong>&amp;&amp;或||</strong>来判断后续命令是否要执行了！</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令下达情况</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cmd1&amp;&amp;cmd2</td>
+<td style="text-align:center">1. 若 cmd1 运行完毕且正确运行($?=0)，则开始运行 cmd2。 2.若 cmd1 运行完毕且为错误 ($?≠0)，则 cmd2 不运行。</td>
+</tr>
+<tr>
+<td style="text-align:center">cmd1or(只能有英文代替了双竖线死活显示不了) cmd2</td>
+<td style="text-align:center">1.若 cmd1 运行完毕且正确运行($?=0)，则 cmd2 不运行。 2.若 cmd1 运行完毕且为错误 ($?≠0)，则开始运行 cmd2。</td>
+</tr>
+</tbody>
+</table>
+<p> 实例:<br>  先判断一个目录是否存在，若不存在则建立该目录,若存在不做任何事情<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls /tmp/abc || mkdir /tmp/abc</span><br><span class="line">ls: 无法访问/tmp/abc: 没有那个文件或目录</span><br><span class="line">root@jack:~# ls /tmp</span><br><span class="line">abc</span><br></pre></td></tr></table></figure></p>
+<p>如果我不确定abc目录是否存在，但是我必须想要创建/tmp/abc/hehe文件怎么办?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls /tmp/abd || mkdir /tmp/abc &amp;&amp; touch /tmp/abd/hehe</span><br><span class="line">ls: 无法访问/tmp/abd: 没有那个文件或目录</span><br><span class="line">mkdir: 无法创建目录&quot;/tmp/abc&quot;: 文件已存在</span><br></pre></td></tr></table></figure></p>
+<p>解释如下:</p>
+<ul>
+<li>(1)若 /tmp/abc 不存在故回传 $?≠0，则 (2)因为 || 遇到非为 0 的 $? 故开始 mkdir /tmp/abc，由于 mkdir /tmp/abc 会成功进行，所以回传 $?=0 (3)因为 &amp;&amp; 遇到 $?=0 故会运行 touch /tmp/abc/hehe，最终 hehe 就被创建了</li>
+</ul>
+<ul>
+<li>(2)若 /tmp/abc 存在故回传 $?=0，则 (2)因为 || 遇到 0 的 $? 不会进行，此时 $?=0 继续向后传，故 (3)因为 &amp;&amp; 遇到 $?=0 就开始创建 /tmp/abc/hehe 了！最终 /tmp/abc/hehe 被创建起来。</li>
+</ul>
+<p>比如:<br>以 ls 测试 /tmp/vbirding 是否存在，若存在则显示 “exist” ，若不存在，则显示 “not exist”！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls /tmp/vbirding &amp;&amp; echo &quot;exist&quot; || echo &quot;not exist&quot;</span><br><span class="line">ls: 无法访问/tmp/vbirding: 没有那个文件或目录</span><br><span class="line">not exist</span><br></pre></td></tr></table></figure></p>
+<p>但如果反过来:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# ls /tmp/vbirding || echo &quot;not exist&quot; &amp;&amp; echo &quot;exist&quot;</span><br><span class="line">ls: 无法访问/tmp/vbirding: 没有那个文件或目录</span><br><span class="line">not exist</span><br><span class="line">exist</span><br></pre></td></tr></table></figure></p>
+<p>not exist与exist同时出现了!why?<strong>原因在于,命令是从左向右顺序执行的，如果前一命令被执行者回传$?=0,若是前一个命令没有被执行，则会将前前一个的$?值继续传递给下一命令，所以&amp;&amp;或者||的顺序是不能颠倒的，这里存在一逻辑判断与回传值的问题</strong></p>
+<hr>
+<h3 id="0x09-管道命令"><a href="#0x09-管道命令" class="headerlink" title="0x09 管道命令"></a>0x09 管道命令</h3><p>管道命令使用的是”|”这个界定符号，另外管线命令与连续下达命令不一样的哈！</p>
+<p>管道命令仅可以处理由前面一个命令传来的正确信息，也就是standard output的信息，对于standard error并没有直接处理的能力，例如less，more，head，tail等都是可以接受standard input的管道命令，至于ls，cp，mv等就不是管道命令了，因为ls，cp，mv不会接受来自stdin的数据。</p>
+<hr>
+<h4 id="截取命令-cut-grep"><a href="#截取命令-cut-grep" class="headerlink" title="截取命令:cut,grep"></a>截取命令:cut,grep</h4><p>截取其实就是将一段数据经过分析后，取出我们想要的，或者是经由关键字取得我们所想要的那一行，并且一般情况下，截取信息都是针对<strong>一行一行</strong>来分析的，并不是整篇信息分析的，不过cut在处理多空格相连数据时，会有点吃力。</p>
+<h5 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h5><p>将一段信息的某一段给它<strong>切</strong>出来，处理的是<strong>以行为单位</strong>的信息 </p>
+<p><strong>选项与参数: { usage $: cut -d’分割符号’ -f num  }</strong></p>
+<ul>
+<li>-d:后接分割符，与-f一起使用</li>
+<li>-f:取出第几段的意思</li>
+<li>-c:以字符为单位取出固定区间字符</li>
+</ul>
+<p>将PATH变量取出，找出第五个路径来:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">root@jack:~# echo $PATH | cut -d &apos;:&apos; -f4</span><br><span class="line">/usr/bin</span><br><span class="line">#如同上面的数字显示，我们是以【: 】作为分隔，因 此会出现</span><br><span class="line">/usr/local/bin</span><br></pre></td></tr></table></figure></p>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><p>grep是分析一行信息，若当中有我们所有需要的信息，就将改行拿出来</p>
+<p><strong>选项与参数:{ useage $: grep [-acinv] [–color=quto] ‘关键字’ filename</strong></p>
+<ul>
+<li>-a: 将 binary 文件以 text 文件的方式搜寻数据</li>
+<li>-c:计算找到’关键字’的次数</li>
+<li>-n:显示行号</li>
+<li>-i:忽略大小写</li>
+<li>-v:反向选择，显示出没有’关键字’的那一行</li>
+<li>–color=auto:将找到的关键字部分加上颜色 </li>
+</ul>
+<p>将last(可查询本月里登录者的信息)中，有出现root的那一行就显示出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# last | grep &apos;root&apos; -n --color=auto</span><br><span class="line">1:root     pts/0        :0               Mon Apr 18 18:47   still logged in   </span><br><span class="line">2:root     :0           :0               Mon Apr 18 18:22   still logged in   </span><br><span class="line">5:root     pts/0        :0               Sun Apr 17 14:24 - 16:29  (02:05)</span><br></pre></td></tr></table></figure></p>
+<p>结合cut命令，只显示last行中含有root的第一列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# last | grep &apos;root&apos; -n | cut -d &apos; &apos; -f 1</span><br><span class="line">1:root</span><br><span class="line">2:root</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="排序命令-sort-uniq-wc"><a href="#排序命令-sort-uniq-wc" class="headerlink" title="排序命令:sort,uniq,wc"></a>排序命令:sort,uniq,wc</h4><h5 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h5><p><strong>选项与参数:{ usage $: sort [-fbMnrtuk] [file or stdin]</strong></p>
+<ul>
+<li>-f:忽略大小写</li>
+<li>-b:忽略最前面空格部分</li>
+<li>-M:一月份排序</li>
+<li>-n:以数字排序</li>
+<li>-r:反向排序</li>
+<li>-u:重复信息过滤，只显示一次</li>
+<li>-t:分隔符</li>
+<li>-k:以哪个区间来进行排序</li>
+</ul>
+<p>/etc/password内容是以“：”来分隔的，现在以第三列来进行排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cat /etc/passwd | sort -t &apos;:&apos; -k 3</span><br></pre></td></tr></table></figure></p>
+<h5 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h5><p>wc的作用是显示文件有多少字，多少行，多少字符</p>
+<p><strong>选项与参数:{ usage $: wc [-lwm] }</strong></p>
+<ul>
+<li>-l:显示有多少行</li>
+<li>-w:显示有多少字(英文单词)</li>
+<li>-m:多少字符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:/etc# cat /etc/hosts | wc</span><br><span class="line">    7      22     184</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="双向重导向-tee"><a href="#双向重导向-tee" class="headerlink" title="双向重导向:tee"></a>双向重导向:tee</h4><p>tee 可以让 standard output 保存一份到文件内的同时并将同样的数据继续送到屏幕去处理！ 这样除了可以让我们同时分析一份数据并记录下来之外，还可以作为处理一份数据的中间缓存记录之用！</p>
+<p><strong>选项与参数:{ usage $: tee [-a] file }</strong><br>参数-a，以累加(append)的方式将数据加入到file中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# last | tee last.list | cut -d &quot; &quot; -f1</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="字符转换命令-tr-col-join-paste-expand"><a href="#字符转换命令-tr-col-join-paste-expand" class="headerlink" title="字符转换命令:tr,col,join,paste,expand"></a>字符转换命令:tr,col,join,paste,expand</h4><h5 id="tr"><a href="#tr" class="headerlink" title="tr"></a>tr</h5><p>tr可以用来删除一段信息当中的文字，或者是进行文字信息的替换</p>
+<p><strong>选项与参数:{ usage $:  tr [-ds] set1 …}</strong></p>
+<ul>
+<li>-d:删除信息当中的set1这个字符串</li>
+<li>-s:取代掉重复的字符!</li>
+</ul>
+<p>将 last 输出的信息中，所有的小写变成大写字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# last | tr [a-z] [A-Z]</span><br></pre></td></tr></table></figure></p>
+<p>将 last输出的信息中，将冒号 (:) 删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# last | tr -d &apos;:&apos;</span><br></pre></td></tr></table></figure></p>
+<h5 id="col"><a href="#col" class="headerlink" title="col"></a>col</h5><p><strong>选项与参数:{ usage $:  col [-xb] }</strong></p>
+<ul>
+<li>-x:将 tab 键转换成对等的空格键</li>
+<li>-b:在文字内有反斜杠 (/) 时，仅保留反斜杠最后接的那个字符</li>
+</ul>
+<h5 id="join"><a href="#join" class="headerlink" title="join"></a>join</h5><p>他是在处理两个文件之间的数据，而且，主要是在处理『两个文件当中，有 “相同数据”的那一行，才将他加在一起』的意思</p>
+<h5 id="past"><a href="#past" class="headerlink" title="past"></a>past</h5><p>paste 就直接『将两行贴在一起，且中间以 [tab] 键隔开』而已！</p>
+<h5 id="expand"><a href="#expand" class="headerlink" title="expand"></a>expand</h5><p> 就是在将 [tab] 按键转成空格键啦</p>
+<h5 id="分割命令-split"><a href="#分割命令-split" class="headerlink" title="分割命令:split"></a>分割命令:split</h5><p>split可以将一个大文件，依据文件的大小或行数来分割成为小文件</p>
+<p><strong>选线与参数：{　usage $: split [-bl] file PREFIX }</strong></p>
+<ul>
+<li>-b:接分割成的文件大小，单位为b,k,m</li>
+<li>-l:以行数来进行分割</li>
+<li>PREFIX:代表前导符，可作为分割文件的前导字</li>
+</ul>
+<p>我的test.txt文件共有729行，现在我以200行分割为一个文件<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@jack:/tmp# split -l 200 test.txt test</span><br><span class="line">root@jack:/tmp# ls -al test*</span><br><span class="line">-rw-r--r-- 1 root root  8721 4月  19 14:50 testaa</span><br><span class="line">-rw-r--r-- 1 root root  8663 4月  19 14:50 testab</span><br><span class="line">-rw-r--r-- 1 root root  9821 4月  19 14:50 testac</span><br><span class="line">-rw-r--r-- 1 root root  3958 4月  19 14:50 testad</span><br><span class="line">-rw-r--r-- 1 root root 31163 4月  19 14:43 test.txt</span><br></pre></td></tr></table></figure></p>
+<p>将以上４个文件合成为一个文件，命名为newtest<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:/tmp# cat test* &gt;&gt; newtest</span><br><span class="line">#使用cat然后数据流重定向，ｏｋ！</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="参数代换-xargs"><a href="#参数代换-xargs" class="headerlink" title="参数代换:xargs"></a>参数代换:xargs</h4><p>xargs就是在产生某个命令的参数的意思！ xargs 可以读入 stdin 的数据，并且以空格符或断行字符作为分辨(因为是以空格为分隔符，当文件名或者其它名词内有空格时可能产生误判)，将 stdin 的数据分隔成为 arguments 。</p>
+<p><strong>选项与参数:{ usage $: xargs [-0pen] command</strong></p>
+<ul>
+<li>-0:如果输入的 stdin 含有特殊字符，例如 `, \, 空格键等等字符时，这个 -0 参数 可以将他还原成一般字符</li>
+<li>-e: EOF (end of file) 的意思</li>
+<li>-p:在运行每个命令的 argument 时，都会询问使用者的意思</li>
+<li>-n:后面接次数，每次 command 命令运行时，要使用几个参数的意思</li>
+</ul>
+<p>将 /etc/passwd 内的第一栏取出，仅取三行，使用 finger 这个命令将每个 账号内容秀出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cut -d&apos;:&apos; -f1 /etc/passwd | head -n 3|xargs finger </span><br><span class="line">Login: root           			Name: root</span><br><span class="line">Directory: /root                    	Shell: /bin/bash</span><br><span class="line">On since Tue Apr 19 14:30 (CST) on :0 from :0 (messages off)</span><br><span class="line">On since Tue Apr 19 14:40 (CST) on pts/0 from :0</span><br><span class="line">   7 seconds idle</span><br><span class="line">No mail.</span><br><span class="line">No Plan.</span><br></pre></td></tr></table></figure></p>
+<p>同上，将所有的 /etc/passwd 内的账号都以 finger 查阅，但一次仅查阅五个账号，并且每次查询请求确认<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# cut -d&quot;:&quot; -f1 /etc/passwd | xargs -p -n 5 finger</span><br><span class="line">finger root daemon bin sys sync ?...y</span><br></pre></td></tr></table></figure></p>
+<p>其实使用xargs的一个重要原因是:很多命令并不支持管道命令，但我们去可以通过xargs来提供该命令引用standard input之用.</p>
+<p>找出/sbin目录下具有特殊权限的文件名，并使用ls -l列出详细属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@jack:~# find /bin -perm +7000 | xargs ls -l</span><br><span class="line">-rwsr-xr-x 1 root root  30800 1月  22 01:38 /bin/fusermoun</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/鸟哥的Linux读书笔记基础篇/" rel="tag"># 鸟哥的Linux读书笔记基础篇</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/10/TCPDUMP/" rel="next" title="TCPDUMP初识">
+                <i class="fa fa-chevron-left"></i> TCPDUMP初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/10/第二十一章-软件的源代码安装/" rel="prev" title="第二十一章-软件安装">
+                第二十一章-软件安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-关于BASH"><span class="nav-number">1.</span> <span class="nav-text">0x00 关于BASH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Bash-shell的功能"><span class="nav-number">1.1.</span> <span class="nav-text">Bash shell的功能:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-shell的变量功能"><span class="nav-number">2.</span> <span class="nav-text">0x01 shell的变量功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的取用与配置"><span class="nav-number">2.1.</span> <span class="nav-text">变量的取用与配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在shell中配置一个变量"><span class="nav-number">2.2.</span> <span class="nav-text">在shell中配置一个变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的配置规则"><span class="nav-number">2.3.</span> <span class="nav-text">变量的配置规则:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-环境变量的功能"><span class="nav-number">3.</span> <span class="nav-text">0x02 环境变量的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#env观察环境变量与常用环境变量"><span class="nav-number">3.1.</span> <span class="nav-text">env观察环境变量与常用环境变量:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set观察所有变量-包括环境变量与自定义变量"><span class="nav-number">3.2.</span> <span class="nav-text">set观察所有变量(包括环境变量与自定义变量)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PS1-提示字符的配置"><span class="nav-number">3.2.1.</span> <span class="nav-text">PS1:提示字符的配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#export-自定义变量转换成环境变量"><span class="nav-number">3.2.2.</span> <span class="nav-text">export 自定义变量转换成环境变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-变量键盘读取，数组，声明-read-array-declare"><span class="nav-number">4.</span> <span class="nav-text">0x03 变量键盘读取，数组，声明:read,array,declare</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#read"><span class="nav-number">4.1.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#declare-typeset"><span class="nav-number">4.2.</span> <span class="nav-text">declare/typeset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组-array-变量类型"><span class="nav-number">4.3.</span> <span class="nav-text">数组(array)变量类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-文件系统与程序的限制关系-ulimit"><span class="nav-number">5.</span> <span class="nav-text">0x04 文件系统与程序的限制关系:ulimit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-变量的删除取代与替换"><span class="nav-number">6.</span> <span class="nav-text">0x05 变量的删除取代与替换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量内容的删除"><span class="nav-number">6.1.</span> <span class="nav-text">变量内容的删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的测试与内容替换"><span class="nav-number">6.2.</span> <span class="nav-text">变量的测试与内容替换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06-命令别名与历史命令"><span class="nav-number">7.</span> <span class="nav-text">0x06 命令别名与历史命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令别名配置-alias-unalias"><span class="nav-number">7.1.</span> <span class="nav-text">命令别名配置:alias,unalias</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#历史命令-history"><span class="nav-number">7.2.</span> <span class="nav-text">历史命令 history</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x07-Bash-shell的操作环境"><span class="nav-number">8.</span> <span class="nav-text">0x07 Bash shell的操作环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#路径与命令搜索顺序"><span class="nav-number">8.1.</span> <span class="nav-text">路径与命令搜索顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#环境配置文件"><span class="nav-number">8.2.</span> <span class="nav-text">环境配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#login-shell"><span class="nav-number">8.2.1.</span> <span class="nav-text">login shell</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#source-更新环境配置文件的命令"><span class="nav-number">8.2.2.</span> <span class="nav-text">source 更新环境配置文件的命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#non-login-shell"><span class="nav-number">8.2.3.</span> <span class="nav-text">non-login shell</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#终端机的环境配置-stty-set"><span class="nav-number">8.3.</span> <span class="nav-text">终端机的环境配置:stty,set</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通配符与特殊符号"><span class="nav-number">8.3.1.</span> <span class="nav-text">通配符与特殊符号</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x08-数据流重定向"><span class="nav-number">9.</span> <span class="nav-text">0x08 数据流重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#standard-output-and-standard-error-output"><span class="nav-number">9.1.</span> <span class="nav-text">standard output and standard error output</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#standard-input-lt-and-lt-lt"><span class="nav-number">9.2.</span> <span class="nav-text">standard input : &lt; and &lt;&lt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令输出导向的意义"><span class="nav-number">9.3.</span> <span class="nav-text">命令输出导向的意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令运行的判断依据-amp-amp"><span class="nav-number">9.4.</span> <span class="nav-text">命令运行的判断依据: ;,&amp;&amp;,||</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x09-管道命令"><span class="nav-number">10.</span> <span class="nav-text">0x09 管道命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#截取命令-cut-grep"><span class="nav-number">10.1.</span> <span class="nav-text">截取命令:cut,grep</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cut"><span class="nav-number">10.1.1.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#grep"><span class="nav-number">10.1.2.</span> <span class="nav-text">grep</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序命令-sort-uniq-wc"><span class="nav-number">10.2.</span> <span class="nav-text">排序命令:sort,uniq,wc</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sort"><span class="nav-number">10.2.1.</span> <span class="nav-text">sort</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#wc"><span class="nav-number">10.2.2.</span> <span class="nav-text">wc</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双向重导向-tee"><span class="nav-number">10.3.</span> <span class="nav-text">双向重导向:tee</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符转换命令-tr-col-join-paste-expand"><span class="nav-number">10.4.</span> <span class="nav-text">字符转换命令:tr,col,join,paste,expand</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tr"><span class="nav-number">10.4.1.</span> <span class="nav-text">tr</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#col"><span class="nav-number">10.4.2.</span> <span class="nav-text">col</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#join"><span class="nav-number">10.4.3.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#past"><span class="nav-number">10.4.4.</span> <span class="nav-text">past</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#expand"><span class="nav-number">10.4.5.</span> <span class="nav-text">expand</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分割命令-split"><span class="nav-number">10.4.6.</span> <span class="nav-text">分割命令:split</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数代换-xargs"><span class="nav-number">10.5.</span> <span class="nav-text">参数代换:xargs</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

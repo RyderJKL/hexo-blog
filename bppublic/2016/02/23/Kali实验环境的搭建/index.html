@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kali渗透测试,Kali安装与环境优化,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 搭建本地实验环境的必要性 渗透非授权系统的弊端，从法律和学习的角度是必须的。 搭建自己的实验环境，自己的环境自己爱怎么搞怎么搞，搭建实验环境过程可以更加了解系统的安装配置和特性，以及基础架构的安装配置，代码构建，作为一个安全工作者是十分有必要的。   0x01 安装windows虚拟机作为渗透对象 微软最新版本软件官方下载:http://msdn.microsoft.com/en-ca/">
+<meta name="keywords" content="Kali渗透测试,Kali安装与环境优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kali实验环境的搭建">
+<meta property="og:url" content="http://yoursite.com/2016/02/23/Kali实验环境的搭建/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 搭建本地实验环境的必要性 渗透非授权系统的弊端，从法律和学习的角度是必须的。 搭建自己的实验环境，自己的环境自己爱怎么搞怎么搞，搭建实验环境过程可以更加了解系统的安装配置和特性，以及基础架构的安装配置，代码构建，作为一个安全工作者是十分有必要的。   0x01 安装windows虚拟机作为渗透对象 微软最新版本软件官方下载:http://msdn.microsoft.com/en-ca/">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-8e66a4248a20eae9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-6cd718aa8a859eb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-43f4f19d718db0da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-3a6ddaab441dcb9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-964c3c697acf251b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1571420-958a1e69dcc13a5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kali实验环境的搭建">
+<meta name="twitter:description" content="0x00 搭建本地实验环境的必要性 渗透非授权系统的弊端，从法律和学习的角度是必须的。 搭建自己的实验环境，自己的环境自己爱怎么搞怎么搞，搭建实验环境过程可以更加了解系统的安装配置和特性，以及基础架构的安装配置，代码构建，作为一个安全工作者是十分有必要的。   0x01 安装windows虚拟机作为渗透对象 微软最新版本软件官方下载:http://msdn.microsoft.com/en-ca/">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1571420-8e66a4248a20eae9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/02/23/Kali实验环境的搭建/">
+
+
+
+
+
+  <title>Kali实验环境的搭建 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/02/23/Kali实验环境的搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kali实验环境的搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-23T21:24:00+08:00">
+                2016-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-搭建本地实验环境的必要性"><a href="#0x00-搭建本地实验环境的必要性" class="headerlink" title="0x00 搭建本地实验环境的必要性"></a>0x00 搭建本地实验环境的必要性</h3><ul>
+<li>渗透非授权系统的弊端，从法律和学习的角度是必须的。</li>
+<li>搭建自己的实验环境，自己的环境自己爱怎么搞怎么搞，搭建实验环境过程可以更加了解系统的安装配置和特性，以及基础架构的安装配置，代码构建，作为一个安全工作者是十分有必要的。</li>
+</ul>
+<hr>
+<h3 id="0x01-安装windows虚拟机作为渗透对象"><a href="#0x01-安装windows虚拟机作为渗透对象" class="headerlink" title="0x01 安装windows虚拟机作为渗透对象"></a>0x01 安装windows虚拟机作为渗透对象</h3><ul>
+<li>微软最新版本软件官方下载:<a href="http://msdn.microsoft.com/en-ca/subscriptions/aa336856" target="_blank" rel="noopener">http://msdn.microsoft.com/en-ca/subscriptions/aa336856</a></li>
+<li>windows虚拟机:<a href="http://dev.modern.ie/tools/vms/" target="_blank" rel="noopener">http://dev.modern.ie/tools/vms/</a></li>
+</ul>
+<hr>
+<h3 id="0x01-安装Linux虚拟机作为渗透对象"><a href="#0x01-安装Linux虚拟机作为渗透对象" class="headerlink" title="0x01 安装Linux虚拟机作为渗透对象:"></a>0x01 安装Linux虚拟机作为渗透对象:</h3><p>Turnkey Linux 是一个基于 Ubuntu 8.04 LTS 的Linux 发行版 ,基于linux的虚拟机。</p>
+<ul>
+<li><p>tuenkey的官方下载地址:<a href="http://tuenkeylinux.org" target="_blank" rel="noopener">http://tuenkeylinux.org</a></p>
+<hr>
+<h3 id="0x02-Linux-ubuntu-下LAMP环境"><a href="#0x02-Linux-ubuntu-下LAMP环境" class="headerlink" title="0x02 Linux ubuntu 下LAMP环境"></a>0x02 Linux ubuntu 下LAMP环境</h3></li>
+</ul>
+<p>Linux+appache+mysql+php环境的搭建</p>
+<hr>
+<h4 id="安装apache2"><a href="#安装apache2" class="headerlink" title="安装apache2"></a>安装apache2</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install apache2 apache2-utils</span><br></pre></td></tr></table></figure>
+<p>安装完成以后查看80端口是否已经开始真侦听:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ netstat -anol |grep :80</span><br></pre></td></tr></table></figure></p>
+<p>apache2是否已经启动了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | grep apache</span><br></pre></td></tr></table></figure></p>
+<p>重启apache:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service apahce2 restart</span><br></pre></td></tr></table></figure></p>
+<p>apache重启常见错误:“fully qualified domain”</p>
+<p>解决方法:新建fadn.conf文件并添加代码:~ServerNname  locahost~</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/apache2/conf-avaliable/fqdn.conf</span><br><span class="line"></span><br><span class="line">ServerName localhost</span><br></pre></td></tr></table></figure>
+<p>:wq! 保存退出！</p>
+<p>启用文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo a2enconf fqdn</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server libapache2- mod-auth-mysql php5-mysql</span><br><span class="line">$ mysql_install_db  &apos;建立数据库目录&apos;</span><br><span class="line">$ mysql_secure_installation  &apos;对数据库进行安全设置&apos;</span><br><span class="line">$ mysql:mysql -u root  -p  &apos;进入Mysql&apos;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="安装php"><a href="#安装php" class="headerlink" title="安装php"></a>安装php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install php5 php5-mysql php-pear php5-mcrypt php5-curl</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-Metasploitable2"><a href="#0x03-Metasploitable2" class="headerlink" title="0x03 Metasploitable2"></a>0x03 Metasploitable2</h3><p>基于linux的一个靶机测试环境<br>Metasploitable2虚拟系统是一个特别制作的ubuntu操作系统，本身设计作为安全工具测试和演示常见漏洞攻击。版本2已经可以下载，并且比上一个版本包含更多可利用的安全漏洞。这个版本的虚拟系统兼容VMware，VirtualBox,和其他虚拟平台。默认只开启一个网络适配器并且开启NAT和Host-only，本镜像一定不要暴漏在一个易受攻击的网络中。</p>
+<p>  <em>默认登录名:msfadmin 密码:msfadmin</em></p>
+<p>通过ifconifg查看默认IP地址，Metasploit的默认端口是192.168.1.107，首次使用默认的metasploitable需要进行一项配置，否则会造成所有测试失败:<br>     &gt; cd 进入文件 /var/www/mutillidae ，vi config.inc 文件将 $dbname一项改为“owasp10”</p>
+<hr>
+<h3 id="0x03-在虚拟机中模拟真实网络"><a href="#0x03-在虚拟机中模拟真实网络" class="headerlink" title="0x03 在虚拟机中模拟真实网络:"></a>0x03 在虚拟机中模拟真实网络:</h3><p>M0n0wall防火墙:</p>
+<blockquote>
+<p><a href="http://m0n0.ch/wall/downloads.php" target="_blank" rel="noopener">http://m0n0.ch/wall/downloads.php</a></p>
+</blockquote>
+<hr>
+<h4 id="首先建立防火墙"><a href="#首先建立防火墙" class="headerlink" title="首先建立防火墙"></a>首先建立防火墙</h4><p>需要至少为虚拟机添加三卡网卡，即是在vm中添加三块虚拟网卡，host-only的网卡接内网(LAN)对应VMnet8(le2)，第二块网卡桥接到物理网络（WAN）对应VMnet0(le0)，第三块网卡服负者连接到DMZ区对应VMnet0(le1)，如图所示:<br>  <img src="http://upload-images.jianshu.io/upload_images/1571420-8e66a4248a20eae9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网卡配置图示"></p>
+<ul>
+<li><p>得到M0m0wall的光盘安装包，为vm新建虚拟机，将M0mwall光盘安装包添加到虚拟机以安装防火墙：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-6cd718aa8a859eb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加镜像.png"></p>
+<ul>
+<li>第三步:安装完成以后会进入DOS界面 输入数字”7” 选择 install on hard drive 将防火墙从光盘安装到虚拟机的物理硬盘里，选择7以后添加”ad0”,待重启过程立刻停止客户机然后关机，移除cd硬盘！</li>
+</ul>
+</li>
+<li><p>第四步:输入数字”1” 配置网络</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1571420-43f4f19d718db0da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="开始界面.png"><br>防火墙至少需要三块网卡，外网，内网，DMZ，host-only的网卡接内网(LAN)le2，第一块网卡桥接到物理网络（WAN）le0，第二块网卡服负者连接到DMZ区，指定网口(interfaces:assign network port)哪个是接外的，哪个死接内的：为网卡添加tag标签，指定lan网卡le2和wan网卡le0以及Optional网卡le1:</p>
+<p> <img src="http://upload-images.jianshu.io/upload_images/1571420-3a6ddaab441dcb9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="初始化防火墙.png"></p>
+<ul>
+<li>第五步:输入数字”2”:<br>为局域网lan网卡指定ip地址:192.168.14.1  sub mark:24  启动DHCP服务 设置dhcp网段的起始地址:192.168.14.20 结束地址:192.168.14.100 配置完成以后局域网网卡的ip地址为:<a href="http://192.168.14.1,当lan的ip地址配置完成以后就可以通过web页面对防火墙进行配置了" target="_blank" rel="noopener">http://192.168.14.1,当lan的ip地址配置完成以后就可以通过web页面对防火墙进行配置了</a></li>
+</ul>
+</li>
+<li><p>第六步:reset webgui password 重设web登录密码 mono默认密码</p>
+</li>
+<li><p>第七步:通过web页面对防火墙进行配置:登录名:damin 密码:mono<br><img src="http://upload-images.jianshu.io/upload_images/1571420-964c3c697acf251b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="配置防火墙-1.png"></p>
+<ul>
+<li>最后点击Rules添加防火墙规则,设置protocol为“any”允许客户机支持所有的协议， source 为“LAN subnet”即是只有处于192.168.14.x下的ip网段才能上网了,然后选择OPT1为DWNZ区添加ip地址网段”192.168.56.10/24”<br><img src="http://upload-images.jianshu.io/upload_images/1571420-958a1e69dcc13a5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="配置防火墙-2.png"></li>
+</ul>
+</li>
+</ul>
+<p>但是由于设置的是私有类ip，还需要进入WAN设置项里将默认的”block private networks”一项的钩钩去掉。自此linux虚拟环境下的网络防火墙经部署完成！</p>
+<hr>
+<h3 id="0x04-大型公司的防火墙"><a href="#0x04-大型公司的防火墙" class="headerlink" title="0x04 大型公司的防火墙"></a>0x04 大型公司的防火墙</h3><p>背靠背防火墙,即是双层防护墙:Pfsense，即是第一层使用momo防火墙，再建立一层pfsense防火请。</p>
+<blockquote>
+<p><a href="https://pfsense.org/" target="_blank" rel="noopener">https://pfsense.org/</a></p>
+</blockquote>
+<p><strong>如此kali的渗透环境就算搭建完成了哦!</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kali渗透测试/" rel="tag"># Kali渗透测试</a>
+          
+            <a href="/tags/Kali安装与环境优化/" rel="tag"># Kali安装与环境优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/23/kali软件安装和更新源/" rel="next" title="kali软件安装和更新源">
+                <i class="fa fa-chevron-left"></i> kali软件安装和更新源
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/27/第五章-开关机命令/" rel="prev" title="第五章-开关机命令">
+                第五章-开关机命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-搭建本地实验环境的必要性"><span class="nav-number">1.</span> <span class="nav-text">0x00 搭建本地实验环境的必要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-安装windows虚拟机作为渗透对象"><span class="nav-number">2.</span> <span class="nav-text">0x01 安装windows虚拟机作为渗透对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-安装Linux虚拟机作为渗透对象"><span class="nav-number">3.</span> <span class="nav-text">0x01 安装Linux虚拟机作为渗透对象:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-Linux-ubuntu-下LAMP环境"><span class="nav-number">4.</span> <span class="nav-text">0x02 Linux ubuntu 下LAMP环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装apache2"><span class="nav-number">4.1.</span> <span class="nav-text">安装apache2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Mysql"><span class="nav-number">4.2.</span> <span class="nav-text">安装Mysql</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装php"><span class="nav-number">4.3.</span> <span class="nav-text">安装php</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Metasploitable2"><span class="nav-number">5.</span> <span class="nav-text">0x03 Metasploitable2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-在虚拟机中模拟真实网络"><span class="nav-number">6.</span> <span class="nav-text">0x03 在虚拟机中模拟真实网络:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先建立防火墙"><span class="nav-number">6.1.</span> <span class="nav-text">首先建立防火墙</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-大型公司的防火墙"><span class="nav-number">7.</span> <span class="nav-text">0x04 大型公司的防火墙</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

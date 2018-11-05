@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="面向对象 title: Python(8)-对象-属性-和-类date: 2016-04-24 17:06tags: [‘Python基础’]toc: truecategories: technology 0x00 对象 属性 类 和方法 Python使用 类(class) 和 对象(object) 进行 面向对象(object-oriented programing,简称oop) 的编程 ，面向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="onejustone">
+<meta property="og:url" content="http://yoursite.com/2018/11/05/8.面向对象/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="面向对象 title: Python(8)-对象-属性-和-类date: 2016-04-24 17:06tags: [‘Python基础’]toc: truecategories: technology 0x00 对象 属性 类 和方法 Python使用 类(class) 和 对象(object) 进行 面向对象(object-oriented programing,简称oop) 的编程 ，面向">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="onejustone">
+<meta name="twitter:description" content="面向对象 title: Python(8)-对象-属性-和-类date: 2016-04-24 17:06tags: [‘Python基础’]toc: truecategories: technology 0x00 对象 属性 类 和方法 Python使用 类(class) 和 对象(object) 进行 面向对象(object-oriented programing,简称oop) 的编程 ，面向">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/05/8.面向对象/">
+
+
+
+
+
+  <title> | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/8.面向对象/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-05T17:53:02+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><hr>
+<p>title: Python(8)-对象-属性-和-类<br>date: 2016-04-24 17:06<br>tags: [‘Python基础’]<br>toc: true<br>categories: technology</p>
+<h2 id="0x00-对象-属性-类-和方法"><a href="#0x00-对象-属性-类-和方法" class="headerlink" title="0x00 对象 属性 类 和方法"></a>0x00 对象 属性 类 和方法</h2><hr>
+<p>Python使用 <strong>类(class)</strong> 和 <strong>对象(object)</strong> 进行 <strong>面向对象(object-oriented programing,简称oop)</strong> 的编程 ，面向对象的目的是为了提高程序的重复使用性，Python 的整个概念都是基于对象的。</p>
+<p>下面我们来定义一个鸟类:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span><span class="params">(object)</span>:</span></span><br><span class="line">    have_feather = <span class="keyword">True</span></span><br><span class="line">    way_of_reproduction = <span class="string">"egg"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义了一个Bird类，并且它有两个和属性，长毛(have_feather)和下蛋(egg)</span></span><br><span class="line"></span><br><span class="line">summer = Bird()</span><br><span class="line"><span class="comment">#创建Bird的一个对象summer，由此summer便有了Bird的属性</span></span><br><span class="line"><span class="keyword">print</span> summer.way_of_reproduction</span><br><span class="line"><span class="comment">#通过" 对象.属性(object.attribute) "的形式实现对属性的引用</span></span><br></pre></td></tr></table></figure>
+<p>类的内部定义的函数就是 <strong>方法(method)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span><span class="params">(object)</span>:</span></span><br><span class="line">        have_feather = <span class="keyword">True</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self,dx,dy)</span>:</span></span><br><span class="line">              position = [<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">              position[<span class="number">0</span>] = position[<span class="number">0</span>]+dx</span><br><span class="line">              position[<span class="number">1</span>] = position[<span class="number">1</span>]+dy</span><br><span class="line">              retutn position</span><br><span class="line">summer = Bird()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"after move:"</span>,summer.move(<span class="number">5</span>,<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+<p>看，我们从新定义了一个 <code>Bird</code> 类，为它增加了一个方法属性，方法的第一个参数是 <code>self</code>，无论是否用到，<code>self</code> 是为了方便内部使用，引用对象自身。</p>
+<h2 id="0x01-对象的继承-inheritance"><a href="#0x01-对象的继承-inheritance" class="headerlink" title="0x01  对象的继承(inheritance)"></a>0x01  对象的继承(inheritance)</h2><hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chicken</span><span class="params">(Bird)</span>:</span></span><br><span class="line">        way_of_move = <span class="string">'walk'</span></span><br><span class="line"></span><br><span class="line">summer = Chicken()</span><br><span class="line"><span class="keyword">print</span> summer.have_feather</span><br><span class="line"><span class="keyword">print</span> summer.move(<span class="number">9</span>,<span class="number">19</span>)</span><br></pre></td></tr></table></figure>
+<p>新定义的鸡类<code>Chicken</code>增加了一个属性:移动方式<code>way_of_move</code></p>
+<p>在定义鸡类时，括号里面是<code>Bird</code>,这说明<code>Chicken</code>是<code>Bird</code>的一个子类，即<code>Chicken</code>继承自<code>Bird</code>，<code>Bird</code>也就是<code>Chicken</code>的父类了，<code>Chicken</code>将享有<code>Bird</code>的所有属性(方法也是一种属性),如果括号里是<code>Object</code>则说明该类是个父类，到头了。</p>
+<hr>
+<h2 id="0x02-关于-self"><a href="#0x02-关于-self" class="headerlink" title="0x02 关于 self"></a>0x02 关于 self</h2><p><code>self</code>的作用是方便在类的内部调用其方法，如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">human</span><span class="params">(object)</span>:</span></span><br><span class="line">        laugh=<span class="string">'hahaha'</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">show_laugh</span><span class="params">(self)</span>:</span></span><br><span class="line">              <span class="keyword">print</span> self.laugh</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">laugh_100th</span><span class="params">(self)</span>:</span></span><br><span class="line">              self.show_laugh()</span><br><span class="line"></span><br><span class="line">li_lei = human()</span><br><span class="line">li_lei.laugh_100th()</span><br></pre></td></tr></table></figure>
+<p>这里有一个类属性<code>laugh</code>，方法<code>show_laugh()</code>中，通过<code>self.laugh</code>，调用了该属性的值。</p>
+<hr>
+<h2 id="0x03-init"><a href="#0x03-init" class="headerlink" title="0x03 __init__"></a>0x03 <code>__init__</code></h2><p><code>__init__</code>可以理解为<strong>方法的初始化</strong>，可以理解为一般编程语言中构造方法，Python <strong>特殊方法(special method)</strong>中的一种</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">happBird</span><span class="params">(Bird)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,more_words)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"we are happy birds."</span>,more_words</span><br><span class="line"></span><br><span class="line">summer = happyBird(<span class="string">'happy,happy,haha'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果：</span></span><br><span class="line">we are happy birds.happy,happy,haha</span><br></pre></td></tr></table></figure>
+<p>可以看到，尽管我们只是创建了 <code>summer</code> 对象，但是<code>__init__</code>方法被自动调用了！</p>
+<hr>
+<h2 id="0x04-对象的性质"><a href="#0x04-对象的性质" class="headerlink" title="0x04 对象的性质"></a>0x04 对象的性质</h2><p>我们上面讲到的属性都是类的属性，所有属于该类的对象都会共享这些属性，下面我们来看看对象的性质</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_gender)</span>:</span></span><br><span class="line">          self.gender=input_gender</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">printGender</span><span class="params">(self)</span>:</span></span><br><span class="line">          <span class="keyword">print</span> self.gender</span><br><span class="line"></span><br><span class="line">li_lei = Human(<span class="string">'male'</span>)</span><br><span class="line"><span class="comment">#‘male’作为参数传递给__init__()方法的input_gender变量</span></span><br><span class="line"><span class="keyword">print</span> li_lei.gender</span><br><span class="line">li_lei.printGender()</span><br></pre></td></tr></table></figure>
+<p>当我们定义方法时，必须要传递<code>self</code>参数，这个参数代表的就是类的一个对象，然后我们通过操纵<code>self</code>来修改某个对象的性质，如上:新建了的<code>li_lei</code>对象就被<code>self</code>表示，我们通过赋值给<code>self.attribute</code>，给<code>li_lei</code>添加一些性质。</p>
+<p>对象的性质也可以被其它方法调用，调用方法与类属性的调用相似，正如在printGender()方法中的调用。</p>
+<hr>
+<h2 id="0x05-对象的属性"><a href="#0x05-对象的属性" class="headerlink" title="0x05 对象的属性"></a>0x05 对象的属性</h2><p>Python 一切皆对象(<code>object</code>),每个对象都可能有多个属性(<code>attribute</code>),Python的属性有一套统一的管理方案。</p>
+<ul>
+<li>属性的<code>__dict__</code>系统</li>
+</ul>
+<p>对象的属性可能来自其类定义，叫做类属性(<code>class attribute</code>),而类属性可能来源于类自身，也可能根据类定义继承来的，一个对象的属性还可能是该对象实例定义的，叫做对象属性(<code>object attribute</code>)</p>
+<p>Python中对象的属性存储在对象的__dict__属性中，__dict__为一个词典，键为属性名，对应的值为属性本身,。当然Python自身也会生成一些类，而这些类并不是我们自己定义的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">bird</span><span class="params">(object)</span>:</span></span><br><span class="line">	feather = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">chicken</span><span class="params">(bird)</span>:</span></span><br><span class="line">	fly = <span class="keyword">False</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, age)</span>:</span></span><br><span class="line">		self.age = age</span><br><span class="line"></span><br><span class="line">summer = chicken(<span class="number">2</span>)</span><br><span class="line">print(bird.__dict__)</span><br><span class="line">&#123;<span class="string">'__dict__'</span>: &lt;attribute <span class="string">'__dict__'</span> of <span class="string">'bird'</span> objects&gt;, <span class="string">'__module__'</span>: <span class="string">'__main__'</span>, <span class="string">'__weakref__'</span>: &lt;attribute <span class="string">'__weakref__'</span> of <span class="string">'bird'</span> objects&gt;, <span class="string">'feather'</span>: <span class="keyword">True</span>, <span class="string">'__doc__'</span>: <span class="keyword">None</span>&#125;</span><br><span class="line">print(chicken.__dict__)</span><br><span class="line">&#123;<span class="string">'fly'</span>: <span class="keyword">False</span>, <span class="string">'__module__'</span>: <span class="string">'__main__'</span>, <span class="string">'__doc__'</span>: <span class="keyword">None</span>, <span class="string">'__init__'</span>: &lt;function __init__ at <span class="number">0x0000000003141128</span>&gt;&#125;</span><br><span class="line">print(summer.__dict__)</span><br><span class="line">&#123;<span class="string">'age'</span>: <span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到Pyhton中的属性是分层定义的，当我们有一个summer对象的时候，分别查询summer对象，chiken类，bird类以及object类的属性，就可以知道summer对象所有的dict，然后就可以找到通过对象summer可调用和修改的所有属性了</p>
+<p>如果只有一个对象，而不知道它的类以及其他信息的时候，我们可以利用__class__属性找到对象的类，然后调用类的__base__属性查询父类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(summer.__class__)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">chicken</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">print</span><span class="params">(chicken.__base__)</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">class</span> '<span class="title">__main__</span>.<span class="title">bird</span>'&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="0x06-特性"><a href="#0x06-特性" class="headerlink" title="0x06 特性"></a>0x06 特性</h2><p>同一个对象的不同属性之间可能存在依赖关系，有时我们希望当某个属性被修改时，依赖于该属性的其它属性也同时变化，这时通过__dict__方式来静态的存储属性并不适用。Pyhton提供了多种即时生成属性的方法，其中一种称为特性(<code>property</code>),特性是特殊的属性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">bird</span><span class="params">(object)</span>:</span></span><br><span class="line">    feather = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">chicken</span><span class="params">(bird)</span>:</span></span><br><span class="line">    fly = <span class="keyword">False</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, age)</span>:</span></span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getAdult</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.age &gt; <span class="number">1.0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    adult = property(getAdult)</span><br><span class="line"></span><br><span class="line">summer = chicken(<span class="number">2</span>)</span><br><span class="line">print(summer.adult)</span><br><span class="line">summer.age = <span class="number">0.5</span></span><br><span class="line">print(summer.adult)</span><br></pre></td></tr></table></figure>
+<p>特性使用内置函数property()来创建，property()最多可加载四个函数，前三个参数为函数，分别用于处理查询特性，修改特性，删除特性，最后一个参数为特性的文档，可以为一个字符串，起说明作用。</p>
+<p>再来看一个例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">num</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        self.value = value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getNeg</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> -self.value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setNge</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        self.value = -value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delNeg</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"value also delete!"</span>)</span><br><span class="line">        <span class="keyword">del</span> self.value</span><br><span class="line">    neg = property(getNeg, setNge, delNeg, <span class="string">"i am a negative"</span>)</span><br><span class="line"></span><br><span class="line">x = num(<span class="number">1.1</span>)</span><br><span class="line">print(x.neg)</span><br><span class="line">x.neg = <span class="number">-22</span></span><br><span class="line">print(x.value)</span><br><span class="line">print(num.neg.__doc__)</span><br><span class="line"><span class="keyword">del</span> x.neg</span><br></pre></td></tr></table></figure>
+<p>上面<code>num</code>为一个数字，而<code>neg</code>为一个特性，用来表示数字的负数<br><code>delNeg</code>表示，如果删除特性<code>neg</code>，那么应该执行的操作是删除属性<code>value</code>。<code>property()</code>的最后一个参数为特性<code>neg</code>的说明文档。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/05/7.模块/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/05/单词频率统计/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象"><span class="nav-number">1.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-对象-属性-类-和方法"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 对象 属性 类 和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-对象的继承-inheritance"><span class="nav-number">1.2.</span> <span class="nav-text">0x01  对象的继承(inheritance)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-关于-self"><span class="nav-number">1.3.</span> <span class="nav-text">0x02 关于 self</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-init"><span class="nav-number">1.4.</span> <span class="nav-text">0x03 __init__</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-对象的性质"><span class="nav-number">1.5.</span> <span class="nav-text">0x04 对象的性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-对象的属性"><span class="nav-number">1.6.</span> <span class="nav-text">0x05 对象的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-特性"><span class="nav-number">1.7.</span> <span class="nav-text">0x06 特性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

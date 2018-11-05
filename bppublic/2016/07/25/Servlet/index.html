@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java-J2EE,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x01 Servlet简介 CGICGI(Common Gateway Interface)通用网关接口。是一种根据请求信息动态产生回应内容的技术。通过CGI，Web服务器可以将根据请求不同启动不同的外部程序，并将请求内容转发给该程序，在程序执行结束后，将执行结果作为回应返回给客户端。也因此，将会产生大量的进程，从而占用许多资源。此外，CGI不可移植。显然在大数据，云计算技术等互联网的新生代下，">
+<meta name="keywords" content="Java-J2EE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet">
+<meta property="og:url" content="http://yoursite.com/2016/07/25/Servlet/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x01 Servlet简介 CGICGI(Common Gateway Interface)通用网关接口。是一种根据请求信息动态产生回应内容的技术。通过CGI，Web服务器可以将根据请求不同启动不同的外部程序，并将请求内容转发给该程序，在程序执行结束后，将执行结果作为回应返回给客户端。也因此，将会产生大量的进程，从而占用许多资源。此外，CGI不可移植。显然在大数据，云计算技术等互联网的新生代下，">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet">
+<meta name="twitter:description" content="0x01 Servlet简介 CGICGI(Common Gateway Interface)通用网关接口。是一种根据请求信息动态产生回应内容的技术。通过CGI，Web服务器可以将根据请求不同启动不同的外部程序，并将请求内容转发给该程序，在程序执行结束后，将执行结果作为回应返回给客户端。也因此，将会产生大量的进程，从而占用许多资源。此外，CGI不可移植。显然在大数据，云计算技术等互联网的新生代下，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/25/Servlet/">
+
+
+
+
+
+  <title>Servlet | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/25/Servlet/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Servlet</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-25T00:00:00+08:00">
+                2016-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x01-Servlet简介"><a href="#0x01-Servlet简介" class="headerlink" title="0x01 Servlet简介"></a>0x01 Servlet简介</h3><hr>
+<h4 id="CGI"><a href="#CGI" class="headerlink" title="CGI"></a>CGI</h4><p>CGI(Common Gateway Interface)通用网关接口。是一种根据请求信息动态产生回应内容的技术。通过CGI，Web服务器可以将根据请求不同启动不同的外部程序，并将请求内容转发给该程序，在程序执行结束后，将执行结果作为回应返回给客户端。也因此，将会产生大量的进程，从而占用许多资源。此外，CGI不可移植。显然在大数据，云计算技术等互联网的新生代下，该技术日显落寞。</p>
+<hr>
+<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><p>Servlet(Servlet Applet),全称Java Servlet，是用Java编写的服务器端程序，其主要功能在于交互式地浏览和修改数据，生成动态Web内容。与CGI不同的是，Servlet对每个请求都是单独启动一个线程，而不是进程。这种处理方式大幅度地降低了系统里的进程数量，提高了系统的并发处理能力。另外因为Java Servlet是运行在虚拟机之上的，也因此了解决了跨平台问题。同样没有Servlet的出现，也没有互联网的今天。</p>
+<p>Servlet其过程分为如下四个:</p>
+<ul>
+<li>客户端发送请求至服务器端;</li>
+<li>服务器端将请求信息发送至Servlet；</li>
+<li>Servlet、生成响应内容并将其传给服务器；</li>
+<li>服务器将响应返回给客户端。</li>
+</ul>
+<p>但是使用Servlet来进行编写程序并不容易，需要实现的方法太多，所以编写Servlet时直接继承HttpServlet，并覆盖需要的方式即可。一般只覆盖<strong>doGet()</strong>和<strong>doPost()</strong>方法即可。</p>
+<h6 id="doGet"><a href="#doGet" class="headerlink" title="doGet()"></a>doGet()</h6><p>当form中的method属性设为”GET”时，浏览器就会以GET方式提交表单数据，表单会根据Action中的设置判断将数据提交到什么<br>地方，Servlet或者JSP。</p>
+<p>使用GET的方式进行表单的提交，浏览器会把表单的内容组织成一个字符串，变量之间用“&amp;”进行连接，然后以Servlet路径加“？”加查询字符串的形式获取服务器内容。使用这种方式并不安全，因为所有需要传输的数据会显示在浏览器的地址栏上。</p>
+<h6 id="doPost"><a href="#doPost" class="headerlink" title="doPost()"></a>doPost()</h6><p>将FORM中的methods属性设置为“POST”，浏览器就会以POST的方式提交表单内容。在POST提交表单时，表单的内容不会在浏览器中显示，因此使用POST提交方式比较安全，适用于提交一些密码等信息。</p>
+<p>此外Servlet可以通过<strong>HttpServletRequest</strong>特性的getPraramter(String parame)__是属性来获取param对应的参数 </p>
+<hr>
+<h3 id="0x2-Servlet路径部署"><a href="#0x2-Servlet路径部署" class="headerlink" title="0x2 Servlet路径部署"></a>0x2 Servlet路径部署</h3><p>JavaEE web规范了服务器搜索Servlet类的路径:WEB-INF/calsses以及WEB-INF/lib下所有的jar文件(jar包)。</p>
+<p>比如写好了一个LoginServlet.java的Servlet文件，那么便需要将LoginServlet.java编译后文件LoginServlet.class文件放到WEB-INF/classs/com/jack/loginServlet/中</p>
+<p>当然，如果使用MyEclipse的话只需重新部署项目就可以了，选择好web项目的本地存放路劲，其它的都会自动配置的。</p>
+<p>只需要再<strong>web.xml</strong>项目部署文件中配置好Servlet的请求匹配路径就好了。</p>
+<p>比如有两个页面index.jsp和LoginServlet.java页面。它们的关系是index.jsp中的form表单会将数据提交给loginServlet.java。但是不会直接使用跳转，而是通过web.xml的配置文件来过渡(映射)的。</p>
+<p>index.jsp—&gt;web.xml—&gt;loginServlet.java</p>
+<p>index.jsp文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;utf-8&quot;%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	String path = request.getContextPath();</span><br><span class="line">	String basePath = request.getScheme() + &quot;://&quot;</span><br><span class="line">			+ request.getServerName() + &quot;:&quot; + request.getServerPort()</span><br><span class="line">			+ path + &quot;/&quot;;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;title&gt;登录&lt;/title&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;description&quot; content=&quot;This is my page&quot;&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;</span><br><span class="line">	--&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		if (request.getAttribute(&quot;Error&quot;) != null) &#123;</span><br><span class="line">			// 有错误，要进行打印输出</span><br><span class="line">			List all = (List) request.getAttribute(&quot;Error&quot;);</span><br><span class="line">			Iterator iter = all.iterator();</span><br><span class="line">			while (iter.hasNext()) &#123;</span><br><span class="line">	%&gt;</span><br><span class="line">	&lt;p&gt;&lt;%=iter.next()%&gt;&lt;/p&gt; &lt;%</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line"> %&gt;</span><br><span class="line">&lt;form action=&quot;loginServlet&quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;table&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;&lt;strong&gt;登录名:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;&lt;strong&gt;密码:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;&lt;td&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;/td&gt;</span><br><span class="line">			&lt;td&gt;&lt;input type=&quot;reset&quot; name=&quot;reset&quot; value=&quot;重置&quot;&gt;&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">		&lt;/table&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>web.xml配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> &lt;servlet&gt;</span><br><span class="line">   &lt;description&gt;控制用户发送来的请求&lt;/description&gt;</span><br><span class="line">   &lt;display-name&gt;LoginServlet&lt;/display-name&gt;</span><br><span class="line">   &lt;servlet-name&gt;LoginServlet&lt;/servlet-name&gt;</span><br><span class="line">   &lt;servlet-class&gt;com.jack.servlet.LoginServlet&lt;/servlet-class&gt;</span><br><span class="line"> &lt;/servlet&gt;</span><br><span class="line"></span><br><span class="line"> &lt;servlet-mapping&gt;</span><br><span class="line">   &lt;servlet-name&gt;LoginServlet&lt;/servlet-name&gt;</span><br><span class="line">   &lt;url-pattern&gt;/loginServlet&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;	</span><br><span class="line"> &lt;welcome-file-list&gt;</span><br><span class="line">   &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line"> &lt;/welcome-file-list&gt;</span><br></pre></td></tr></table></figure>
+<p>LoginServlet.java文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">package com.jack.servlet;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">import com.jack.factory.DAOFactory;</span><br><span class="line">import com.jack.pojo.Login;</span><br><span class="line"></span><br><span class="line">public class LoginServlet extends HttpServlet &#123;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Constructor of the object.</span><br><span class="line">	 */</span><br><span class="line">	public LoginServlet() &#123;</span><br><span class="line">		super();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Destruction of the servlet. &lt;br&gt;</span><br><span class="line">	 */</span><br><span class="line">	public void destroy() &#123;</span><br><span class="line">		super.destroy(); // Just puts &quot;destroy&quot; string in log</span><br><span class="line">		// Put your code here</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * The doGet method of the servlet. &lt;br&gt;</span><br><span class="line">	 * </span><br><span class="line">	 * This method is called when a form has its tag value method equals to get.</span><br><span class="line">	 * </span><br><span class="line">	 * @param request</span><br><span class="line">	 *            the request send by the client to the server</span><br><span class="line">	 * @param response</span><br><span class="line">	 *            the response send by the server to the client</span><br><span class="line">	 * @throws ServletException</span><br><span class="line">	 *             if an error occurred</span><br><span class="line">	 * @throws IOException</span><br><span class="line">	 *             if an error occurred</span><br><span class="line">	 */</span><br><span class="line">	public void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">			throws ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">		doPost(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * The doPost method of the servlet. &lt;br&gt;</span><br><span class="line">	 * </span><br><span class="line">	 * This method is called when a form has its tag value method equals to</span><br><span class="line">	 * post.</span><br><span class="line">	 * </span><br><span class="line">	 * @param request</span><br><span class="line">	 *            the request send by the client to the server</span><br><span class="line">	 * @param response</span><br><span class="line">	 *            the response send by the server to the client</span><br><span class="line">	 * @throws ServletException</span><br><span class="line">	 *             if an error occurred</span><br><span class="line">	 * @throws IOException</span><br><span class="line">	 *             if an error occurred</span><br><span class="line">	 */</span><br><span class="line">	public void doPost(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">			throws ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">		List errors = new ArrayList();</span><br><span class="line">		String path = &quot;../index.jsp&quot;;</span><br><span class="line">		String name = request.getParameter(&quot;username&quot;);</span><br><span class="line">		String pwd = request.getParameter(&quot;pwd&quot;);</span><br><span class="line">		Login lg = new Login();</span><br><span class="line">		lg.setUsername(name);</span><br><span class="line">		lg.setPassword(pwd);</span><br><span class="line">		lg.setErrors(errors);</span><br><span class="line">		boolean isValid = lg.isInvalidate();</span><br><span class="line">		System.out.println(&quot;判断输入格式是否合法&quot; + isValid);</span><br><span class="line">		// 如果输入合法，再进行数据库端的验证</span><br><span class="line">		if (isValid) &#123;</span><br><span class="line">			if (DAOFactory.getLoginDAOInstance().isLogin(lg)) &#123;</span><br><span class="line">				System.out.println(&quot;数据库匹配验证&quot;);</span><br><span class="line">				path = &quot;../success.jsp&quot;;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				errors.add(&quot;用户名密码不对!&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		request.setAttribute(&quot;Error&quot;, errors);</span><br><span class="line">		request.setAttribute(&quot;Lg&quot;, lg);</span><br><span class="line">		System.out.println(&quot;&lt;html&gt;&quot;);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Initialization of the servlet. &lt;br&gt;</span><br><span class="line">	 * </span><br><span class="line">	 * @throws ServletException</span><br><span class="line">	 *             if an error occurs</span><br><span class="line">	 */</span><br><span class="line">	public void init() throws ServletException &#123;</span><br><span class="line">		// Put your code here</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上创建了一个index.jsp页面，form表单会将数据提交到路径为action=”loginServlet”中的Servlet程序(实际上这个程序就是LoginServlet.class(由LoginServlet.java编译后的文件))，而loginServlet是实际上不存在的，它只是一个别名或者说一虚拟的url路径而已。</p>
+<p>值得注意的是web.xml中<url-pattern>/loginServlet</url-pattern>和index.jsp中的action=”loginServlet”必须一致。</p>
+<p>然后web.xml会将/loginServlet映射为com.jack.servlet.LoginServlet页面。</p>
+<hr>
+<h3 id="0x03-Servlet转发"><a href="#0x03-Servlet转发" class="headerlink" title="0x03 Servlet转发"></a>0x03 Servlet转发</h3><p>Servlet的请求转发有三种形式，主要是通过HttpServletRequest和HttpServletResponse对象来实现的。</p>
+<p>Java代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void service(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException &#123;</span><br><span class="line">   request.getRequestDispathcer(&quot;/url&quot;).include(request,response);</span><br><span class="line">   request.getRequestDispathcer(&quot;/url&quot;).forward(request,response);</span><br><span class="line">   request.sendRedirect(&quot;/url&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它们的区别是:<br>include是把另一个servlet/jsp处理过后的内容拿过来与本身的servlet内容一起输出；forward是把请求的内容转发到另一个servlet/jsp中。</p>
+<p>include是把被人包含进来，forward则是丢掉自己。而sendRedict则是单纯的重定向。</p>
+<hr>
+<h3 id="0x04-ServletContext"><a href="#0x04-ServletContext" class="headerlink" title="0x04 ServletContext"></a>0x04 ServletContext</h3><p>ServletContext是Servlet与Servlet容器之间的直接通信接口，每个web应用有唯一的一个servletConetxt对象。同一个web应用的所有servlet对象共享一个servletContext，sevlet对象可以通过它来访问容器中的各种资源。</p>
+<hr>
+<h4 id="获取内存共享数据的方法"><a href="#获取内存共享数据的方法" class="headerlink" title="获取内存共享数据的方法"></a>获取内存共享数据的方法</h4><h6 id="setAttribute"><a href="#setAttribute" class="headerlink" title="setAttribute"></a>setAttribute</h6><p>setAttribute(String name,java.lang.Object object):把一个java对象和属性名绑定，并存放到SevletContext中，参数name指定属性名，参数Object表示共享数据。</p>
+<h6 id="setAttribute-String-name-根据参数给定的属性名，返回一个object类型的对象"><a href="#setAttribute-String-name-根据参数给定的属性名，返回一个object类型的对象" class="headerlink" title="setAttribute(String name):根据参数给定的属性名，返回一个object类型的对象"></a>setAttribute(String name):根据参数给定的属性名，返回一个object类型的对象</h6><h6 id="getAttributeNames-返回一个Enumeration对象，该对象包含了所有存放在SetvletContext中的属性名。"><a href="#getAttributeNames-返回一个Enumeration对象，该对象包含了所有存放在SetvletContext中的属性名。" class="headerlink" title="getAttributeNames():返回一个Enumeration对象，该对象包含了所有存放在SetvletContext中的属性名。"></a>getAttributeNames():返回一个Enumeration对象，该对象包含了所有存放在SetvletContext中的属性名。</h6><h6 id="removetAttribute-String-name-根据参数指定属性名，从ServletContext对象中删除匹配的属性。"><a href="#removetAttribute-String-name-根据参数指定属性名，从ServletContext对象中删除匹配的属性。" class="headerlink" title="removetAttribute(String name):根据参数指定属性名，从ServletContext对象中删除匹配的属性。"></a>removetAttribute(String name):根据参数指定属性名，从ServletContext对象中删除匹配的属性。</h6><h4 id="servletContext对象获得的几种方法"><a href="#servletContext对象获得的几种方法" class="headerlink" title="servletContext对象获得的几种方法"></a>servletContext对象获得的几种方法</h4><p>Javax.servlet.HttpSession.getServletContext()<br>Javax.servlet.jsp.PageContext.getServletContext()<br>Javax.servlet.ServletConfig.getServletContext()</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-J2EE/" rel="tag"># Java-J2EE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/23/Java连接MSSQL数据库/" rel="next" title="Java-Java连接MSSQL数据库">
+                <i class="fa fa-chevron-left"></i> Java-Java连接MSSQL数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/25/J2EE+Servlet+JSP/" rel="prev" title="J2EEE+Servlet+JSP">
+                J2EEE+Servlet+JSP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Servlet简介"><span class="nav-number">1.</span> <span class="nav-text">0x01 Servlet简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CGI"><span class="nav-number">1.1.</span> <span class="nav-text">CGI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Servlet"><span class="nav-number">1.2.</span> <span class="nav-text">Servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#doGet"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">doGet()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#doPost"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">doPost()</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x2-Servlet路径部署"><span class="nav-number">2.</span> <span class="nav-text">0x2 Servlet路径部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Servlet转发"><span class="nav-number">3.</span> <span class="nav-text">0x03 Servlet转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-ServletContext"><span class="nav-number">4.</span> <span class="nav-text">0x04 ServletContext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取内存共享数据的方法"><span class="nav-number">4.1.</span> <span class="nav-text">获取内存共享数据的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#setAttribute"><span class="nav-number">4.1.0.1.</span> <span class="nav-text">setAttribute</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#setAttribute-String-name-根据参数给定的属性名，返回一个object类型的对象"><span class="nav-number">4.1.0.2.</span> <span class="nav-text">setAttribute(String name):根据参数给定的属性名，返回一个object类型的对象</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#getAttributeNames-返回一个Enumeration对象，该对象包含了所有存放在SetvletContext中的属性名。"><span class="nav-number">4.1.0.3.</span> <span class="nav-text">getAttributeNames():返回一个Enumeration对象，该对象包含了所有存放在SetvletContext中的属性名。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#removetAttribute-String-name-根据参数指定属性名，从ServletContext对象中删除匹配的属性。"><span class="nav-number">4.1.0.4.</span> <span class="nav-text">removetAttribute(String name):根据参数指定属性名，从ServletContext对象中删除匹配的属性。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servletContext对象获得的几种方法"><span class="nav-number">4.2.</span> <span class="nav-text">servletContext对象获得的几种方法</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

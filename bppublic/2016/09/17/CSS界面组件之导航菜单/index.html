@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS,CSS界面组件,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 纵向菜单代码示例: 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&amp;lt;head&amp;gt;	&amp;lt;meta charset=&amp;">
+<meta name="keywords" content="CSS,CSS界面组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS界面组件之导航菜单">
+<meta property="og:url" content="http://yoursite.com/2016/09/17/CSS界面组件之导航菜单/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 纵向菜单代码示例: 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&amp;lt;head&amp;gt;	&amp;lt;meta charset=&amp;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS界面组件之导航菜单">
+<meta name="twitter:description" content="0x00 纵向菜单代码示例: 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&amp;lt;head&amp;gt;	&amp;lt;meta charset=&amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/17/CSS界面组件之导航菜单/">
+
+
+
+
+
+  <title>CSS界面组件之导航菜单 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/17/CSS界面组件之导航菜单/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSS界面组件之导航菜单</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-17T16:39:00+08:00">
+                2016-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-纵向菜单"><a href="#0x00-纵向菜单" class="headerlink" title="0x00 纵向菜单"></a>0x00 纵向菜单</h3><p>代码示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		*&#123;</span><br><span class="line">			margin:0;</span><br><span class="line">			padding:0;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		nav&#123;</span><br><span class="line">			margin: 50px;</span><br><span class="line">			width: 200px;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.list ul&#123;</span><br><span class="line">			border:1px solid #6a6bbc;</span><br><span class="line">			border-radius: 3px;</span><br><span class="line">			padding:5px 10px 3px;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.list li&#123;</span><br><span class="line">			list-style:none;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		.list li+li a &#123;</span><br><span class="line"></span><br><span class="line">			border-top:1px solid #6a6bbc;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.list a&#123;</span><br><span class="line">			padding: 3px 10px;</span><br><span class="line">			text-decoration: none;</span><br><span class="line">			display: block;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		.list a:hover&#123;</span><br><span class="line">			background-color: #069;</span><br><span class="line">			color:white;</span><br><span class="line">			font: 20px/1em &quot;宋体&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;nav class=&quot;list&quot;&gt;</span><br><span class="line">		&lt;ul&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;APP&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;Contents&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;About&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">		&lt;/ul&gt;</span><br><span class="line">	&lt;/nav&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>注释:</p>
+<ol>
+<li><p>使用 <strong>非首位子元素</strong> 选择符。<br><code>li + li</code> 选择符意思为：任何跟在  <code>li</code>  之后的 <code>li</code>。在上面表示给除第一个 <code>li</code>  之外的所有列表项上方加一条边框。</p>
+<p>其它实现效果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.list li&#123;</span><br><span class="line">  border-top:1px solid #069;</span><br><span class="line">&#125;</span><br><span class="line">.list li:first-child&#123;</span><br><span class="line">   border-top:none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>让列表可点击。<br>为了不让只有文本可以点击（<strong>因为链接 a  是行内元素，它会收缩并包住其中的文本。</strong>），为了提高用户体验，我们需要 <strong>让列表项所在的整行都能点击</strong>。方法就是首先把内边距从 li  元素转移到链接内部，然后让链接完全填满整个列表项。</p>
+</li>
+</ol>
+<hr>
+<h3 id="0x01-横向菜单"><a href="#0x01-横向菜单" class="headerlink" title="0x01 横向菜单"></a>0x01 横向菜单</h3><p>代码示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		*&#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding:0;</span><br><span class="line">		&#125;</span><br><span class="line">		.list ul&#123;</span><br><span class="line">			overflow: hidden; </span><br><span class="line">			list-style: none; </span><br><span class="line">			margin: 0 20px;</span><br><span class="line">			border:1px solid grey;   </span><br><span class="line">			padding: 5px 10px;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.list li &#123;</span><br><span class="line">			</span><br><span class="line">			float: left;</span><br><span class="line">			border-right: 1px solid grey;</span><br><span class="line">			padding: 0 10px;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">		.list li a&#123;</span><br><span class="line"></span><br><span class="line">			display: block;</span><br><span class="line">			text-decoration: none;</span><br><span class="line">			border-radius: 3px;	</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.list li:last-child&#123;</span><br><span class="line">			border-right: none;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		.list a:hover&#123;</span><br><span class="line">			background-color: grey;</span><br><span class="line">			border-radius: 4px;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;nav class=&quot;list&quot;&gt;</span><br><span class="line">		&lt;ul&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;Pages&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;Content&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;&lt;a href=&quot;&quot;&gt;About&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">		&lt;/ul&gt;</span><br><span class="line">	&lt;/nav&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>注释:</p>
+<ol>
+<li><p>浮动可以让 <code>li</code>  元素从垂直变成水平。当然可以使用 <code>display:inline-block</code> 属性将 <code>li</code> 变成水平方向的。</p>
+</li>
+<li><p><code>ul { overflow:hidden;}</code> 可以使 <code>ul</code> 强制包裹 浮动的 <code>li</code>。</p>
+</li>
+</ol>
+<hr>
+<h3 id="0x02-下拉菜单"><a href="#0x02-下拉菜单" class="headerlink" title="0x02 下拉菜单"></a>0x02 下拉菜单</h3><p>html示例代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;multipule.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;nav id=&quot;nav&quot;&gt;</span><br><span class="line">	&lt;ul class=&quot;firstNav&quot;&gt;</span><br><span class="line">		&lt;li&gt;&lt;a href=&quot;&quot;&gt;人类&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;&lt;a href=&quot;&quot;&gt;植物&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;&lt;a href=&quot;&quot;&gt;动物&lt;/a&gt;</span><br><span class="line">			&lt;ul class=&quot;secondNav&quot;&gt;</span><br><span class="line">				&lt;li&gt;&lt;a href=&quot;&quot;&gt;犬科&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;&lt;a href=&quot;&quot;&gt;猫科&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;&lt;a href=&quot;&quot;&gt;鸟科&lt;/a&gt;</span><br><span class="line">					&lt;ul class=&quot;thirdNav&quot;&gt;</span><br><span class="line">						&lt;li&gt;&lt;a href=&quot;&quot;&gt;大鸟&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">						&lt;li&gt;&lt;a href=&quot;&quot;&gt;中鸟&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">						&lt;li&gt;&lt;a href=&quot;&quot;&gt;小鸟&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">						&lt;li&gt;&lt;a href=&quot;&quot;&gt;小小鸟&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">					&lt;/ul&gt;</span><br><span class="line">				&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;&lt;a href=&quot;&quot;&gt;昆虫科&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">			&lt;/ul&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">		&lt;li&gt;&lt;a href=&quot;&quot;&gt;微生物&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">	&lt;/nav&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>CSS示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">	margin: 0;</span><br><span class="line">	padding: 0;</span><br><span class="line">	text-decoration: none;</span><br><span class="line">	list-style: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#nav&#123;</span><br><span class="line">	font:1em &quot;宋体&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*显示样式规则*/</span><br><span class="line">/*一级菜单显示*/</span><br><span class="line">	/*设置所有 a 标签的显示样式*/</span><br><span class="line">#nav li a &#123;</span><br><span class="line">	color:#555;</span><br><span class="line">	background-color: gray;</span><br><span class="line">	padding: .2em 1em;</span><br><span class="line">	border-width: 3px;</span><br><span class="line">	border-color:transparent;</span><br><span class="line">	border-right-style: solid;</span><br><span class="line">	background-clip: padding-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#nav li:hover &gt; a&#123;</span><br><span class="line">	color: #fff;</span><br><span class="line">	background-color: #aaa;</span><br><span class="line">&#125;</span><br><span class="line">	/* a 标签显示样式结束 */</span><br><span class="line">/*一级菜单显示结束*/</span><br><span class="line"></span><br><span class="line">/*二级菜单显示样式*/</span><br><span class="line"></span><br><span class="line">#nav ul&#123;</span><br><span class="line">	height: 2em;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">#nav li ul&#123;</span><br><span class="line">	</span><br><span class="line">	width:9em;</span><br><span class="line">	height: 7em;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#nav li li a&#123;</span><br><span class="line">	/*去掉继承的右边框*/</span><br><span class="line">	border-right: none;	</span><br><span class="line">	border-top:2px solid transparent;</span><br><span class="line">&#125;</span><br><span class="line">/*结束二级菜单显示演示*/</span><br><span class="line">/*显示样式规则结束*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*开始设置功能样式*/</span><br><span class="line"></span><br><span class="line">#nav &#123;</span><br><span class="line">	position: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#nav li&#123;</span><br><span class="line">	float: left;</span><br><span class="line">	position: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#nav li a&#123;</span><br><span class="line">	display: block;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*二级菜单功能样式*/</span><br><span class="line">#nav li ul &#123;</span><br><span class="line">	/*隐藏二级菜单*/</span><br><span class="line">	display: none;</span><br><span class="line">	/*相对父元素绝对定位*/</span><br><span class="line">	position: absolute;</span><br><span class="line">	left: 20px;</span><br><span class="line">	top: 100%;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#nav li:hover &gt; ul&#123;</span><br><span class="line">	/*一级菜单悬浮时显示二级菜单*/</span><br><span class="line">	display: block;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">/*二级菜单功能演示结束*/</span><br><span class="line"></span><br><span class="line">#nav li li&#123;</span><br><span class="line">	/*二级菜单停止悬浮，恢复重叠*/</span><br><span class="line">	float: none;</span><br><span class="line">	border:none;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*三级菜单功能样式*/</span><br><span class="line">#nav li li ul&#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	left: 100%;</span><br><span class="line">	top:0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">/*结束三级菜单功能样式*/</span><br><span class="line">/*结束功能样式*/</span><br></pre></td></tr></table></figure>
+<h4 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">div.menu-bar ul ul &#123; display: none;&#125;</span><br><span class="line">div.menu-bar li:hover &gt; ul &#123; display: block;&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/CSS界面组件/" rel="tag"># CSS界面组件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/16/Arachni/" rel="next" title="Arachni">
+                <i class="fa fa-chevron-left"></i> Arachni
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/25/JS极速入门/" rel="prev" title="JS极速入门">
+                JS极速入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-纵向菜单"><span class="nav-number">1.</span> <span class="nav-text">0x00 纵向菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-横向菜单"><span class="nav-number">2.</span> <span class="nav-text">0x01 横向菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-下拉菜单"><span class="nav-number">3.</span> <span class="nav-text">0x02 下拉菜单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心代码"><span class="nav-number">3.1.</span> <span class="nav-text">核心代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

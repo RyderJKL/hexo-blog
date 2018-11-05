@@ -5,3 +5,7 @@ db.json
 node_modules/
 public/
 .deploy*/
+.deploy_git/
+public/
+source/_posts/
+themes/

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JS小项目,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 JS+CSS 图片轮播功能描述: 图片自动轮播，鼠标可通过左右选择滑动下一张图片。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081">
+<meta name="keywords" content="JS小项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="轮播图的N种方式">
+<meta property="og:url" content="http://yoursite.com/2016/10/08/轮播图的N种方式/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 JS+CSS 图片轮播功能描述: 图片自动轮播，鼠标可通过左右选择滑动下一张图片。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="轮播图的N种方式">
+<meta name="twitter:description" content="0x00 JS+CSS 图片轮播功能描述: 图片自动轮播，鼠标可通过左右选择滑动下一张图片。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/08/轮播图的N种方式/">
+
+
+
+
+
+  <title>轮播图的N种方式 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/08/轮播图的N种方式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">轮播图的N种方式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-08T00:00:00+08:00">
+                2016-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-JS-CSS-图片轮播"><a href="#0x00-JS-CSS-图片轮播" class="headerlink" title="0x00 JS+CSS 图片轮播"></a>0x00 JS+CSS 图片轮播</h3><p>功能描述: 图片自动轮播，鼠标可通过左右选择滑动下一张图片。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;myExperimentPages&lt;/title&gt;	</span><br><span class="line">  &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> </span><br><span class="line">    *&#123;</span><br><span class="line">      margin:0;</span><br><span class="line">      padding: 0;</span><br><span class="line">      list-style: none;</span><br><span class="line">      text-decoration: none;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #wrapper&#123;</span><br><span class="line">      position: relative;</span><br><span class="line">      width: 1024px;</span><br><span class="line">      height: 768px;</span><br><span class="line">      border:1px solid green;</span><br><span class="line">      overflow: hidden;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    #imageboxs &#123;</span><br><span class="line">      border:1px red solid;</span><br><span class="line">      width: 6000px;</span><br><span class="line">      height: 600px;</span><br><span class="line">      position: absolute;</span><br><span class="line">      left: 0;</span><br><span class="line">      top: 0;</span><br><span class="line">      transition:all .5s ease-in .1s;    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #control &#123;</span><br><span class="line">      width: 360px;</span><br><span class="line">      height: 35px;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">      position: absolute;</span><br><span class="line">      bottom: 10; </span><br><span class="line">      right: 0;      </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #control ul &#123;</span><br><span class="line">      float:left;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    #control li &#123;</span><br><span class="line">      float:left;</span><br><span class="line">      width: 30px;</span><br><span class="line">      height: 30px;</span><br><span class="line">      border-radius: 15px;</span><br><span class="line">      border:1px solid red;</span><br><span class="line">      text-align: center;</span><br><span class="line">      cursor:pointer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    #control li  a &#123;</span><br><span class="line">      display: inline-block;</span><br><span class="line">      width: 30px</span><br><span class="line">      height:30px;</span><br><span class="line">    &#125;</span><br><span class="line">    #control p &#123;</span><br><span class="line">      float: left;</span><br><span class="line">      width: 100px;</span><br><span class="line">      background-color: red;</span><br><span class="line">      line-height: 35px;</span><br><span class="line">      text-align: center;      </span><br><span class="line">      cursor:pointer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;wrapper&quot;&gt;</span><br><span class="line">  //轮播框，必不可少，相对定位</span><br><span class="line">      &lt;div id=&quot;imageboxs&quot;&gt;</span><br><span class="line">      // 图片载体，必不可少，相对定位</span><br><span class="line">        &lt;a href=&quot;&quot;&gt;&lt;img src=&quot;myImages/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;myImages/2.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;myImages/3.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;myImages/4.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;div id=&quot;control&quot;</span><br><span class="line">      //控制按钮，绝对定位</span><br><span class="line">        &lt;p id = &quot;prevNext&quot;&gt;前一页&lt;/p&gt;</span><br><span class="line">          &lt;ul&gt;</span><br><span class="line">            &lt;li class=&quot;con-li&quot;&gt;&lt;a href=&quot;&quot;&gt;1&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;con-li&quot;&gt;&lt;a href=&quot;&quot;&gt;2&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;con-li&quot;&gt;&lt;a href=&quot;&quot;&gt;3&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li class=&quot;con-li&quot;&gt;&lt;a href=&quot;&quot;&gt;4&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">         &lt;p id = &quot;afterNext&quot;&gt;后一页&lt;/p&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">       var isWrapper = document.getElementById(&quot;wrapper&quot;);</span><br><span class="line">       var boxsImage = document.getElementById(&quot;imageboxs&quot;);</span><br><span class="line">       var liControlArr = document.getElementsByClassName(&quot;con-li&quot;);</span><br><span class="line">       var nextPrev = document.getElementById(&quot;prevNext&quot;);</span><br><span class="line">       var nextAfter = document.getElementById(&quot;afterNext&quot;);</span><br><span class="line"></span><br><span class="line">       var i = 0;</span><br><span class="line">       // 记录当前显示的图片</span><br><span class="line">       nextAfter.onclick = function function_name(argument) &#123;</span><br><span class="line"></span><br><span class="line">         // body...</span><br><span class="line">          i ++;</span><br><span class="line">          if(i &gt; 3)&#123;</span><br><span class="line">            i=0;</span><br><span class="line">          &#125;</span><br><span class="line">          boxsImage.style.left = (-1024*i) + &quot;px&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       nextPrev.onclick = function ()&#123;</span><br><span class="line">          i --;</span><br><span class="line">          if ( i &lt; 0)&#123;</span><br><span class="line">            i = 3;</span><br><span class="line">            boxsImage.style.left = (-1024*i) + &quot;px&quot;;</span><br><span class="line">          &#125;else&#123;</span><br><span class="line">            boxsImage.style.left = (-1024*i) + &quot;px&quot;;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       function autoPlay ()&#123;</span><br><span class="line">       // 移动图片函数</span><br><span class="line">          i ++;</span><br><span class="line">          if(i &gt; 3)&#123;</span><br><span class="line">            i=0;</span><br><span class="line">          &#125;</span><br><span class="line">          boxsImage.style.left = (-1024*i) + &quot;px&quot;;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       var timer = setInterval(autoPlay,1000);</span><br><span class="line">       //自动轮播</span><br><span class="line"></span><br><span class="line">       isWrapper.onmouseover = function ()&#123;</span><br><span class="line">       // 鼠标划中，停止轮播</span><br><span class="line">          clearInterval(timer);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       isWrapper.onmouseout = function ()&#123;</span><br><span class="line">       //鼠标划出，开始轮播</span><br><span class="line">          timer = setInterval(autoPlay,1000);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       for( var j=0;j&lt;liControlArr.length;j++)&#123;</span><br><span class="line">       //为每个 li 添加 对应的图片移动事件</span><br><span class="line">          console.log(liControlArr.length);</span><br><span class="line">          liControlArr[j].index = j;</span><br><span class="line">          liControlArr[j].onmouseover = function ()&#123;</span><br><span class="line">            console.log(this.index);</span><br><span class="line">            boxsImage.style.left = (-1024*(this.index)) +&quot;px&quot;;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x01-为轮播添加一个短暂的停留"><a href="#0x01-为轮播添加一个短暂的停留" class="headerlink" title="0x01 为轮播添加一个短暂的停留"></a>0x01 为轮播添加一个短暂的停留</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;&lt;/title&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		*&#123;</span><br><span class="line">			margin:0;</span><br><span class="line">			padding: 0;</span><br><span class="line">			box-sizing: border-box;</span><br><span class="line">		&#125;</span><br><span class="line">		#wrap &#123;</span><br><span class="line">			height: 400px;</span><br><span class="line">			width:260px;</span><br><span class="line">			border: 1px solid red;</span><br><span class="line">			position: relative;</span><br><span class="line">			overflow: hidden;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		#boxImg &#123;</span><br><span class="line">			width:5000px;</span><br><span class="line">			height: 100%;</span><br><span class="line">			position: absolute;</span><br><span class="line">			left:0;</span><br><span class="line">			top:0;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		#boxImg img &#123;</span><br><span class="line">			float: left;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		#btnDiv &#123;</span><br><span class="line">			position: absolute;</span><br><span class="line">			top:100px;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id=&quot;wrap&quot;&gt;</span><br><span class="line">		&lt;div id=&quot;boxImg&quot;&gt;</span><br><span class="line">			&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;../20DAY/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;</span><br><span class="line">			&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;../20DAY/2.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;</span><br><span class="line">			&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;../20DAY/3.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;</span><br><span class="line">			&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;../20DAY/4.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;</span><br><span class="line">			&lt;a href=&quot;&quot;&gt;&lt;img src=&quot;../20DAY/5.jpg&quot; alt=&quot;&quot;&gt;&lt;/a&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div id=&quot;btnDiv&quot;&gt;</span><br><span class="line">		&lt;button class=&quot;btn&quot; onclick=&quot;nextLeft()&quot;&gt;&lt;&lt;/button&gt;</span><br><span class="line">		&lt;button class=&quot;btn&quot; onclick=&quot;nextRight()&quot;&gt;&gt;&lt;/button&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	var boxImg = document.getElementById(&quot;boxImg&quot;);</span><br><span class="line">	var mySetTiem1 = &quot;&quot;;</span><br><span class="line">	var mySetTiem2 = &quot;&quot;;</span><br><span class="line">	var timer1 = &quot;&quot;;</span><br><span class="line">	var timer = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">	function clearAlltimer ()&#123;</span><br><span class="line">		clearInterval(timer);</span><br><span class="line">		clearInterval(timer1);</span><br><span class="line">		clearTimeout(mySetTiem2);</span><br><span class="line">		clearTimeout(mySetTiem1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	var x = 0;	</span><br><span class="line">	function nextLeft ()&#123;</span><br><span class="line">		clearAlltimer();</span><br><span class="line">		clearTimeout(mySetTiem2);</span><br><span class="line">		timer1 = setInterval(function ()&#123;</span><br><span class="line">		x -=1;</span><br><span class="line">		if(x % 259 == 0)&#123;</span><br><span class="line">			clearInterval(timer1);</span><br><span class="line">			mySetTiem1 = setTimeout(nextLeft,1000);		</span><br><span class="line">		&#125;</span><br><span class="line">		if( x &lt; -1036)</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			x = 0;</span><br><span class="line"></span><br><span class="line">		&#125;		</span><br><span class="line">		boxImg.style.left = x +&quot;px&quot;;</span><br><span class="line">		</span><br><span class="line">		&#125;, 1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	function nextRight () &#123;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		clearAlltimer();</span><br><span class="line">		timer = setInterval(function ()&#123;</span><br><span class="line">		x +=1;</span><br><span class="line">		if(x % 259 == 0)&#123;</span><br><span class="line">			clearInterval(timer);</span><br><span class="line">			mySetTiem2 = setTimeout(nextRight,1000);</span><br><span class="line">		&#125;</span><br><span class="line">		if( x &gt; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			x = -1036;</span><br><span class="line">		&#125;</span><br><span class="line">		boxImg.style.left = x +&quot;px&quot;;</span><br><span class="line">		&#125;, 1);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x02-Tween-js-为轮播添加动画效果"><a href="#0x02-Tween-js-为轮播添加动画效果" class="headerlink" title="0x02 Tween.js 为轮播添加动画效果"></a>0x02 Tween.js 为轮播添加动画效果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">	&lt;script type=&quot;text/javascript&quot; src=&quot;tween.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		*&#123;</span><br><span class="line">			margin: 0;</span><br><span class="line">			padding: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		ul&#123;</span><br><span class="line">			list-style: none;</span><br><span class="line">		&#125;</span><br><span class="line">		#bannerBox&#123;</span><br><span class="line">			/*banner盒子，宽度和高度应该等于图片高度宽度*/</span><br><span class="line">			width: 1000px;</span><br><span class="line">			height: 600px;</span><br><span class="line">			border: 2px solid red;</span><br><span class="line">			margin: 0 auto;</span><br><span class="line">			position: relative;</span><br><span class="line">			overflow:hidden;</span><br><span class="line">		&#125;</span><br><span class="line">		#bannerImgs&#123;</span><br><span class="line">			/*banner 图片载体*/</span><br><span class="line">			width: 9999px;</span><br><span class="line">			height: 600px;</span><br><span class="line">			background-color: purple;</span><br><span class="line">			position: absolute;</span><br><span class="line">			left: 0;</span><br><span class="line">			top: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		#bannerControl&#123;</span><br><span class="line">			width: 360px;</span><br><span class="line">			height: 40px;</span><br><span class="line">			border: 2px solid yellow;</span><br><span class="line">			position: absolute;</span><br><span class="line">			bottom: 0;</span><br><span class="line">			right: 0;</span><br><span class="line">		&#125;</span><br><span class="line">		#bannerControl p&#123;</span><br><span class="line">			float: left;</span><br><span class="line">			width: 100px;</span><br><span class="line">			background: #ccc;</span><br><span class="line">			line-height: 40px;</span><br><span class="line">			text-align: center;</span><br><span class="line">			cursor: pointer;</span><br><span class="line">		&#125;</span><br><span class="line">		#btns li&#123;</span><br><span class="line">			float: left;</span><br><span class="line">			width: 40px;</span><br><span class="line">			height: 40px;</span><br><span class="line">			background-color: #ccc;</span><br><span class="line">			border-radius: 20px;</span><br><span class="line">			line-height: 40px;</span><br><span class="line">			text-align: center;</span><br><span class="line">			cursor: pointer;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id=&quot;bannerBox&quot;&gt;</span><br><span class="line">		&lt;div id=&quot;bannerImgs&quot;&gt;</span><br><span class="line">			&lt;a href=&quot;#&quot;&gt;&lt;img src=&quot;../img/01.jpg&quot;/&gt;&lt;/a&gt;&lt;img src=&quot;../img/02.jpg&quot;/&gt;&lt;img src=&quot;../img/03.jpg&quot;/&gt;&lt;img src=&quot;../img/04.jpg&quot;/&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div id=&quot;bannerControl&quot;&gt;</span><br><span class="line">			&lt;p id=&quot;prev&quot;&gt;前一页&lt;/p&gt;</span><br><span class="line">			&lt;ul id=&quot;btns&quot;&gt;</span><br><span class="line">				&lt;li&gt;1&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;2&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;3&lt;/li&gt;</span><br><span class="line">				&lt;li&gt;4&lt;/li&gt;</span><br><span class="line">			&lt;/ul&gt;</span><br><span class="line">			&lt;p id=&quot;next&quot;&gt;后一页&lt;/p&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">		//找对象</span><br><span class="line">		var imgs = document.getElementById(&quot;bannerImgs&quot;);</span><br><span class="line">		var prevbtn = document.getElementById(&quot;prev&quot;);</span><br><span class="line">		var nextbtn = document.getElementById(&quot;next&quot;);</span><br><span class="line">		var lis  = document.getElementsByTagName(&quot;li&quot;);		</span><br><span class="line"></span><br><span class="line">		var timerIntCavans = &quot;&quot;;</span><br><span class="line">		// 定时器，用于控制banner移动的动画效果</span><br><span class="line">		var timerOutAutoPlay = &quot;&quot;;</span><br><span class="line">		//定时器，延时调用自动轮播</span><br><span class="line">		var timerIntAutoPlay = &quot;&quot;;</span><br><span class="line">		//定时器，用于banner自动轮播</span><br><span class="line">		var num = 0;</span><br><span class="line">		// num 用于匹配当前聚焦的 li 或者imgs所在的位置</span><br><span class="line">		</span><br><span class="line">		function clearAllTimer(argument) &#123;</span><br><span class="line">			// body...</span><br><span class="line">			// 清除定时器</span><br><span class="line">			clearInterval(timerIntCavans);</span><br><span class="line">			clearInterval(timerIntAutoPlay);</span><br><span class="line">			clearTimeout(timerOutAutoPlay);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		//为每一个 Li 按钮添加 imgs 移动事件</span><br><span class="line">		for(var i = 0; i &lt; lis.length; i++)&#123;</span><br><span class="line">			</span><br><span class="line">			lis[i].index = i;//把i的值记录一下,添加到每一个li对象的index属性里</span><br><span class="line">			lis[i].onclick = function()&#123;</span><br><span class="line">				clearAllTimer();</span><br><span class="line">				num = this.index;	</span><br><span class="line">				clickMove();			</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		function clickMove ()&#123;</span><br><span class="line">			// 控制 imgs 移动</span><br><span class="line">				var step = 30; </span><br><span class="line">				//分三十次完成移动</span><br><span class="line">				var start = 0;</span><br><span class="line">				//移动初始量</span><br><span class="line">				var targetPosition = num*1000*-1;</span><br><span class="line">				//目标位置</span><br><span class="line">				var nowPosition = imgs.offsetLeft;</span><br><span class="line">				//目标当前的位置</span><br><span class="line">				var changeDisplacement = targetPosition - nowPosition;</span><br><span class="line">				//目标需要改变的位置</span><br><span class="line">				timerIntCavans = setInterval(function()&#123;</span><br><span class="line">					//timer 设置定时器，使其每十帧移动一次</span><br><span class="line">					start ++;					</span><br><span class="line">					if( start &gt;= step)&#123;						</span><br><span class="line">						clearInterval(timerIntCavans);</span><br><span class="line">					&#125;</span><br><span class="line">					imgs.style.left = Tween.Bounce.easeInOut(start,nowPosition,changeDisplacement,step)+&quot;px&quot;;</span><br><span class="line">				&#125;,10);</span><br><span class="line">				timerOutAutoPlay = setTimeout(autoPlay,2000);</span><br><span class="line">				// 定时器，延时调用自动轮播</span><br><span class="line">				changeColors(num);		</span><br><span class="line">				// 改变 当前 li 的颜色</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		prevbtn.onclick = function () &#123;			</span><br><span class="line">			clearAllTimer();</span><br><span class="line">			num --;</span><br><span class="line">			if( num &lt; 0)&#123;</span><br><span class="line">				num = 3;</span><br><span class="line">			&#125;</span><br><span class="line">			clickMove();</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		nextbtn.onclick = function ()&#123;</span><br><span class="line">			clearAllTimer();</span><br><span class="line">			num ++;</span><br><span class="line">			if (num &gt; 3)&#123;</span><br><span class="line">				num = 0;</span><br><span class="line">			&#125;</span><br><span class="line">			clickMove();			</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		function autoPlay ()&#123;			</span><br><span class="line">			clearAllTimer();</span><br><span class="line">			var x = imgs.offsetLeft;</span><br><span class="line">			timerIntAutoPlay = setInterval(function()&#123;</span><br><span class="line">				x -=1;</span><br><span class="line">				if( x%1000 == 0)&#123;</span><br><span class="line">					num ++;</span><br><span class="line">					clearInterval(timerIntAutoMove);</span><br><span class="line">					timerOutAutoPlay = setTimeout(autoPlay,2000);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				if(num &gt; 3)&#123;</span><br><span class="line">					num = 0;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				changeColors(num);</span><br><span class="line">				if (x &lt; -3000)&#123;</span><br><span class="line">					x = 0;</span><br><span class="line">				&#125;</span><br><span class="line">				imgs.style.left = x + &quot;px&quot;;</span><br><span class="line">			&#125;,1);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		function changeColors (index)&#123;</span><br><span class="line">			for(var i = 0; i &lt; lis.length; i ++)&#123;</span><br><span class="line">				lis[i].style.backgroundColor = &quot;red&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			lis[index].style.backgroundColor = &quot;black&quot;;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		autoPlay();		</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-使用opcaity实现图片轮播"><a href="#0x03-使用opcaity实现图片轮播" class="headerlink" title="0x03 使用opcaity实现图片轮播"></a>0x03 使用opcaity实现图片轮播</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">// HTML</span><br><span class="line">&lt;div class=&quot;swiper-container&quot;&gt;</span><br><span class="line">	&lt;div class=&quot;swiper-wrapper&quot;&gt;</span><br><span class="line">		 &lt;div id=&quot;swiper-img-box&quot;&gt;</span><br><span class="line">                        &lt;img src=&quot;images/rendering/Z.jpg&quot; alt=&quot;&quot;&gt;</span><br><span class="line">		 	&lt;img src=&quot;images/rendering/Z-1.jpg&quot; alt=&quot;&quot;&gt;</span><br><span class="line">		 	&lt;img src=&quot;images/rendering/Z-2.jpg&quot; alt=&quot;&quot;&gt;	</span><br><span class="line">		 &lt;/div&gt;</span><br><span class="line">		  &lt;div id=&quot;swiper-controll&quot;&gt;</span><br><span class="line">		 	&lt;div class=&quot;swiper-con-item swiper-con-item-one&quot;&gt;&lt;/div&gt;</span><br><span class="line">		 	&lt;div class=&quot;swiper-con-item swiper-con-item-two&quot; &gt;&lt;/div&gt;</span><br><span class="line">		 	&lt;div class=&quot;swiper-con-item swiper-con-item-three&quot;&gt;&lt;/div&gt;</span><br><span class="line">		 &lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">.swiper-wrapper &#123;</span><br><span class="line">	height: 78vh;</span><br><span class="line">	width: 100%;</span><br><span class="line">	position: relative;</span><br><span class="line">	overflow: hidden;</span><br><span class="line">	border: 4px solid black;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#swiper-img-box &#123;	</span><br><span class="line">	width: 100%;</span><br><span class="line">	height: 100%;</span><br><span class="line">	position: absolute;</span><br><span class="line">	left: 0;</span><br><span class="line">	top: 0;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#swiper-img-box img &#123;</span><br><span class="line">	width: 100%;</span><br><span class="line">	height: 100%;</span><br><span class="line">	position: absolute;</span><br><span class="line">	left: 0;</span><br><span class="line">	top:0;</span><br><span class="line">	transition: all 1s ease ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#swiper-controll &#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	bottom: 20px;</span><br><span class="line">	left: 50%;</span><br><span class="line">	z-index: 999;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.swiper-con-item &#123;</span><br><span class="line">	width: 10px;</span><br><span class="line">	height: 10px;</span><br><span class="line">	border-radius: 5px;</span><br><span class="line">	background: gray;</span><br><span class="line">	margin-right: 5px;</span><br><span class="line">	float: left;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.swiper-con-item:focus,</span><br><span class="line">.swiper-con-item:hover &#123;</span><br><span class="line">	background: yellowgreen;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//js</span><br><span class="line">	var swiper = document.querySelector(&quot;#swiper-img-box&quot;);</span><br><span class="line">	var imgs = document.querySelectorAll(&quot;#swiper-img-box img&quot;);</span><br><span class="line">	var controlItem = document.querySelectorAll(&quot;.swiper-con-item&quot;)</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	function moveSwiper ()&#123;	</span><br><span class="line">		var num =0;	</span><br><span class="line">		moveSwiperTimer = setInterval(function()&#123;					</span><br><span class="line">			for(var i=0;i&lt;imgs.length;i++)&#123;</span><br><span class="line">				imgs[i].style.opacity = 0;</span><br><span class="line">			&#125;			</span><br><span class="line">			imgs[num].style.opacity = 1;</span><br><span class="line">			num ++;</span><br><span class="line">			if(num &gt; imgs.length-1)&#123;</span><br><span class="line">				num =0;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,5000);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	function SwiperClick ()&#123;</span><br><span class="line">		clearTimeout(callmoveSwiper);</span><br><span class="line">		for(var i=0;i&lt;controlItem.length;i++)&#123;</span><br><span class="line">			controlItem[i].index = i;</span><br><span class="line">			controlItem[i].onclick = function()&#123;</span><br><span class="line">				</span><br><span class="line">				clearInterval(moveSwiperTimer);</span><br><span class="line">				for(var i=0;i&lt;imgs.length;i++)&#123;</span><br><span class="line">				imgs[i].style.opacity = 0;</span><br><span class="line">			&#125;			</span><br><span class="line">				imgs[this.index].style.opacity = 1;</span><br><span class="line">				callmoveSwiper = setTimeout(moveSwiper,1000);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS小项目/" rel="tag"># JS小项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/08/TWEEN.JS动画类库/" rel="next" title="TWEEN.JS动画类库">
+                <i class="fa fa-chevron-left"></i> TWEEN.JS动画类库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/08/Table无切换刷新/" rel="prev" title="Table无切换刷新">
+                Table无切换刷新 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-JS-CSS-图片轮播"><span class="nav-number">1.</span> <span class="nav-text">0x00 JS+CSS 图片轮播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-为轮播添加一个短暂的停留"><span class="nav-number">2.</span> <span class="nav-text">0x01 为轮播添加一个短暂的停留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-Tween-js-为轮播添加动画效果"><span class="nav-number">3.</span> <span class="nav-text">0x02 Tween.js 为轮播添加动画效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-使用opcaity实现图片轮播"><span class="nav-number">4.</span> <span class="nav-text">0x03 使用opcaity实现图片轮播</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

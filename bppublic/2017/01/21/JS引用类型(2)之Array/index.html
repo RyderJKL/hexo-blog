@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,JS引用类型,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 Array objectJS 数组的每一项可以保存任何类型的数据，并且 JS 的数组大小是可以动态调整的，即可以随着数据的添加自动增长以容纳新的数据。 JavaScript 中没有明确的数组数据类型。但是，我们可以通过使用内置 Array 对象和它的方法对数组进行操作。  creating an array使用 Array 构造函数创建数组12var arr = new Array(a,">
+<meta name="keywords" content="JavaScript,JS引用类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS引用类型(2)之Array">
+<meta property="og:url" content="http://yoursite.com/2017/01/21/JS引用类型(2)之Array/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 Array objectJS 数组的每一项可以保存任何类型的数据，并且 JS 的数组大小是可以动态调整的，即可以随着数据的添加自动增长以容纳新的数据。 JavaScript 中没有明确的数组数据类型。但是，我们可以通过使用内置 Array 对象和它的方法对数组进行操作。  creating an array使用 Array 构造函数创建数组12var arr = new Array(a,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS引用类型(2)之Array">
+<meta name="twitter:description" content="0x00 Array objectJS 数组的每一项可以保存任何类型的数据，并且 JS 的数组大小是可以动态调整的，即可以随着数据的添加自动增长以容纳新的数据。 JavaScript 中没有明确的数组数据类型。但是，我们可以通过使用内置 Array 对象和它的方法对数组进行操作。  creating an array使用 Array 构造函数创建数组12var arr = new Array(a,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/21/JS引用类型(2)之Array/">
+
+
+
+
+
+  <title>JS引用类型(2)之Array | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/21/JS引用类型(2)之Array/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS引用类型(2)之Array</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
+                2017-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-Array-object"><a href="#0x00-Array-object" class="headerlink" title="0x00 Array object"></a>0x00 Array object</h3><p>JS 数组的每一项可以保存任何类型的数据，并且 JS 的数组大小是可以动态调整的，即可以随着数据的添加自动增长以容纳新的数据。</p>
+<p>JavaScript 中没有明确的数组数据类型。但是，我们可以通过使用内置 <strong>Array</strong> 对象和它的方法对数组进行操作。</p>
+<hr>
+<h4 id="creating-an-array"><a href="#creating-an-array" class="headerlink" title="creating an array"></a>creating an array</h4><h5 id="使用-Array-构造函数创建数组"><a href="#使用-Array-构造函数创建数组" class="headerlink" title="使用 Array 构造函数创建数组"></a>使用 Array 构造函数创建数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var arr = new Array(a, b, c,...N);</span><br><span class="line">var arr = Array(a, b, c,..N);</span><br></pre></td></tr></table></figure>
+<h5 id="使用数组字面量创建数组"><a href="#使用数组字面量创建数组" class="headerlink" title="使用数组字面量创建数组"></a>使用数组字面量创建数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var arr = [a, b, c, ..N];</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>var arr = [4] 和 var arr = new Array(4) 是不等效的，后者指的是数组长度。</p>
+</blockquote>
+<h5 id="创建指定长度的空数组"><a href="#创建指定长度的空数组" class="headerlink" title="创建指定长度的空数组"></a>创建指定长度的空数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var arr = new Array(arraylength);</span><br><span class="line">var arr = Array(arraylength);</span><br><span class="line"></span><br><span class="line">//以下等效</span><br><span class="line">var arr = [];</span><br><span class="line">arr.length = arrrayLength;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x01-数组与对象"><a href="#0x01-数组与对象" class="headerlink" title="0x01  数组与对象"></a>0x01  数组与对象</h3><p>数组可以作为一个属性(property)分配给一个新的或者已经存在的对象(object).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br><span class="line">obj.prop = [element0, element1, ..., elementN];</span><br><span class="line"></span><br><span class="line">//or</span><br><span class="line">var obj = &#123; prop:[element0, element1, ..., elementN]&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x02-填充数组-populating-an-array"><a href="#0x02-填充数组-populating-an-array" class="headerlink" title="0x02 填充数组 (populating an array)"></a>0x02 填充数组 (populating an array)</h3><h4 id="给元素赋值以填充数组"><a href="#给元素赋值以填充数组" class="headerlink" title="给元素赋值以填充数组"></a>给元素赋值以填充数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var emp = [];</span><br><span class="line">emp[0] = &quot;haha&quot;;</span><br><span class="line">emp[1] = &quot;heihei&quot;;</span><br></pre></td></tr></table></figure>
+<h4 id="创建数组时填充"><a href="#创建数组时填充" class="headerlink" title="创建数组时填充"></a>创建数组时填充</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var myArray = new Array(&quot;hello&quot;, myVar, 3.1244);</span><br><span class="line"></span><br><span class="line">//or</span><br><span class="line">var myArray = [&quot;mna&quot;, &quot;apple&quot;, &quot;orange&quot;];</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x03-数组的-length-属性"><a href="#0x03-数组的-length-属性" class="headerlink" title="0x03 数组的 length 属性"></a>0x03 数组的 length 属性</h3><p>有趣的是， length 属性不是只读的，可以通过 lenght 属性从数组的末尾移除或添加元素。</p>
+<p>指定 length 长度以删除最后一个元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var colors = [&quot;red&quot;, &quot;blure&quot;, &quot;green&quot;];</span><br><span class="line">colors.length = 2;</span><br></pre></td></tr></table></figure>
+<p>使用 length 向末尾添加元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colors[colors.length] = &quot;black&quot;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x04-检测数组"><a href="#0x04-检测数组" class="headerlink" title="0x04 检测数组"></a>0x04 检测数组</h3><p>可以使用 <code>instanceof</code> 操作符来检测数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (value instanceof Array)&#123;</span><br><span class="line">    do something;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是当网页包含多个框架是使用 instanceof 就可能存在问题。所以使用 <strong>Array.isArray()</strong> 也许更好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">if ( Array.isArray(value)) &#123;</span><br><span class="line">    do something;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">### 0x05 数组方法 array methods</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### toString(),valueOf(),toLocalString()</span><br><span class="line"></span><br><span class="line">当然，所有对象都具有 `toString()`,`valueOf()`,`toLocalString()` 这三种方法。</span><br><span class="line"></span><br><span class="line">调用数据的 `toString()` 会返回一个</span><br><span class="line">由数组元素拼接而成的用逗号隔开的字符串:</span><br></pre></td></tr></table></figure>
+<p>var colors = [“red”, “blue”, “green”];<br>console.log(colors.toString())<br>// 字符串: red,blue,green<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">而调用数组的 `valueOf()` 方法返回的还是数组。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### join() </span><br><span class="line">join() 方法只接受一个参数，就是用作分隔符的字符串，然后返回所有数组项的字符串。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = [“red”, “green”, “white”];<br>colors.join(“||”); // red||green||white<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">#### 重排序 sort(), reverse()</span><br><span class="line">`sort()` 方法会调用每个数组项的 `toString()` 方法，再按数组项的 ASCAII 码进行排序，并且会改变原来数组的顺序。所以 `sort()` 方法并不适合对全数字的数组进行排序。</span><br><span class="line"></span><br><span class="line">##### 使用 sort() 方法对数组元素进行随机排列</span><br></pre></td></tr></table></figure></p>
+<p>var arr = [“红”,”橙”,”黄”,”绿”,”黑”]<br>arr.sort(function(a,b){ var num = Math.random()-0.5<br>    return num;<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`reverse()` 方法可以反转数组项的顺序,同样的 `reverse()` 函数也会改变原始数组的顺序。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### unshift(), shift()</span><br><span class="line">`shift()` 能够移除数组的第一项并返回该项，同时将数组的长度减 1</span><br><span class="line">。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = new Array();<br>var count = colors.push(“red”, “green”);<br>alet(count); //2</p>
+<p>colors.push(“black”);</p>
+<p>var item = colors.shift(); // red;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`unshift()` 作用与 `shift()` 相反，它在数组前端添加 n 个任一项并返回新的数组长度。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### 栈的方法 push(), pop()</span><br><span class="line">栈是一种 LIFO( Last In First Out 后进先出)的数据结构，也就是最新添加的项最后被移除，而栈中项的插入叫 **推入** 和 删除叫 **弹出**。JS 提供了 push() 和 pop() 方法，以类似栈的行为。 </span><br><span class="line"></span><br><span class="line">push() 方法可以接受任意数量的参数，把它们逐个添加到数组末尾，并返回修改以后的数组长度。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = [“red”, “blue”, “green”];<br>console.log(colors.push(‘balck’));<br>// 4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">pop() 方法则是从数组末尾移除一项，减少 length 的值，然后返回移除的项。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = [“red”, “blue”, “green”];<br>console.log(colors.push(‘balck’));<br>// 4<br>console.log(colors.pop());<br>// black<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">#### 队列的方法 </span><br><span class="line">栈数据结构的访问规则是 LIFO(后进先出的)，而队列的访问规则是 FIFO(First In First Out)，先进先出的。由于 `push()` 是向数组末端添加项的方法。那么，结合 `push()` 和 `shitft()` 便可以像使用队列那样使用数组了。</span><br><span class="line"></span><br><span class="line">`unshift()` 结合 `pop()` 可以从相反的方向来模拟队列。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### concat() </span><br><span class="line">`contact()` 方法会先创建一个当前数组的一副本，然后将接收到的参数添加到这个副本的末尾，最后返回新构建的数组。</span><br><span class="line"></span><br><span class="line">`concat()` 方法不会影响到原始数组。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### slice()</span><br><span class="line">slice() 方法同样会先创建一个当前数组的副本，然后在只有一个参数的情况下返回从该参数指定位置到当前数组末端的所有的项；在有两个参数的情况下，则返回从该参数开始的位置到结束位置之间的项---但是不包括结束位置。</span><br></pre></td></tr></table></figure></p>
+<p>arr = [1,3,4,56]<br>arr2 = arr.slice(0);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`slice()` 方法不会影响到原始数组。</span><br><span class="line"></span><br><span class="line">在函数式编程的术语中，我们说它是一个 **纯函数**。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = [“red”, “blue”, “green”, “balck”];<br>console.log(colors.slice(1));<br>// [“blue”, “green”, “balck”]<br>console.log(colors);<br>// [“red”, “blue”, “green”, “balck”]<br>console.log(colors.slice(1));<br>// [“blue”, “green”, “balck”]<br>console.log(colors);<br>// [“red”, “blue”, “green”, “balck”]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">#### splice() </span><br><span class="line">`splice()` 要用途主要是在数组的中部插入项。它有以下3种用法:</span><br><span class="line"></span><br><span class="line">删除: 可以删除任意数量的项，并且只需要两个参数，要删除的第一项的位置和要删除的项数。</span><br></pre></td></tr></table></figure></p>
+<p>splice(2); //从下标为 2 的位置开始删除以后的所有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>splice(0, 2); //将会删除数组中的前两项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">插入: 可向指定位置插入任意数量的项，只需三个参数: 起始位置，0（要删除的数），要插入的项。</span><br></pre></td></tr></table></figure></p>
+<p>splice(2,0,”red”,”green”,”white”); //从下标为 2 的位置开始插入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">替换: 只需指定三个数： 起始位置，要删掉的项数，要插入的任意数量的项。</span><br></pre></td></tr></table></figure></p>
+<p>splice(2,1,”red”,”green”);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`splice()` 方法始终都会返回一数组，该数组包含从原始数组中删除的项（没有删除的项则会返回一个空数组）。</span><br><span class="line"></span><br><span class="line">但是 `splice()` 方法会影响到原始数组。</span><br><span class="line"></span><br><span class="line">在函数式编程的术语中，我们说它是一个 **非纯函数**。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = [“red”, “blue”, “green”, “balck”];<br>console.log(colors.splice(0, 1));<br>// [“red”]<br>console.log(colors);<br>// [“blue”, “green”, “balck”]<br>console.log(colors.splice(0, 1));<br>// [“blue”]<br>console.log(colors);<br>// [“green”, “balck”]<br>console.log(colors.splice(0, 1));<br>// [“green”]<br>console.log(colors);<br>// [“balck”]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">#### indexOf(), lastIndexOf()</span><br><span class="line">`indexOf()` 和 `lastIndexOf()` 都返回要查找的项在数组中的位置。它们都接收两参数:要查找的项 和表示查找起点位置的索引。</span><br><span class="line"></span><br><span class="line">其中 `indexOf()`从数组的的开头开始向后找，`lastIndexOf()`从数组的末尾开始向前找。</span><br></pre></td></tr></table></figure></p>
+<p>var colors = new Array(“red”,”green”,”black”,”dfjsl”);<br>alert(colors.indexOf(“black”)); // 2<br>alert(colors.indexOf(“dfjsl”,2)); //3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">### 0x06 迭代方法</span><br><span class="line"></span><br><span class="line">##### for 循环遍历数组</span><br></pre></td></tr></table></figure></p>
+<p>for (var i = 0;i &lt; arr.lenght; i++) {<br>    statement<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### forEach() 方法遍历数组</span><br></pre></td></tr></table></figure></p>
+<p>var colors = [‘red’, ‘green’, ‘blue’];<br>    colors.forEach(function (color){<br>        document.write(color);<br>    });<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">forEach() 函数将数组元素作为参数依次迭代传递给 function.</span><br><span class="line"></span><br><span class="line">&gt; 一旦 JS 元素被保存为标准的对象属性，再使用 `for..in` 循环来迭代将变得非常不适用，因为正常元素和所有可枚举的属性都会被列出。</span><br><span class="line"></span><br><span class="line">当然，ES6 提供了一种新的遍历的方法，`for...of`， 它比以上任何方法都强大易用。</span><br><span class="line">JS 为数组定义了5个迭代方法，这些方法都接收三个参数： 数组项的值，该项在数组中的位置，数组对象本身。</span><br><span class="line"></span><br><span class="line">##### erery()，some()</span><br><span class="line"></span><br><span class="line">对 every() 来说，传入的参数必需对每一项都返回 true，这个方法才返回 true；否则，返回false。而 some() 方法则只要传入的函数对数组中的某一项返回 true，就会返回 true。</span><br></pre></td></tr></table></figure></p>
+<p>var numbers = [1,2,4,5];<br> var everyResult = numbers.every(function(item,index,array){<br>    return (item &gt; 2);<br>});</p>
+<p>alert(everyResult); // false</p>
+<p>var somerResult = numbers.some(function(item,index,array){<br>    return (item &gt; 2);<br>});</p>
+<p>alert(someResult); // true;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### filter()</span><br><span class="line">filter() 方法对查询某些符合条件的所有数组项非常有用。</span><br></pre></td></tr></table></figure></p>
+<p>var numbers = [1,2,6,4,78,12,34];<br>    var filterResult = numbers.filter(function(item,index,array){<br>        return (item &gt; 2);<br>    });</p>
+<pre><code>alert(filterResult);  // 6,4,78,12,34
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### map()</span><br><span class="line">map() 同样返回数组，而这个数组时在原始数组的基础上经过函数运行以后的数组项集合。</span><br></pre></td></tr></table></figure>
+<p>var numbers = [1,2,6,4,78,12,34];<br>    var mapResult = numbers.map(function(item,index,array){<br>        return (item*2)<br>    });<br>    alert(mapResult);<br><code>`</code></p>
+<blockquote>
+<p>本文更新日志:<br>2016-9-25;<br>2016-10-11;<br>2016-12-25;<br>2017-01-21;</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JS引用类型/" rel="tag"># JS引用类型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/19/XSS/" rel="next" title="XSS">
+                <i class="fa fa-chevron-left"></i> XSS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/21/AngularJS(3)元素与事件指令/" rel="prev" title="AngularJS(3)元素与事件指令">
+                AngularJS(3)元素与事件指令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-Array-object"><span class="nav-number">1.</span> <span class="nav-text">0x00 Array object</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#creating-an-array"><span class="nav-number">1.1.</span> <span class="nav-text">creating an array</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-Array-构造函数创建数组"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用 Array 构造函数创建数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用数组字面量创建数组"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用数组字面量创建数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建指定长度的空数组"><span class="nav-number">1.1.3.</span> <span class="nav-text">创建指定长度的空数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-数组与对象"><span class="nav-number">2.</span> <span class="nav-text">0x01  数组与对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-填充数组-populating-an-array"><span class="nav-number">3.</span> <span class="nav-text">0x02 填充数组 (populating an array)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#给元素赋值以填充数组"><span class="nav-number">3.1.</span> <span class="nav-text">给元素赋值以填充数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数组时填充"><span class="nav-number">3.2.</span> <span class="nav-text">创建数组时填充</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-数组的-length-属性"><span class="nav-number">4.</span> <span class="nav-text">0x03 数组的 length 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-检测数组"><span class="nav-number">5.</span> <span class="nav-text">0x04 检测数组</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

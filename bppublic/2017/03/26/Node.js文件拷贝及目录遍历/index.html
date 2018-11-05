@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Node.js,Node.js应用篇,fs,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言最近想要将简书中的文章全部迁移到 hexo 中来，整个过程可是说很很苦逼的。 hexo 是静态的，这意味着首先需要将简书中下载的存放在不同目录中的 .md 文件全部提取出来，存放到 hexo 的 _posts 目录中，当然这一步比较简单，在 Linux 中一条命令就可以搞定: 1$ cp `find /jianshuo/blog -name &amp;quot;*.md&amp;quot;` /hexo/my">
+<meta name="keywords" content="Node.js,Node.js应用篇,fs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从博客迁移到异步目录遍历">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Node.js文件拷贝及目录遍历/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="前言最近想要将简书中的文章全部迁移到 hexo 中来，整个过程可是说很很苦逼的。 hexo 是静态的，这意味着首先需要将简书中下载的存放在不同目录中的 .md 文件全部提取出来，存放到 hexo 的 _posts 目录中，当然这一步比较简单，在 Linux 中一条命令就可以搞定: 1$ cp `find /jianshuo/blog -name &amp;quot;*.md&amp;quot;` /hexo/my">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.893Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从博客迁移到异步目录遍历">
+<meta name="twitter:description" content="前言最近想要将简书中的文章全部迁移到 hexo 中来，整个过程可是说很很苦逼的。 hexo 是静态的，这意味着首先需要将简书中下载的存放在不同目录中的 .md 文件全部提取出来，存放到 hexo 的 _posts 目录中，当然这一步比较简单，在 Linux 中一条命令就可以搞定: 1$ cp `find /jianshuo/blog -name &amp;quot;*.md&amp;quot;` /hexo/my">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/26/Node.js文件拷贝及目录遍历/">
+
+
+
+
+
+  <title>从博客迁移到异步目录遍历 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/26/Node.js文件拷贝及目录遍历/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从博客迁移到异步目录遍历</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-26T19:45:00+08:00">
+                2017-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近想要将简书中的文章全部迁移到 hexo 中来，整个过程可是说很很苦逼的。</p>
+<p>hexo 是静态的，这意味着首先需要将简书中下载的存放在不同目录中的 <code>.md</code> 文件全部提取出来，存放到 hexo 的 <code>_posts</code> 目录中，当然这一步比较简单，在 Linux 中一条命令就可以搞定:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cp `find /jianshuo/blog -name &quot;*.md&quot;` /hexo/my_blog/source/_post</span><br></pre></td></tr></table></figure>
+<p>但是发布以后，发现生成的 <code>tags</code> 标签有问题，当一篇文章存在过多标签时，会全部生成为一个标签，查看 hexo 官方文档，发现是写作格式不对。</p>
+<p>下面是 hexo 的文章格式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tags: [&apos;javascript&apos;,&apos;node.js&apos;,&apos;前端&apos;]</span><br></pre></td></tr></table></figure>
+<p>而我所有的文章格式是这样的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tags: [&apos;javascript&apos;,&apos;node.js&apos;,&apos;前端&apos;]</span><br><span class="line">toc: true</span><br><span class="line">categories: technology</span><br></pre></td></tr></table></figure>
+<p>既在 <code>tags</code> 中，多个标签之间直接使用空格分开的，而不是 <code>[&#39;&#39;,&#39;&#39;&#39;]</code> 的形式，这就操蛋了，我所有的文章加起来 300+，不会让我一篇篇改吧。。。</p>
+<p>当然一个偷懒的程序猿是绝对不会干这种蠢事情的，于是有了这篇文章。</p>
+<p>显然，一条 <code>find</code> 命令是搞不定了，因为涉及到对文章内容的读写操作，我将从一个简单的 node.js 文件拷贝开始，然后到递归遍历目录及其子文件，提取所有的 <code>.md</code> 文件，一步一步来实现文章格式化的需求。</p>
+<hr>
+<h3 id="0x00-文件拷贝"><a href="#0x00-文件拷贝" class="headerlink" title="0x00 文件拷贝"></a>0x00 文件拷贝</h3><h4 id="小文件拷贝"><a href="#小文件拷贝" class="headerlink" title="小文件拷贝"></a>小文件拷贝</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">function copy(src, dst) &#123;</span><br><span class="line">    fs.writeFileSync(dst, fs.readFileSync(src))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function main(argv) &#123;</span><br><span class="line">    console.log(argv)</span><br><span class="line">    copy(argv[0], argv[1])</span><br><span class="line">&#125;</span><br><span class="line">console.log(process.argv)</span><br><span class="line">main(process.argv.slice(2))</span><br></pre></td></tr></table></figure>
+<p><code>process</code> 是一个全局变量，可通过 <code>process.argv</code> 获得命令行参数。由于 <code>argv[0]</code> 固定等于 Node.js 执行程序的绝对路径，<code>argv[1]</code> 固定等于主模块的绝对路径，因此第一个命令行参数从 <code>argv[2]</code> 这个位置开始。</p>
+<p>运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node copy.js a.txt b.txt</span><br><span class="line">[ &apos;/root/.nvm/versions/node/v5.0.0/bin/node&apos;,</span><br><span class="line">  &apos;/root/Git-Repository/test/copy.js&apos;,</span><br><span class="line">  &apos;a.txt&apos;,</span><br><span class="line">  &apos;b.txt&apos; ]</span><br></pre></td></tr></table></figure>
+<p>如上，我们使用同步的方法将文件 a.txt 中的内容复制到了 b.txt 中。</p>
+<p>上边的程序拷贝一些小文件没啥问题，但这种一次性把所有文件内容都读取到内存中后再一次性写入磁盘的方式不适合拷贝大文件，内存会爆仓。对于大文件，我们只能读一点写一点，直到完成拷贝。</p>
+<h4 id="大文件拷贝"><a href="#大文件拷贝" class="headerlink" title="大文件拷贝"></a>大文件拷贝</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">function copy(src, dst) &#123;</span><br><span class="line">    fs.createReadStream(src).pipe(fs.createWriteStream(dst));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function main(argv) &#123;</span><br><span class="line">    console.log(argv)</span><br><span class="line">    copy(argv[0], argv[1])</span><br><span class="line">&#125;</span><br><span class="line">main(process.argv.slice(2))</span><br></pre></td></tr></table></figure>
+<p>以上程序使用 <code>fs.createReadStream</code> 创建了一个源文件的只读数据流，并使用 <code>fs.createWriteStream</code> 创建了一个目标文件的只写数据流，并且用 <code>pipe</code> 方法把两个数据流连接了起来。</p>
+<hr>
+<h3 id="0x02-目录遍历"><a href="#0x02-目录遍历" class="headerlink" title="0x02 目录遍历"></a>0x02 目录遍历</h3><h4 id="遍历算法"><a href="#遍历算法" class="headerlink" title="遍历算法"></a>遍历算法</h4><p>遍历目录通常使用递归算法，这样可以使得代码更加的简洁，但是递归的问题是，性能消耗很高，不过我们可以通过 ES6 函数尾调用来优化性能，或则，结合栈，使用非递归的方式遍历目录，我们慢慢来。</p>
+<p>下面，将采用深度优先和先序遍历算法实现。</p>
+<h4 id="同步遍历"><a href="#同步遍历" class="headerlink" title="同步遍历"></a>同步遍历</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">const path = require(&apos;path&apos;)</span><br><span class="line">const targetDir = process.argv[2];</span><br><span class="line"></span><br><span class="line">function travel(dir, callback) &#123;</span><br><span class="line">    fs.readdirSync(dir).map(file =&gt; &#123;</span><br><span class="line">    // 同步读取目标目录下的所有内容</span><br><span class="line">        let pathname = path.join(dir, file)</span><br><span class="line">        // 获得文件的绝对路径</span><br><span class="line">        if(fs.statSync(pathname).isDirectory())&#123;</span><br><span class="line">        // 同步获取文件状态，如果是目录，递归调用 travel 函数</span><br><span class="line">            travel(pathname, callback)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">        // 非目录，执行回调函数</span><br><span class="line">            callback(pathname)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">travel(targetDir, function (pathname) &#123;</span><br><span class="line">    console.log(pathname)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="异步遍历"><a href="#异步遍历" class="headerlink" title="异步遍历"></a>异步遍历</h4><p>下面是异步遍历的核心代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by root on 17-3-30.</span><br><span class="line"> */</span><br><span class="line">function travelDirAsync(dir, callback, finish) &#123;</span><br><span class="line"></span><br><span class="line">    fs.readdir(dir, (err, files) =&gt; &#123;</span><br><span class="line">        // 异步读取目录</span><br><span class="line">        // console.log(files)</span><br><span class="line">        (function next(i) &#123;</span><br><span class="line">            // console.log(i)</span><br><span class="line">            // console.log(files)</span><br><span class="line">            // 立即执行函数，主要是为了限制变量 i,next 函数是为了同级遍历</span><br><span class="line">            if( i &lt; files.length) &#123;</span><br><span class="line">                let pathname = path.join(dir, files[i])</span><br><span class="line">                // 获取文件或者目录的绝对路径</span><br><span class="line">                fs.stat(pathname, (err, stats) =&gt; &#123;</span><br><span class="line">                    // 获取文件状态</span><br><span class="line">                    if (stats.isDirectory()) &#123;</span><br><span class="line">                        console.log(pathname)</span><br><span class="line">                        // 若是目录，则继续向下遍历(既开始深度优先搜索)</span><br><span class="line">                        travelDirAsync(pathname, callback, () =&gt; next(i + 1))</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        // 如果不是目录，则执行回调函数，继续遍历同级目录</span><br><span class="line">                        callback(pathname, () =&gt; next(i + 1))</span><br><span class="line">                        // 注意 callback 中的 i 和 finish 中的 i 不是同一 i</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                // 如果目录遍历完毕，执行回调,既是运行（next(i+1))</span><br><span class="line">                finish()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)(0)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">travelDirAsync(process.argv[2],function (pathname, callback) &#123;</span><br><span class="line">    console.log(pathname)</span><br><span class="line">    callback()</span><br><span class="line">&#125;, function () &#123;</span><br><span class="line">    console.log(&apos;yes,finish!&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>可见异步调用还是比较复杂的。</p>
+<p>举个例子，若果我们有如下目录:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-test</span><br><span class="line">	a.js</span><br><span class="line">	b.js</span><br><span class="line">	-folder</span><br><span class="line">		a.txt</span><br><span class="line">		b.txt</span><br><span class="line">	c.js</span><br></pre></td></tr></table></figure>
+<p>那么在第一次运行遍历函数 <code>travelDirAsyn</code> 时，创建了一个运行上下文。其中 <code>i</code> 的初始值为 0，<code>files</code> 的值为 <code>[&#39;a.js&#39;,&#39;b.js&#39;,&#39;folder&#39;,&#39;c.js&#39;]</code>。遍历到 <code>folder</code> 的时候 <code>i</code> 的值为 2。再一次运行 <code>travelDirAsyn</code> 进入 <code>folder</code> 目录，又创建了一个新的运行上下文。遍历两次后当前运行上下文的i的值为 2，<code>if</code> 条件不成立跳到 <code>else</code> 执行 <code>finish</code> 函数 既执行(next(i + 1))。此时 <code>finish</code> 函数的执行环境位于之前的运行上下文（因为finish函数最近一次绑定位于之前的运行上下文），之前的运行上下文中的 <code>i</code> 的值为 <code>2</code>，所以此时执行的也就是 <code>next(3)`</code>。最后输出 <code>c.js</code>。</p>
+<hr>
+<h3 id="0x03-应用"><a href="#0x03-应用" class="headerlink" title="0x03 应用"></a>0x03 应用</h3><p>ok,我们回到开始，我下载的所有文章最开始存放在 <code>jianshu/data</code>,现在需要将该目录下的所有 <code>*.md</code> 文件提取出来，并将文件中的 <code>tags: tag tag tag</code> 形式改为 <code>tags: [&#39;tag&#39;,&#39;tag&#39;,&#39;tag&#39;]</code> 形式。</p>
+<p>首先我们采用同步遍历目录的方法,下面是完整代码:</p>
+<h4 id="迁移博客"><a href="#迁移博客" class="headerlink" title="迁移博客"></a>迁移博客</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by root on 17-3-28.</span><br><span class="line"> */</span><br><span class="line">const fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">const path = require(&apos;path&apos;)</span><br><span class="line">const tags = /^tags:/</span><br><span class="line">// 匹配标签项</span><br><span class="line">const patternFilemd = /\.md$/;</span><br><span class="line">// 匹配 .md 文件</span><br><span class="line">const targetDir = process.argv[2];</span><br><span class="line">// 源文件目录</span><br><span class="line">const distDir = process.argv[3];</span><br><span class="line">// 新的文件目录</span><br><span class="line">function travel(dir, callback) &#123;</span><br><span class="line">    fs.readdirSync(dir).map(file =&gt; &#123;</span><br><span class="line">        let pathname = path.join(dir, file)</span><br><span class="line">        if(fs.statSync(pathname).isDirectory())&#123;</span><br><span class="line">            travel(pathname, callback)</span><br><span class="line">        &#125; else if( patternFilemd.test(pathname)) &#123;</span><br><span class="line">            // 判断是否为 .md 文件</span><br><span class="line">            let tempFile = &apos;&apos;;</span><br><span class="line">            fs.readFileSync(pathname).toString().split(/\n/).forEach(function(line)&#123;</span><br><span class="line"></span><br><span class="line">                // 根据换行符换行，将文件以行为单位进行拆分</span><br><span class="line">                if(tags.test(line)) &#123;</span><br><span class="line">                    // 寻找目标行，既以 `tags` 开头的标签行，其具体格式为: tags: Node.js JavaScript 前端</span><br><span class="line">                    let tempArr = line.trim().split(&quot; &quot;)</span><br><span class="line">                    // 去掉两头的空，再以空格切割行元素</span><br><span class="line">                    console.log(tempArr)</span><br><span class="line"></span><br><span class="line">                    let temp = &apos;&apos;</span><br><span class="line"></span><br><span class="line">                    // 存放临时 tags 元素</span><br><span class="line">                    for(let i = 1; i &lt; strArr.length;i ++)&#123;</span><br><span class="line">                        // 格式化 tags 元素为 [&apos;Node.js&apos;,&apos;JavaScript&apos;,&apos;前端&apos;] 的形式</span><br><span class="line">                        if(tempArr[i] != &apos;&apos;)&#123;</span><br><span class="line">                            temp += &quot;&apos;&quot; + tempArr[i] + &quot;&apos;&quot; + &quot;,&quot;;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    line = tempArr.slice(0,1) + &quot; &quot; +&quot;[&quot; + temp.replace(/,$/,&quot;&quot;) + &quot;]&quot;</span><br><span class="line">                    // 拼接 tags，此时line 的形式为 tags: [&apos;Node.js&apos;,&apos;JavaScript&apos;,&apos;前端&apos;]</span><br><span class="line">                &#125;</span><br><span class="line">                tempFile += line + &apos;\r\n&apos;</span><br><span class="line">                // 将其余的内容存放在内存的 tempFile 变量中</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            fs.writeFileSync(path.join(distDir, file),tempFile)</span><br><span class="line">            // 将格式化的文件写入新的文件目录中</span><br><span class="line">            callback(pathname)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">let i = 0;</span><br><span class="line"></span><br><span class="line">travel(targetDir, function (pathname) &#123;</span><br><span class="line">    i ++;</span><br><span class="line">    console.log(&quot;finish&quot; + i)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最有运行 <code>travelSync</code> 实现一键迁移博客:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node travelSync.js /root/Git-Repository/my-notes /root/Git-Repository/hexo/blog/source/_posts</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h3><p>这次博客迁移得到东西还是蛮多了，为了一个小小的改动，从 Linux 搞定 Windows，从文件拷贝到递归遍历，再到异步处理和深度优先搜索，当然所有的代码都还有很多的优化空间，比如可以将异步的目录遍历封装为一个 Promise 函数，使用队列来用非递归的方法来提高递归算法因为消耗大量内存而损坏的性能。但不管怎样，我们的需求算是实现了，这些坑先挖着，以后慢慢填。</p>
+<blockquote>
+<p>不折腾到死不罢休!</p>
+</blockquote>
+<blockquote>
+<p>(博客)[<a href="https://www.onejustone.github.io]" target="_blank" rel="noopener">https://www.onejustone.github.io]</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/Node-js应用篇/" rel="tag"># Node.js应用篇</a>
+          
+            <a href="/tags/fs/" rel="tag"># fs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/26/yarn初步/" rel="next" title="yarn初步">
+                <i class="fa fa-chevron-left"></i> yarn初步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/渐进式图片加载插件/" rel="prev" title="渐进式图片加载">
+                渐进式图片加载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-文件拷贝"><span class="nav-number">2.</span> <span class="nav-text">0x00 文件拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小文件拷贝"><span class="nav-number">2.1.</span> <span class="nav-text">小文件拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#大文件拷贝"><span class="nav-number">2.2.</span> <span class="nav-text">大文件拷贝</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-目录遍历"><span class="nav-number">3.</span> <span class="nav-text">0x02 目录遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历算法"><span class="nav-number">3.1.</span> <span class="nav-text">遍历算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步遍历"><span class="nav-number">3.2.</span> <span class="nav-text">同步遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步遍历"><span class="nav-number">3.3.</span> <span class="nav-text">异步遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-应用"><span class="nav-number">4.</span> <span class="nav-text">0x03 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迁移博客"><span class="nav-number">4.1.</span> <span class="nav-text">迁移博客</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-总结"><span class="nav-number">5.</span> <span class="nav-text">0x04 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

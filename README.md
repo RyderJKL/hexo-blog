@@ -1,2 +1,0 @@
-# hexo-blog
-blog hexo

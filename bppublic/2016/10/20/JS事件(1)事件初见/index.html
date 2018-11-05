@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,JS事件,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x01 事件处理程序事件是用户或者浏览器自身执行的某种动作。而响应某个事件的函数叫做事件处理程序。  DOM0 级事件处理程序 在所有浏览器中，对于 DOM0 级事件，事件处理程序都只会也只能在事件冒泡阶段被处理。  DOM0 级事件处理是将一个函数赋值给一个事件处理程序属性来实现的。 每个元素(包括 window 和 document)都有自己的事件处理程序属性，这些属性通常小写，例如 onc">
+<meta name="keywords" content="JavaScript,JS事件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS事件(1)事件初见">
+<meta property="og:url" content="http://yoursite.com/2016/10/20/JS事件(1)事件初见/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x01 事件处理程序事件是用户或者浏览器自身执行的某种动作。而响应某个事件的函数叫做事件处理程序。  DOM0 级事件处理程序 在所有浏览器中，对于 DOM0 级事件，事件处理程序都只会也只能在事件冒泡阶段被处理。  DOM0 级事件处理是将一个函数赋值给一个事件处理程序属性来实现的。 每个元素(包括 window 和 document)都有自己的事件处理程序属性，这些属性通常小写，例如 onc">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS事件(1)事件初见">
+<meta name="twitter:description" content="0x01 事件处理程序事件是用户或者浏览器自身执行的某种动作。而响应某个事件的函数叫做事件处理程序。  DOM0 级事件处理程序 在所有浏览器中，对于 DOM0 级事件，事件处理程序都只会也只能在事件冒泡阶段被处理。  DOM0 级事件处理是将一个函数赋值给一个事件处理程序属性来实现的。 每个元素(包括 window 和 document)都有自己的事件处理程序属性，这些属性通常小写，例如 onc">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/20/JS事件(1)事件初见/">
+
+
+
+
+
+  <title>JS事件(1)事件初见 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/20/JS事件(1)事件初见/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS事件(1)事件初见</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-20T00:00:00+08:00">
+                2016-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x01-事件处理程序"><a href="#0x01-事件处理程序" class="headerlink" title="0x01 事件处理程序"></a>0x01 事件处理程序</h3><p>事件是用户或者浏览器自身执行的某种动作。而响应某个事件的函数叫做<strong>事件处理程序</strong>。</p>
+<hr>
+<h4 id="DOM0-级事件处理程序"><a href="#DOM0-级事件处理程序" class="headerlink" title="DOM0 级事件处理程序"></a>DOM0 级事件处理程序</h4><blockquote>
+<p>在所有浏览器中，对于 DOM0 级事件，事件处理程序都只会也只能在事件冒泡阶段被处理。</p>
+</blockquote>
+<p>DOM0 级事件处理是将一个函数赋值给一个事件处理程序属性来实现的。</p>
+<p>每个元素(包括 window 和 document)都有自己的事件处理程序属性，这些属性通常小写，例如 onclick。</p>
+<p>事件处理程序的名字以 <code>on</code> 开头。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var btn = document.getElementById(&quot;myBtn&quot;);</span><br><span class="line">btn.onclick = function()&#123;</span><br><span class="line">    alert(this.id)// &quot;myBtn&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 DOM0 级方法指定的事件处理程序被认为是元素的方法。因此，这时的事件处理程序是在元素的作用域中运行。程序中的 <code>this</code> 指代的是当前元素。</p>
+<p>DOM0 级对每个事件只支持一个事件处理程序。</p>
+<hr>
+<h4 id="DOM2-级事件处理程序"><a href="#DOM2-级事件处理程序" class="headerlink" title="DOM2 级事件处理程序"></a>DOM2 级事件处理程序</h4><p>DOM2 级中的两个方法: <code>addEventListener()</code> <strong>添加事件处理程序</strong> 和 <code>removeEventListener()</code> <strong>移除事件处理程序</strong>。</p>
+<p>它们接收三个相同的参数:事件名，事件处理函数，一个布尔值。如果布尔值为 true，表示在捕获阶段调用事件处理程序，false 表示在冒泡阶段调用事件处理程序。所有浏览器默认都为 falase.</p>
+<p>使用 DOM2 级事件处理程序的好处是可以添加多个事件处理程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">		var btn = document.querySelector(&quot;#myBtn&quot;);</span><br><span class="line">		btn.addEventListener(&quot;click&quot;,function()&#123;</span><br><span class="line">			alert(this.id);</span><br><span class="line">		&#125;,false);</span><br><span class="line"></span><br><span class="line">		btn.addEventListener(&quot;click&quot;,function()&#123;</span><br><span class="line">			alert(&quot;word!&quot;);</span><br><span class="line">		&#125;,false);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>btn 中的两个事件处理程序会按照添加它们的顺序先后执行，首先弹出 ID，然后显示 word.</p>
+<p>使用 addEventListener( 添加的事件只能使用 removeEventListener() 来移除，并且与 addEventListener() 传入的参数相同，这个意味着无法移除使用 addEventListener() 添加的匿名函数。</p>
+<hr>
+<h4 id="IE-事件处理程序"><a href="#IE-事件处理程序" class="headerlink" title="IE 事件处理程序"></a>IE 事件处理程序</h4><p>IE 中使用 <strong>attachEvent()</strong> 和 <strong>detachEvent()</strong> 来操作事件。两个方法接收两个相同的参数:事件处理程序名称与事件处理程序。因为 IE 只支持冒泡(IE8以下,所以没有第三个参数)</p>
+<blockquote>
+<p>实际上，attachEvent 主要是为了兼容 IE8以下。从 IE9 开始，可以使用标准的 addEventLister 来使用 DOM2 级事件了。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vat btn = document.querySelector(&quot;#myBtn&quot;);</span><br><span class="line">btn.attachEvent(&quot;onclick&quot;,function()&#123;</span><br><span class="line">    alert(this === window); //true</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>attachEvent() 与 DOM0 级方法的区别在于事件处理程序的作用域。DOM0 级中，事件处理程序会在所属元素的作用域内运行。而使用 attachEvent() 方法，事件处理程序会在全局作用域中运行，因此 this 等于 window。</p>
+<p>同样，attachEvent() 也可为同一元素添加不同事件，但是不同于 DOM0 级方法，IE 中的这些事件是以相反的顺序被触发的。</p>
+<p>detachEvent() 方法同样不能移除匿名函数。</p>
+<p>attachEvent() 方法添加的事件只会在冒泡阶段被处理。</p>
+<hr>
+<h4 id="夸浏览器的事件处理程序"><a href="#夸浏览器的事件处理程序" class="headerlink" title="夸浏览器的事件处理程序"></a>夸浏览器的事件处理程序</h4><p>考虑到不同浏览器之间操作事件处理程序的差异，我们可以使用专门的库或者编写自己的兼容程序来处理不同的浏览器中的情况。</p>
+<p>我们将创建一个 <strong>EventUtil 对象</strong>，并为其添加<strong>addHandler()</strong> 方法和 <strong>removeHandler()</strong> 方法。它的作用是视情况分别使用 DOM0 级方法，DOM2 级方法或 IE 方法来添加事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var EventUtil = &#123;</span><br><span class="line">			addHandler:function (element, type, handler)&#123;</span><br><span class="line">				if (element.addEventListener)&#123;</span><br><span class="line">// 所有现代浏览器都可以使用的方法，IE9，firefox，chrome</span><br><span class="line">					element.addEventListener(type, handler, false);</span><br><span class="line">				&#125; else if(element.attachEvent)&#123;</span><br><span class="line">				// 主要是为了兼容 IE8，IE8 是最后一个使用专用事件系统的主流浏览器。	element.attachEvent(&quot;on&quot;+type,handler)</span><br><span class="line"></span><br><span class="line">				&#125;else&#123;</span><br><span class="line">					element[&quot;on&quot; + type] = handler;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;,</span><br><span class="line"></span><br><span class="line">			removeHandler:function (element,type,handler)&#123;</span><br><span class="line">				if (element.removeEventListener)&#123;</span><br><span class="line">					element.removeEventListener(type, handler,false)</span><br><span class="line">			        &#125; else if (element.detachEvent)&#123;</span><br><span class="line">					element.detachEvent(type, handler)</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					element[&quot;on&quot; + type] = null;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>以上的两个方法首先会检测传入的元是否存在 DOM2 级方法，若存在就使用它。如果存在的是 IE 中的方法，则采取第二种方案。为了在 IE8 级更早的版本中运行，我们为事件类型添加了 <strong>on</strong> 前缀。</p>
+<p>显然，我们没有考虑到所有的问题，比如在 IE 中的作用域问题，不过使用它们添加和删除事件处理程序还是足够了。</p>
+<hr>
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h3><p>触发 DOM 上的事件时，会产生一个事件对象 <strong>event</strong>,它包含着所有与事件有关的信息。比如导致事件的元素，事件的类型以及与其它特定事件相关的信息。</p>
+<h5 id="DOM-的事件对象"><a href="#DOM-的事件对象" class="headerlink" title="DOM 的事件对象"></a>DOM 的事件对象</h5><p>兼容 DOM 的浏览器会将一个 event 对象传入到事件处理程序中，而无论指定事件处理程序时使用的什么方法(DOM0 级或 DOM2 级),都会传入 event 对象。</p>
+<p>event 对象包含与创建它的特定事件有关的属性和方法。触发的事件类型不一样，可用的属性和方法也不一样。DOM 中所有事件都具有以下成员:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">属性/方法</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">bubbles</td>
+<td style="text-align:center">布尔</td>
+<td style="text-align:left">表明事件是否冒泡</td>
+</tr>
+<tr>
+<td style="text-align:right">cancelable</td>
+<td style="text-align:center">布尔</td>
+<td style="text-align:left">表明是否可以取消事件的默认行为</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">preventDefault</td>
+<td style="text-align:center">函数</td>
+<td style="text-align:left">取消事件的默认行为(cancelable 为则可以使用该方法)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">stopPropagation</td>
+<td style="text-align:center">函数</td>
+<td style="text-align:left">取消事件的进一步捕获或冒泡(bubbles为true则可以使用该方法)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">target</td>
+<td style="text-align:center">元素</td>
+<td style="text-align:left">事件的目标</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">type</td>
+<td style="text-align:center">字符串</td>
+<td style="text-align:left">被触发的事件的类型</td>
+</tr>
+</tbody>
+</table>
+<p>在需要通过一个函数处理多个事件时，可以使用 type 属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var btn = document.querySelector(&quot;#myBtn&quot;);</span><br><span class="line">var handler = function (event) &#123;</span><br><span class="line">	// body...</span><br><span class="line">	switch(event.type)&#123;</span><br><span class="line">		case &quot;click&quot;:</span><br><span class="line">			alert(&quot;Clicked&quot;);</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		case &quot;mouseover&quot;:</span><br><span class="line">			event.target.style.backgroundColor = &quot;red&quot;;</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		case &quot;mouseout&quot;:</span><br><span class="line">			event.target.style.backgroundColor = &quot;green&quot;;</span><br><span class="line">			break;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">btn.onclick = handler;</span><br><span class="line">btn.onmouseover = handler;</span><br><span class="line">btn.onmouseout = handler;</span><br></pre></td></tr></table></figure>
+<p>此外，我们可以使用 preventDefault() 方法来阻止特定事件的默认行为。</p>
+<p>最后，还可以使用 stopPropagation() 方法来立即停止事件在 DOM 层次中的传播，即取消进一步事件的捕获或冒泡。</p>
+<hr>
+<h4 id="IE-中的事件对象"><a href="#IE-中的事件对象" class="headerlink" title="IE  中的事件对象"></a>IE  中的事件对象</h4><p>不同于 DOM 中的 event 对象，要访问 IE 中的 event 对象，取决于事件处理程序的方法。在 IE 中使用 DOM0 级方法添加事件时， event 对象将会作为 window 对象的一个属性存在。若是使用 attachEvent() 方法添加事件，便会有一个 event 对象作为参数被传入事件处理程序函数中。如果是通过 HMTL 特性指定事件处理程序，那么还可以通过一个 event 的变量来访问 event 对象。</p>
+<p>当然, IE 中的 event 也包含与创建它的事件相关的属性和方法，并且与 DOM 中的属性与方法类型。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性/方法</th>
+<th style="text-align:center">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cancelBubble</td>
+<td style="text-align:center">布尔</td>
+<td>默认值为 false ，但将其设置为 true 便可取消事件冒泡(等价于 stopPropagation())</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">returnValue</td>
+<td style="text-align:center">布尔</td>
+<td>默认为 true，将其设置为 false</td>
+<td>可取消事件默认行为(等价于preventDefault())</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">srcElement</td>
+<td style="text-align:center">元素</td>
+<td>事件的目标(等价于 target 属性)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">字符串</td>
+<td>事件类型</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="夸浏览器的事件对象"><a href="#夸浏览器的事件对象" class="headerlink" title="夸浏览器的事件对象"></a>夸浏览器的事件对象</h4><p>显然，DOM 标准和 IE 中的 event 对象不同，但是基于它们之间的相似性，我们依旧可以写出夸浏览器的方案。因为 IE 中event 对象的全部信息和方法 DOM 对象中都有，只不过实现方式不一样。</p>
+<p>我们通过对 EventUtil 对象的增强来到达不同浏览器之间的兼容性问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">var EventUtil = &#123;</span><br><span class="line">		addHandler: function(element,type,handler)&#123;</span><br><span class="line">                        if(element.addEventListener)&#123;</span><br><span class="line">				element.addEventListener(type, handler);</span><br><span class="line">			&#125; else if (element.attachEvent)&#123;</span><br><span class="line">				element.attachEvent(type, handler);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				element[&quot;on&quot; + type] = handler;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		getEvent: function(event)&#123;</span><br><span class="line">			return event ? event : window.event;</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		getTarget: function(event)&#123;</span><br><span class="line">			return event.target || event.srcElement;</span><br><span class="line">		&#125;,</span><br><span class="line">		preventDefault: function(event)&#123;</span><br><span class="line">			if(event.preventDefault)&#123;</span><br><span class="line">				event.preventDefault();</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				event.returnValue = false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		removeHandler: function()&#123;</span><br><span class="line">			if (element.removeElementListener)&#123;</span><br><span class="line">				element.removeElementListener(type,handler);</span><br><span class="line">			&#125; else if (element.detachEvent)&#123;</span><br><span class="line">				element.detachEvent;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				element[&quot;on&quot; + type] = null;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		stopPropagation: function()&#123;</span><br><span class="line">			if(event.stopPropagation)&#123;</span><br><span class="line">				event.stopPropagation()；</span><br><span class="line">			&#125; else&#123;</span><br><span class="line">				event.cancelBubble = true;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x01-事件类型"><a href="#0x01-事件类型" class="headerlink" title="0x01 事件类型"></a>0x01 事件类型</h3><p>DOM3 级规定了以下几个事件: UI 事件，焦点事件，鼠标事件，滑轮事件，文本事件，键盘事件，合成事件(当 Input Method Editor 输入字符时触发)，变动事件(DOM 底层结构发生变化时触发)</p>
+<p>包括 IE9 在内的所有主流浏览器都支持 DOM2 事件和 DOM3 级事件。</p>
+<hr>
+<h4 id="UI-事件"><a href="#UI-事件" class="headerlink" title="UI 事件"></a>UI 事件</h4><h5 id="load"><a href="#load" class="headerlink" title="load"></a>load</h5><p>在页面加载完成以后(所有图像，JavaScript文件，CSS文件等等)便会触发 window 上的 <code>onload 事件</code>。</p>
+<p>显示是 load 事件的使用场景。</p>
+<p>在 <code>docuement</code> 上定义 load 事件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EventUtil.addHaneler(document, &apos;load&apos;, callback)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>DOM2 级规范规定，应该在 document 而非 window 上触发 load 事件，使用 window 仅仅是为了向后兼容。<br>图片预加载:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">EventUtil.addHandler(window, &apos;load&apos;,function()&#123;</span><br><span class="line">// 确保页面加载完成，否则</span><br><span class="line">操作 document.body 会报错</span><br><span class="line">	var image = document.createElement(&apos;img&apos;);</span><br><span class="line">	EventUtil.addHandler(image, &apos;load&apos;, function(event)&#123;</span><br><span class="line">		event = EventUtil.getEvent(event);		</span><br><span class="line">	&#125;)</span><br><span class="line">	document.body.appendChild(image);</span><br><span class="line">	image.src = &quot;simle.gif&quot;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>动态加载 JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">EventUtil.addHandler(document,&apos;load&apos;, function()&#123;</span><br><span class="line">var script = document.createElement(&apos;script&apos;)</span><br><span class="line">	EventUtil.addHandler(script, &apos;load&apos;, function()&#123;</span><br><span class="line">	console.log(&apos;yes,JavaScript&apos;)</span><br><span class="line">	&#125;)</span><br><span class="line">	script.src = &apos;example.js&apos;</span><br><span class="line">	document.body.appendChild(script)</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+<p>不同于图片加载，只有在设置了 <script> 元素的 src 属性并将其添加到文档后，才会开始下载。</p>
+<h5 id="unload"><a href="#unload" class="headerlink" title="unload"></a>unload</h5><p>从一个页面切换到另一页面时便会触发 unload 事件。利用这个事件最多的情况是清除引用，以次避免内存泄漏。</p>
+<blockquote>
+<p>根据 DOM2 级事件，应该在 body 上触发 unload 事件，而不是 window 上，同样使用 window 只是为了兼容</p>
+</blockquote>
+<h4 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h4><p>该事件在 window 上被触发.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EventUtil.addHandler(window,&apos;resize&apos;,callback);</span><br></pre></td></tr></table></figure>
+<h5 id="scroll"><a href="#scroll" class="headerlink" title="scroll"></a>scroll</h5><p>scroll 事件是在 window 对象上发生的，但是其实际表示的是页面中相应元素的变化。<br>混杂模式下通过 <code>body</code> 元素的 scrollLeft 和scrollTop 来监控；标准模式下，通过 <html> 元素跟踪页面变化。这里是个大坑。</p>
+<hr>
+<h4 id="焦点事件"><a href="#焦点事件" class="headerlink" title="焦点事件"></a>焦点事件</h4><p>焦点是事件会在页面失去焦点或得到焦点时触发。这类事件最主要的两个方法是 <code>focus</code> 和 <code>blur</code>。</p>
+<hr>
+<h4 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h4><p>DOM3 级中定义了 9 个鼠标事件：</p>
+<ul>
+<li>click：单击主鼠标按钮时触发</li>
+<li>dblclick:双击主鼠标按钮时触犯</li>
+<li>mousedown:按下任意鼠标按钮时触发</li>
+<li>mouseup: 释放鼠标按钮时触发</li>
+<li>mouseout: 鼠标划出时触发</li>
+<li>mouseover: 鼠标滑过时触发</li>
+<li>mousewheel: 鼠标滚轮事件</li>
+<li>mouseenter: 仅IE9 ,FireFox9,, Opera支持</li>
+<li>mouseleave: 仅IE9 ,FireFox9,, Opera支持</li>
+</ul>
+<h5 id="客户区的位置"><a href="#客户区的位置" class="headerlink" title="客户区的位置"></a>客户区的位置</h5><p>鼠标的位置信息保存在事件对象的 <code>clientX</code>  和 <code>clientY</code> 属性中。它们的值表示在事件发生时，鼠标指针在可视区域中的水平和垂直位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var section = document.querySelector(&quot;section&quot;);</span><br><span class="line">EventUtil.addHandler(section, &quot;click&quot;,function()&#123;</span><br><span class="line">	event = EventUtil.getEvent(event);</span><br><span class="line">	console.log(event.clientX + &quot;,&quot; + event.clientY);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="页面坐标位置"><a href="#页面坐标位置" class="headerlink" title="页面坐标位置"></a>页面坐标位置</h5><p>我们可以通过 <code>pageX</code> 和 <code>pageY</code> 属性获得鼠标在页面中的位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var section = document.querySelector(&quot;section&quot;);</span><br><span class="line">EventUtil.addHandler(section, &quot;click&quot;,function()&#123;</span><br><span class="line">	event = EventUtil.getEvent(event);</span><br><span class="line">	console.log(event.pageX + &quot;,&quot; + event.pageY);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>IE8 及其更早版本并不支持事件对象上的页面坐标。但是我们可以通过客户区坐标及其滚动坐标计算出来页面坐标。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var pageX = event.pageX,</span><br><span class="line">    pageY = event.pageY;</span><br><span class="line">if(pageX == undefined) &#123; pageX = event.clientX + (document.body.scrolltop || document.documentElement.scrollTop); &#125;</span><br><span class="line"></span><br><span class="line">if(pageY == undefined) &#123; pageY = event.clientY + (document.body.scrollLeft || document.documentElement.scrollLeft);&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="屏幕坐标位置"><a href="#屏幕坐标位置" class="headerlink" title="屏幕坐标位置"></a>屏幕坐标位置</h5><p>顾名思义，就是当事件发生时，鼠标相对于整个电脑屏幕的位置。我们可以通过 <code>screenX</code>  和 <code>screenY</code>  来获得它们的值。</p>
+<h5 id="onclick-鼠标点击事件"><a href="#onclick-鼠标点击事件" class="headerlink" title="onclick 鼠标点击事件"></a>onclick 鼠标点击事件</h5><h6 id="点击按钮选中-checkbox-checked属性值"><a href="#点击按钮选中-checkbox-checked属性值" class="headerlink" title="点击按钮选中 checkbox checked属性值"></a>点击按钮选中 checkbox checked属性值</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">	&lt;button id = &quot;selectAll&quot;&gt;Select All&lt;/button&gt;</span><br><span class="line">	&lt;button id = &quot;cancelAll&quot;&gt;Cancel&lt;/button&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;li&gt;&lt;input type=&quot;checkbox&quot; name = &quot;checkInput&quot;&gt;&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;&lt;input type=&quot;checkbox&quot; name = &quot;checkInput&quot;&gt;&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;&lt;input type=&quot;checkbox&quot; name = &quot;checkInput&quot;&gt;&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;&lt;input type=&quot;checkbox&quot; name = &quot;checkInput&quot;&gt;&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;&lt;input type=&quot;checkbox&quot; name = &quot;checkInput&quot;&gt;&lt;/li&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	var btnSelectAll = document.getElementById(&quot;selectAll&quot;);</span><br><span class="line">	var btnCancelAll = document.getElementById(&quot;cancelAll&quot;);</span><br><span class="line">	var checkArray = document.getElementsByName(&quot;checkInput&quot;);</span><br><span class="line"></span><br><span class="line">	btnSelectAll.onclick = function ()&#123;</span><br><span class="line">		for(var i = 0; i &lt; checkArray.length; i++)&#123;</span><br><span class="line">			checkArray[i].checked = true;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	btnCancelAll.onclick = function ()&#123;</span><br><span class="line">		for(var i = 0; i &lt; checkArray.length; i++)&#123;</span><br><span class="line">			checkArray[i].checked = false;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="鼠标滑轮事件"><a href="#鼠标滑轮事件" class="headerlink" title="鼠标滑轮事件"></a>鼠标滑轮事件</h4><p>任何元素都可以触发 mousewheel 事件，只需将其指定给页面中的元素或者 document 对象，即可处理鼠标滚轮的交互操作。</p>
+<p>与 <code>mousewheel</code> 事件对应的 <code>evet</code> 对象除了包含鼠标事件的所有标准信息外，还包含一个特殊的 <code>wheelDelta</code> 属性。当鼠标滚轮向前滑动时，wheelDelta 是120的倍数；当滚轮向后滑动时，wheelDelta 是 -120 的倍数。</p>
+<p>而 FireFox 支持的是一个 <code>DOMMouseScroll</code> 的类似事件，而有关鼠标滚轮有关的信息则保存在 <code>detail</code> 属性中，当向前滑动鼠标滚轮时，该属性的值是 -3 的倍数，当向后滑动鼠标滚轮时，该属性值是 3 的倍数。</p>
+<p>此外，Oprea 9.5 之前的版本中， wheelDelta 值的正负号是相反的。</p>
+<h5 id="取得鼠标滑轮增量-delta-兼容方法"><a href="#取得鼠标滑轮增量-delta-兼容方法" class="headerlink" title="取得鼠标滑轮增量(delta)兼容方法"></a>取得鼠标滑轮增量(delta)兼容方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var EventUtil = &#123;</span><br><span class="line">    getWheelDelta:function()&#123;</span><br><span class="line">        if(event.wheelDelta)&#123;</span><br><span class="line">            return (client.engine.opera &amp;&amp; client.engine.opera &lt; 9.5 ? -event.wheelDelta : event.wheelDelta);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return -event.detail*40;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如此，便可以将相同的事件处理程序指定给 <code>mousewheel</code> 和 <code>DOMMouseScroll</code> 事件了。</p>
+<hr>
+<h4 id="键盘与文本事件"><a href="#键盘与文本事件" class="headerlink" title="键盘与文本事件"></a>键盘与文本事件</h4><ul>
+<li>keydown: 按下键盘上的<strong>任意键</strong>时触发</li>
+<li>keypress: 按下<strong>字符键</strong>时触发</li>
+<li>keyup: 释放键盘上的键时触发</li>
+<li>textInput: (DOM3 级事件)在文本插入文本框之前会触发 textInput 事件。</li>
+</ul>
+<p>此外，另一个 <code>textInput</code>事件是对 <code>keypress</code> 事件的补充，旨在将文本显示给用户之前更容易拦截文本。其主要考虑的是字符，因此因此它的 event 对象中还包含一个 data 属性，该属性的值就是用户输入的值。</p>
+<h6 id="键码"><a href="#键码" class="headerlink" title="键码"></a>键码</h6><p>当发生 <code>keydown</code> 和 <code>keyup</code> 事件时，<code>event</code> 对象的 <code>keyCode</code> 属性会包含一个代码，与键盘上的一个特定的键对应。</p>
+<p>DOM 和 IE 中的 event 对象都支持 keyCode 属性。</p>
+<h6 id="字符码"><a href="#字符码" class="headerlink" title="字符码"></a>字符码</h6><p>当触发  <code>keypress</code> 事件时，绝大部分的浏览的 <code>event</code> 对象都会将该键对应的 ASCII 码保存在 <code>charCode</code> 属性中，而此时的 keyCode 属性的值可能为0或等于所按键的键码。</p>
+<p>IE8 及之前版本和 Opera 则是在 keyCode 中保存字符的 ASCII 码。</p>
+<blockquote>
+<p>在所有浏览器中按下能够插入和删除字符的键都会触发 keypress 事件。</p>
+</blockquote>
+<h6 id="以跨浏览器的方法取得字符编码"><a href="#以跨浏览器的方法取得字符编码" class="headerlink" title="以跨浏览器的方法取得字符编码"></a>以跨浏览器的方法取得字符编码</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var EventUtil = &#123;</span><br><span class="line">    getCharCode: function () &#123;</span><br><span class="line">        if (typeof event.charCode == &quot;number&quot;)&#123;</span><br><span class="line">            return event.charCode;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return event.keyCode;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="文本框事件"><a href="#文本框事件" class="headerlink" title="文本框事件"></a>文本框事件</h5><p>input<br>change<br>focus<br>blur</p>
+<hr>
+<h4 id="HTML5-事件"><a href="#HTML5-事件" class="headerlink" title="HTML5 事件"></a>HTML5 事件</h4><h5 id="contextmeun-事件"><a href="#contextmeun-事件" class="headerlink" title="contextmeun 事件"></a>contextmeun 事件</h5><p>通过单击鼠标右键，便可以调出上下文菜单。 <code>contextmenu</code> 事件是冒泡的，所以可以为 document 指定一个事件处理程序，以处理页面总的所有类似事件。</p>
+<hr>
+<h3 id="0x02-内存和性能"><a href="#0x02-内存和性能" class="headerlink" title="0x02 内存和性能"></a>0x02 内存和性能</h3><hr>
+<h4 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h4><p><strong>事件委托</strong> 利用了事件冒泡，只指定一个事件处理程序就可以管理某一类型的事件。它的主要作用便解决”事件处理程序过多”的问题。</p>
+<p>使用事件委托，只需在 DOM 树中尽量最高的层次上添加一个事件处理程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=&quot;myLinks&quot;&gt;</span><br><span class="line">	&lt;li id=&quot;doSomething&quot;&gt;Do something&lt;/li&gt;</span><br><span class="line">	&lt;li id=&quot;goSomewhere&quot;&gt;Go somewhere&lt;/li&gt;</span><br><span class="line">	&lt;li id=&quot;sayHi&quot;&gt;Say Hi&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">EventUtil.addHandler(myLinks,&quot;click&quot;,function(event)&#123;</span><br><span class="line">	var event = EventUtil.getEvent(event);</span><br><span class="line">	var target = EventUtil.getTarget(event);</span><br><span class="line">	switch(target.id)&#123;</span><br><span class="line"></span><br><span class="line">		case &quot;doSomething&quot;:</span><br><span class="line">			console.log(target.id);</span><br><span class="line">			document.title = &quot;I changed the document&apos;s title&quot;;</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		case &quot;goSomewhere&quot;:</span><br><span class="line">			console.log(target.id);</span><br><span class="line">			location.href = &quot;http://www.baidu.com&quot;;</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		case &quot;sayHi&quot;:</span><br><span class="line">			alert(&quot;Say Hi&quot;);</span><br><span class="line">			break;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</script></p>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JS事件/" rel="tag"># JS事件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/20/瀑布流/" rel="next" title="瀑布流">
+                <i class="fa fa-chevron-left"></i> 瀑布流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/20/JS事件(2)mousewheel和scrollTop/" rel="prev" title="JS事件(2)mousewheel和scrollTop">
+                JS事件(2)mousewheel和scrollTop <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-事件处理程序"><span class="nav-number">1.</span> <span class="nav-text">0x01 事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM0-级事件处理程序"><span class="nav-number">1.1.</span> <span class="nav-text">DOM0 级事件处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM2-级事件处理程序"><span class="nav-number">1.2.</span> <span class="nav-text">DOM2 级事件处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IE-事件处理程序"><span class="nav-number">1.3.</span> <span class="nav-text">IE 事件处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#夸浏览器的事件处理程序"><span class="nav-number">1.4.</span> <span class="nav-text">夸浏览器的事件处理程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件对象"><span class="nav-number">2.</span> <span class="nav-text">事件对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DOM-的事件对象"><span class="nav-number">2.0.1.</span> <span class="nav-text">DOM 的事件对象</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IE-中的事件对象"><span class="nav-number">2.1.</span> <span class="nav-text">IE  中的事件对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#夸浏览器的事件对象"><span class="nav-number">2.2.</span> <span class="nav-text">夸浏览器的事件对象</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-事件类型"><span class="nav-number">3.</span> <span class="nav-text">0x01 事件类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UI-事件"><span class="nav-number">3.1.</span> <span class="nav-text">UI 事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#load"><span class="nav-number">3.1.1.</span> <span class="nav-text">load</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

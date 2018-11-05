@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Operators(7)Subjectsubject的一个作用是当有新的订阅的产生的时候，可以延续上一个订阅的结果，而不从头开始订阅。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647const subject = new Subjectconst source$ = Obse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="onejustone">
+<meta property="og:url" content="http://yoursite.com/2018/11/05/Operators-7/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="Operators(7)Subjectsubject的一个作用是当有新的订阅的产生的时候，可以延续上一个订阅的结果，而不从头开始订阅。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647const subject = new Subjectconst source$ = Obse">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="onejustone">
+<meta name="twitter:description" content="Operators(7)Subjectsubject的一个作用是当有新的订阅的产生的时候，可以延续上一个订阅的结果，而不从头开始订阅。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647const subject = new Subjectconst source$ = Obse">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/05/Operators-7/">
+
+
+
+
+
+  <title> | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/Operators-7/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-05T17:53:02+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Operators-7"><a href="#Operators-7" class="headerlink" title="Operators(7)"></a>Operators(7)</h1><h2 id="Subject"><a href="#Subject" class="headerlink" title="Subject"></a>Subject</h2><p><code>subject</code>的一个作用是当有新的订阅的产生的时候，可以延续上一个订阅的结果，而不从头开始订阅。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject = <span class="keyword">new</span> Subject</span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>).take(<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">source$.subscribe(subject)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableA = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'A:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete A'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableB = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'B:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete B'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.subscribe(observableA)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  subject.subscribe(observableB)</span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line">A: <span class="number">1</span></span><br><span class="line">A: <span class="number">2</span></span><br><span class="line">B: <span class="number">2</span></span><br><span class="line">A: <span class="number">3</span></span><br><span class="line">B: <span class="number">3</span></span><br><span class="line">A: <span class="number">4</span></span><br><span class="line">B: <span class="number">4</span></span><br><span class="line">A: <span class="number">5</span></span><br><span class="line">B: <span class="number">5</span></span><br><span class="line">complete A</span><br><span class="line">complete B</span><br></pre></td></tr></table></figure>
+<h2 id="multicast"><a href="#multicast" class="headerlink" title="multicast"></a>multicast</h2><p><code>multicast</code> 可以用来挂载 <code>Subject</code> 并返回一个可连接的 <code>Observable</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject = <span class="keyword">new</span> Subject</span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>).take(<span class="number">6</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> Subject())</span><br><span class="line"></span><br><span class="line">source$.connect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableA = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'A:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete A'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableB = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'B:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete B'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">source$.subscribe(observableA)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  source$.subscribe(observableB)</span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出 同上</span></span><br></pre></td></tr></table></figure>
+<p>使用 <code>multicast</code> 可以简化多个<code>obsevser</code> 对 <code>subject</code> 依次订阅的操作，不过必须和<code>connet</code>一起使用，这时可以使用<code>refCount</code> 简化 <code>connet</code>操作。</p>
+<h2 id="refCount"><a href="#refCount" class="headerlink" title="refCount"></a>refCount</h2><p><code>refCount</code>同样必须和<code>multicast</code>一起使用，他可以建立一个只要订阅就自动<code>connect</code>的<code>observale</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject = <span class="keyword">new</span> Subject</span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> Subject())</span><br><span class="line">  .refCount()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableA = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'A:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete A'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableB = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'B:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete B'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> subscriptionA = source$.subscribe(observableA)</span><br><span class="line"><span class="keyword">let</span> subscriptionB = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  subscriptionB = source$.subscribe(observableB)</span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 手动取消订阅</span></span><br><span class="line">  subscriptionA.unsubscribe()</span><br><span class="line">  subscriptionB.unsubscribe()</span><br><span class="line">&#125;, <span class="number">5000</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><p><code>multicast(new Subject())</code>可以简写成<code>publish</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> Subject())</span><br><span class="line">  .refCount()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .publish()</span><br><span class="line">  .refCount()</span><br></pre></td></tr></table></figure>
+<p>加上 Subject 的三种变形：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> ReplaySubject(<span class="number">1</span>))</span><br><span class="line">  .refCount()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .publishReplay(<span class="number">1</span>)</span><br><span class="line">  .refCount()</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> BehaviorSubject(<span class="number">0</span>))</span><br><span class="line">  .refCount()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .publishBehavior(<span class="number">0</span>)</span><br><span class="line">  .refCount()</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> AsyncSubject(<span class="number">1</span>))</span><br><span class="line">  .refCount()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .publishLast(<span class="number">0</span>)</span><br><span class="line">  .refCount()</span><br></pre></td></tr></table></figure>
+<h2 id="share"><a href="#share" class="headerlink" title="share"></a>share</h2><p>最后的最后，<code>publish</code> 和 <code>refCount</code> 可以简化为 <code>share</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .multicast(<span class="keyword">new</span> Subject())</span><br><span class="line">  .refCount() <span class="comment">// 自动 connect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>)</span><br><span class="line">  .publish()</span><br><span class="line">  .refCount()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>).share()</span><br></pre></td></tr></table></figure>
+<h2 id="最终-demo"><a href="#最终-demo" class="headerlink" title="最终 demo"></a>最终 demo</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> source$ = Observable.interval(<span class="number">1000</span>).take(<span class="number">6</span>).share()</span><br><span class="line"><span class="comment">// 返回一个新的 Observable，该 Observable 多播(共享)源 Observable。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableA = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'A:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete A'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observableB = &#123;</span><br><span class="line">  next(value) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'B:'</span>, value)</span><br><span class="line">  &#125;,</span><br><span class="line">  error (e) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  complete () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'complete B'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> subscriptionA = source$.subscribe(observableA)</span><br><span class="line"><span class="keyword">let</span> subscriptionB = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  subscriptionB = source$.subscribe(observableB)</span><br><span class="line">&#125;, <span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 手动取消订阅</span></span><br><span class="line">  subscriptionA.unsubscribe()</span><br><span class="line">  subscriptionB.unsubscribe()</span><br><span class="line">&#125;, <span class="number">10000</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="在-vue-中一个例子"><a href="#在-vue-中一个例子" class="headerlink" title="在 vue 中一个例子"></a>在 vue 中一个例子</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template lang=<span class="string">"pug"</span>&gt;</span><br><span class="line">  .section</span><br><span class="line">    .title Operators<span class="number">-7</span> share</span><br><span class="line">    .section</span><br><span class="line">      p.title subject</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">import &#123; Observable, Subject &#125; from 'rxjs'</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">  name: 'Operators7',</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  subscriptions () &#123;</span></span><br><span class="line"><span class="regexp">    const source$ = Observable.timer(1000)</span></span><br><span class="line"><span class="regexp">    const example$ = source$</span></span><br><span class="line"><span class="regexp">      .do(v =&gt; console.log('***SIDE EFFECT***'))</span></span><br><span class="line"><span class="regexp">      .mapTo('***RESULT***')</span></span><br><span class="line"><span class="regexp">      .share() /</span><span class="regexp">/ 共享的话副作用只执行一次</span></span><br><span class="line"><span class="regexp">      /</span><span class="regexp">/ .share() /</span><span class="regexp">/ 不共享副作用执行两次</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    const observableA$ = example$</span></span><br><span class="line"><span class="regexp">    const observableB$ = example$</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    return &#123;</span></span><br><span class="line"><span class="regexp">      observableA$,</span></span><br><span class="line"><span class="regexp">      observableB$</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/05/Operators-6/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/05/RxJS初识/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Operators-7"><span class="nav-number">1.</span> <span class="nav-text">Operators(7)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Subject"><span class="nav-number">1.1.</span> <span class="nav-text">Subject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multicast"><span class="nav-number">1.2.</span> <span class="nav-text">multicast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#refCount"><span class="nav-number">1.3.</span> <span class="nav-text">refCount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#publish"><span class="nav-number">1.4.</span> <span class="nav-text">publish</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#share"><span class="nav-number">1.5.</span> <span class="nav-text">share</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终-demo"><span class="nav-number">1.6.</span> <span class="nav-text">最终 demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-vue-中一个例子"><span class="nav-number">1.7.</span> <span class="nav-text">在 vue 中一个例子</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

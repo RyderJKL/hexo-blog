@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ES6,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 letlet 命令所声明的变量只在 let 命令所在的代码块内有效。 对于 for 循环，let 命令就很好了。 123for(let i = 0; i &amp;lt; 10; i++)&amp;#123;&amp;#125;console.log(i)// ReferenceError 计数器 i 只在 for 循环体内有效，在循环体外引用就会报错。 此外，let 不像 var 那样会发生“变量提升”现象。">
+<meta name="keywords" content="ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6(2)let和const">
+<meta property="og:url" content="http://yoursite.com/2016/12/17/ ES6(2)let和const/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="0x00 letlet 命令所声明的变量只在 let 命令所在的代码块内有效。 对于 for 循环，let 命令就很好了。 123for(let i = 0; i &amp;lt; 10; i++)&amp;#123;&amp;#125;console.log(i)// ReferenceError 计数器 i 只在 for 循环体内有效，在循环体外引用就会报错。 此外，let 不像 var 那样会发生“变量提升”现象。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6(2)let和const">
+<meta name="twitter:description" content="0x00 letlet 命令所声明的变量只在 let 命令所在的代码块内有效。 对于 for 循环，let 命令就很好了。 123for(let i = 0; i &amp;lt; 10; i++)&amp;#123;&amp;#125;console.log(i)// ReferenceError 计数器 i 只在 for 循环体内有效，在循环体外引用就会报错。 此外，let 不像 var 那样会发生“变量提升”现象。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/17/ ES6(2)let和const/">
+
+
+
+
+
+  <title>ES6(2)let和const | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/17/ ES6(2)let和const/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ES6(2)let和const</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-17T00:00:00+08:00">
+                2016-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-let"><a href="#0x00-let" class="headerlink" title="0x00 let"></a>0x00 let</h3><p><code>let</code> 命令所声明的变量只在 <code>let</code> 命令所在的代码块内有效。</p>
+<p>对于 <code>for</code> 循环，<code>let</code> 命令就很好了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for(let i = 0; i &lt; 10; i++)&#123;&#125;</span><br><span class="line">console.log(i)</span><br><span class="line">// ReferenceError</span><br></pre></td></tr></table></figure>
+<p>计数器 <code>i</code> 只在 <code>for</code> 循环体内有效，在循环体外引用就会报错。</p>
+<p>此外，<code>let</code> 不像 <code>var</code> 那样会发生“变量提升”现象。所以，变量一定要在声明后使用，否则报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log(foo) // 输出undefined</span><br><span class="line">console.log(bar) // 报错ReferenceError</span><br><span class="line"></span><br><span class="line">var foo = 2;</span><br><span class="line">let bar = 2;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>var</code> 命令允许重复声明，后面的声明会覆盖前面的。但是 <code>let</code> 和 <code>const</code> 命令不允许重复</p>
+</blockquote>
+<hr>
+<h4 id="暂时性死区"><a href="#暂时性死区" class="headerlink" title="暂时性死区"></a>暂时性死区</h4><p>ES6明确规定，如果区块中存在let和const命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用域。凡是在声明之前就使用这些变量，就会报错。这在语法上，称为“暂时性死区”（temporal dead zone，简称TDZ）。</p>
+<p>这样的设计是为了让大家养成良好的编程习惯，变量一定要在声明之后使用，否则就报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if (true) &#123;</span><br><span class="line">  // TDZ开始</span><br><span class="line">  tmp = &apos;abc&apos;; // ReferenceError</span><br><span class="line">  console.log(tmp); // ReferenceError</span><br><span class="line"></span><br><span class="line">  let tmp; // TDZ结束</span><br><span class="line">  console.log(tmp); // undefined</span><br><span class="line"></span><br><span class="line">  tmp = 123;</span><br><span class="line">  console.log(tmp); // 123</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域"></a>块级作用域</h4><p><code>let</code> 实际上是提供了一个块级作用域，ES5 时没有块级作用域的，只有全局作用域和函数作用域，而在 ES5 很可能造成两种后果:1)内层变量可能会覆盖外层变量。 2)用来计数的循环变量泄露为全局变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function f1()&#123;</span><br><span class="line">    let n = 5</span><br><span class="line">    if (true) &#123;</span><br><span class="line">        let n = 10</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(n) // 5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES6允许块级作用域的任意嵌套。外层作用域无法读取内层作用域的变量,内层作用域可以定义外层作用域的同名变量。</p>
+<p>块级作用域的出现，实际上使得获得广泛应用的立即执行函数表达式（IIFE）不再必要了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// IIFE</span><br><span class="line">(function ()&#123;</span><br><span class="line">    var tmp = ...;</span><br><span class="line">&#125;())</span><br><span class="line"></span><br><span class="line">// 块级作用域</span><br><span class="line">&#123;</span><br><span class="line">    let tmp = ...;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x01-const"><a href="#0x01-const" class="headerlink" title="0x01 const"></a>0x01 const</h3><p><code>const</code> 声明一个只读常量。一旦声明，常量的值就不能改变，即必须立即初始化，不能留到以后赋值。其作用域与 <code>let</code> 命令相同，只在块级作用域有效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(true)&#123;</span><br><span class="line">  const MAX = 5</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(MAX)</span><br><span class="line">// ReferenceError: MAX is not defined(…)</span><br></pre></td></tr></table></figure>
+<p>值得注意的是当使用 <code>const</code> 声明一个变量指向一个引用类型时，<code>const</code> 能保证只是变量名指向的地址不变，和该地址中数据没有关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const a = []</span><br><span class="line">a.push(&quot;hello&quot;) // 可执行</span><br><span class="line">a.length = 0;	//  可执行</span><br><span class="line">// a = [&apos;dfdf&apos;] //  尝试改变 a 的指向，报错</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="0x02-对象冻结"><a href="#0x02-对象冻结" class="headerlink" title="0x02 对象冻结"></a>0x02 对象冻结</h3><p>可以使用 <code>Object.freeze</code> 方法来冻结一个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const foo = Object.freeze(&#123;&#125;)</span><br><span class="line">foo.prop = 123; // 不起作用</span><br></pre></td></tr></table></figure>
+<p>除了冻结对象本身，对象的属性也可以被冻结。使用下面的函数可以将一个对象彻底冻结。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var constFreeze = (obj) =&gt; &#123;</span><br><span class="line">	Object.freeze(obj)</span><br><span class="line">	Object.keys(obj).forEach((key, value) =&gt; &#123;</span><br><span class="line">		if( typeof obj[key] == &apos;object&apos;) &#123;</span><br><span class="line">			constFreeze(obj[key])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES6除了添加 <code>let</code> 和 <code>const</code> 命令，还要 <code>import</code> 和 <code>class</code> 方法可以声明变量，加上 ES5 中的两种声明变量的方式,<code>var</code> 和 <code>function</code>，ES6 一共有 6 种声明变量的方法。</p>
+<hr>
+<h3 id="0x03-顶层对象"><a href="#0x03-顶层对象" class="headerlink" title="0x03 顶层对象"></a>0x03 顶层对象</h3><p>顶层对象，在浏览器环境指的是 <code>window</code> 对象，在Node指的是 <code>global</code> 对象。ES5之中，顶层对象的属性与全局变量是等价的。</p>
+<p>顶层对象的属性与全局变量挂钩，被认为是JavaScript语言最大的设计败笔之一。</p>
+<p>ES6 为了改变这一点，依旧规定 <code>var</code> 命令和 <code>function</code> 命令声明的全局变量，依旧是顶层对象的属性。而 <code>let</code> 命令、<code>const</code> 命令、<code>class</code> 命令声明的全局变量，不属于顶层对象的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var c = 123</span><br><span class="line"></span><br><span class="line">window.alert(window.c) // 1</span><br><span class="line"></span><br><span class="line">let b = 456</span><br><span class="line">window.alert(window.b) // undefined</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从ES6开始，全局变量将逐步与顶层对象的属性脱钩。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/17/视觉效果/" rel="next" title="CSS视觉效果">
+                <i class="fa fa-chevron-left"></i> CSS视觉效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/17/ ES6(1)Babel/" rel="prev" title="ES6(1)Babel">
+                ES6(1)Babel <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-let"><span class="nav-number">1.</span> <span class="nav-text">0x00 let</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#暂时性死区"><span class="nav-number">1.1.</span> <span class="nav-text">暂时性死区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#块级作用域"><span class="nav-number">1.2.</span> <span class="nav-text">块级作用域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-const"><span class="nav-number">2.</span> <span class="nav-text">0x01 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-对象冻结"><span class="nav-number">3.</span> <span class="nav-text">0x02 对象冻结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-顶层对象"><span class="nav-number">4.</span> <span class="nav-text">0x03 顶层对象</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

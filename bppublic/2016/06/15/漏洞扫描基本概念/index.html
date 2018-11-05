@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kali渗透测试,漏洞扫描,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="通过之前的扫描我们可以知道目标主机的一些基本信息，然后我们可以基于这些个基本信息去进一步的发现目标是否存在漏洞，当然这种方式虽然可行，但是效率太低。 对于这方面，kali的提供了一个漏洞集成网站:https://www.exploit-db.com/  searchsploit同时kali系统也集成了searchsploit命令，该命令可以查询到eploit-db网站中所有的漏洞信息。 12345">
+<meta name="keywords" content="Kali渗透测试,漏洞扫描">
+<meta property="og:type" content="article">
+<meta property="og:title" content="漏洞扫描基本概念">
+<meta property="og:url" content="http://yoursite.com/2016/06/15/漏洞扫描基本概念/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="通过之前的扫描我们可以知道目标主机的一些基本信息，然后我们可以基于这些个基本信息去进一步的发现目标是否存在漏洞，当然这种方式虽然可行，但是效率太低。 对于这方面，kali的提供了一个漏洞集成网站:https://www.exploit-db.com/  searchsploit同时kali系统也集成了searchsploit命令，该命令可以查询到eploit-db网站中所有的漏洞信息。 12345">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="漏洞扫描基本概念">
+<meta name="twitter:description" content="通过之前的扫描我们可以知道目标主机的一些基本信息，然后我们可以基于这些个基本信息去进一步的发现目标是否存在漏洞，当然这种方式虽然可行，但是效率太低。 对于这方面，kali的提供了一个漏洞集成网站:https://www.exploit-db.com/  searchsploit同时kali系统也集成了searchsploit命令，该命令可以查询到eploit-db网站中所有的漏洞信息。 12345">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/15/漏洞扫描基本概念/">
+
+
+
+
+
+  <title>漏洞扫描基本概念 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/15/漏洞扫描基本概念/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">漏洞扫描基本概念</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-15T10:30:00+08:00">
+                2016-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通过之前的扫描我们可以知道目标主机的一些基本信息，然后我们可以基于这些个基本信息去进一步的发现目标是否存在漏洞，当然这种方式虽然可行，但是效率太低。</p>
+<p>对于这方面，kali的提供了一个漏洞集成网站:<a href="https://www.exploit-db.com/" target="_blank" rel="noopener">https://www.exploit-db.com/</a></p>
+<hr>
+<h4 id="searchsploit"><a href="#searchsploit" class="headerlink" title="searchsploit"></a>searchsploit</h4><p>同时kali系统也集成了searchsploit命令，该命令可以查询到eploit-db网站中所有的漏洞信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ searchsploit tomcat</span><br><span class="line">--------------------------------------------- ----------------------------------</span><br><span class="line"> Exploit Title                               |  Path</span><br><span class="line">                                             | (/usr/share/exploitdb/platforms)</span><br><span class="line">--------------------------------------------- ----------------------------------</span><br><span class="line">Apache Tomcat &lt; 5.5.17 - Remote Directory Li | ./multiple/remote/2061.txt</span><br></pre></td></tr></table></figure>
+<p>由此也可以知道searchsploit的文档库的位置为:<strong>/usr/share/exploit/platforms</strong>中</p>
+<p>然后我们只需要对其中的脚本只进行简单的修改就可以加以利用了。</p>
+<hr>
+<h4 id="Sandi"><a href="#Sandi" class="headerlink" title="Sandi"></a>Sandi</h4><p>Sandi将会以图形化的界面对exploit-db库中结果进行显示。</p>
+<hr>
+<h3 id="0x01-漏洞基本概念"><a href="#0x01-漏洞基本概念" class="headerlink" title="0x01 漏洞基本概念"></a>0x01 漏洞基本概念</h3><hr>
+<h4 id="CVSS-Common-Vulnerability-Scoring-System"><a href="#CVSS-Common-Vulnerability-Scoring-System" class="headerlink" title="CVSS(Common Vulnerability Scoring System)"></a>CVSS(Common Vulnerability Scoring System)</h4><p>CVSS是通用的漏洞评分系统，它是工业标准，用于描述安全漏洞严重程度的统一评分方案。</p>
+<p>CVSS使用Metric对弱电进行了分类:</p>
+<ul>
+<li>Basic Metric 基础的恒定不变的弱点权重</li>
+<li>Temporal Metric 依赖时间因素的弱点权重</li>
+<li>Enviromental Metric 利用弱点的环境要求和实施难度的权重</li>
+</ul>
+<p>CVSS是安全内容自动化协议(SCAP)的一部分。通常CVSS与CVE一同由美国国家漏洞库(NVD)发布并保持数据的更新。</p>
+<p>CVSS的评分范围是：0-10。10是最高等级，不同机构按CVSS分值定义威胁的中，高，低<strong>威胁级别</strong>，CVSS是工业标准，但是威胁等级级别不是。</p>
+<hr>
+<h3 id="CVE-Common-Vulnerabilities-and-Exposures"><a href="#CVE-Common-Vulnerabilities-and-Exposures" class="headerlink" title="CVE(Common Vulnerabilities and Exposures)"></a>CVE(Common Vulnerabilities and Exposures)</h3><p>CVE是已公开的信息安全漏洞字典，同时也是统一的漏洞编号标准。<br>因为CVE的存在，使得漏洞的世界秩序变得清晰可辨。</p>
+<p>当发现一个漏洞后，CAN负责指定CVE ID，然后发布到CVE LIst中:CVE-2008-4250，然后MITRE公司负责对内容进行编辑维护。</p>
+<p>同时有的厂商也会有自己的CVE标准，比如微软的MS漏洞编号，MSKB为补丁编号。不同组织不同机构也许会有不同的CVE标准。</p>
+<hr>
+<h4 id="OVAL-Open-Vulnerability-and-Assessment-Language"><a href="#OVAL-Open-Vulnerability-and-Assessment-Language" class="headerlink" title="OVAL(Open Vulnerability and Assessment Language)"></a>OVAL(Open Vulnerability and Assessment Language)</h4><p>描述漏洞检测方法的机器可识别语言。会以xml的格式进行发布。它是一个技术性的描述。它详细的描述了漏洞检测的技术细节，可导入自动化检测工具中实施漏洞检测工作。</p>
+<hr>
+<h4 id="CEE"><a href="#CEE" class="headerlink" title="CEE"></a>CEE</h4><p>描述软件配置缺陷的一种标准格式。<br>在信息安全风险评估中，配置缺陷的检测是一项重要内容，使用CCE可以让配置缺陷以标准的方式展现出来，便于配置缺陷评估的可量化操作。</p>
+<hr>
+<h4 id="CPE-Common-Product-Enumeration"><a href="#CPE-Common-Product-Enumeration" class="headerlink" title="CPE(Common Product Enumeration)"></a>CPE(Common Product Enumeration)</h4><p>信息技术产品，系统，软件包的结构化命名规范，分类命名标准。</p>
+<hr>
+<h4 id="CWE-Common-Weakness-Enumeration"><a href="#CWE-Common-Weakness-Enumeration" class="headerlink" title="CWE(Common Weakness Enumeration)"></a>CWE(Common Weakness Enumeration)</h4><p>常见漏洞类型的字典，描述不同类型漏洞的特征，不同于OVAL，CWE只是一个大体上的分类而已，不会去具体的打分（访问控制，信息泄露，拒绝服务）。</p>
+<hr>
+<h4 id="SCAP-Security-Content-Automation-Protocol"><a href="#SCAP-Security-Content-Automation-Protocol" class="headerlink" title="SCAP(Security Content Automation Protocol)"></a>SCAP(Security Content Automation Protocol)</h4><p>SCAP是一个集合了多种安全标准的框架，它共有六个子元素:CVE,OVAL,CCE,CPE,CVSS,XCCDF。其目的是以标准的方法展示和操作安全数据。有NIST负责维护。</p>
+<p>框架是个很有效率的东西，美国人民很擅长做框架的东西，因为一般只要完成了框架里所要求的事情，基本上就很规范了。所以，SCAP是当前美国比较成熟的一套信息安全评估标准体系，其标准化，自动化的思想对信息安全行业产生了深远的影响。</p>
+<p>SCAP主要解决三个问题:</p>
+<ul>
+<li>实现高层政策法规等到底层实施的落地。</li>
+<li>将信息安全所涉及的各个要素标准化。</li>
+<li>将复杂的系统配置核查工作自动化。</li>
+</ul>
+<p>由于SCAP太完美，太细致啦，所以太复杂了，目前这个星球上完全安装按照SCAP标准去干的，只有NVD(National Vulnerabiliy Database:美国国家漏洞管理标准数据)一家。</p>
+<p>NVD:<a href="https://nvd.nist.gov/" target="_blank" rel="noopener">https://nvd.nist.gov/</a></p>
+<p>nvd的CheckList是很好用的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kali渗透测试/" rel="tag"># Kali渗透测试</a>
+          
+            <a href="/tags/漏洞扫描/" rel="tag"># 漏洞扫描</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/15/思维初步/" rel="next" title="思维初步">
+                <i class="fa fa-chevron-left"></i> 思维初步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/15/缓冲区溢出+Pop3+Fuzzing/" rel="prev" title="缓冲区溢出">
+                缓冲区溢出 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#searchsploit"><span class="nav-number">1.</span> <span class="nav-text">searchsploit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sandi"><span class="nav-number">2.</span> <span class="nav-text">Sandi</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-漏洞基本概念"><span class="nav-number"></span> <span class="nav-text">0x01 漏洞基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CVSS-Common-Vulnerability-Scoring-System"><span class="nav-number">1.</span> <span class="nav-text">CVSS(Common Vulnerability Scoring System)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-Common-Vulnerabilities-and-Exposures"><span class="nav-number"></span> <span class="nav-text">CVE(Common Vulnerabilities and Exposures)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OVAL-Open-Vulnerability-and-Assessment-Language"><span class="nav-number">1.</span> <span class="nav-text">OVAL(Open Vulnerability and Assessment Language)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CEE"><span class="nav-number">2.</span> <span class="nav-text">CEE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CPE-Common-Product-Enumeration"><span class="nav-number">3.</span> <span class="nav-text">CPE(Common Product Enumeration)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CWE-Common-Weakness-Enumeration"><span class="nav-number">4.</span> <span class="nav-text">CWE(Common Weakness Enumeration)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SCAP-Security-Content-Automation-Protocol"><span class="nav-number">5.</span> <span class="nav-text">SCAP(Security Content Automation Protocol)</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

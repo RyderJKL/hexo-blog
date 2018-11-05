@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,JS高阶,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="高级阶数高阶函数 (一个函数的参数是函数，或是将函数作为返回值的函数) 在 Javascript 中随处可见(比如数组中的 forEach(),sort()，map()……)，比起普通函数，高阶函数要灵活太多。除了传统意义上的函数调用返回，还形成了一种后续传递的风格(Continuation Passing Style) 的结果接收方式。  函数柯里化Currying 是函数式编程的一个特性，我们">
+<meta name="keywords" content="JavaScript,JS高阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数柯理化及其应用">
+<meta property="og:url" content="http://yoursite.com/2017/07/01/函数柯理化及其应用/index.html">
+<meta property="og:site_name" content="onejustone">
+<meta property="og:description" content="高级阶数高阶函数 (一个函数的参数是函数，或是将函数作为返回值的函数) 在 Javascript 中随处可见(比如数组中的 forEach(),sort()，map()……)，比起普通函数，高阶函数要灵活太多。除了传统意义上的函数调用返回，还形成了一种后续传递的风格(Continuation Passing Style) 的结果接收方式。  函数柯里化Currying 是函数式编程的一个特性，我们">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T09:53:02.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数柯理化及其应用">
+<meta name="twitter:description" content="高级阶数高阶函数 (一个函数的参数是函数，或是将函数作为返回值的函数) 在 Javascript 中随处可见(比如数组中的 forEach(),sort()，map()……)，比起普通函数，高阶函数要灵活太多。除了传统意义上的函数调用返回，还形成了一种后续传递的风格(Continuation Passing Style) 的结果接收方式。  函数柯里化Currying 是函数式编程的一个特性，我们">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/01/函数柯理化及其应用/">
+
+
+
+
+
+  <title>函数柯理化及其应用 | onejustone</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">onejustone</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">--愿你内心有种不灭的火焰，将你与别人区分开来--</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/01/函数柯理化及其应用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="onejustonee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="onejustone">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">函数柯理化及其应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-01T00:00:00+08:00">
+                2017-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/technology/" itemprop="url" rel="index">
+                    <span itemprop="name">technology</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="高级阶数"><a href="#高级阶数" class="headerlink" title="高级阶数"></a>高级阶数</h3><p><strong>高阶函数</strong> (<em>一个函数的参数是函数，或是将函数作为返回值的函数</em>) 在 Javascript 中随处可见(比如数组中的 forEach(),sort()，map()……)，比起普通函数，高阶函数要灵活太多。除了传统意义上的函数调用返回，还形成了一种后续传递的风格(Continuation Passing Style) 的结果接收方式。</p>
+<hr>
+<h3 id="函数柯里化"><a href="#函数柯里化" class="headerlink" title="函数柯里化"></a>函数柯里化</h3><p><code>Currying</code> 是函数式编程的一个特性，我们可以将多个参数的处理转化成单个参数的处理，类似链式调用。同时柯里化也是一个逐步传参，逐步缩小函数的适用范围，逐步求解的过程。</p>
+<blockquote>
+<p>柯里化有3个常见作用：1. 参数复用；2. 提前返回；3. 延迟计算/运行。</p>
+</blockquote>
+<p>普通的函数求解过程是这样的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function commFn(a,b,c)&#123;</span><br><span class="line">  return a + b + c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而函数柯理化是分部求解，先传一个a参数，再传一个b参数，再传一个c参数，最后将这三个参数相加:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function fn(a)&#123;</span><br><span class="line">  return function(b)&#123;</span><br><span class="line">    return function(c)&#123;</span><br><span class="line">      return a+b+c</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.haorooms.com/post/js_currying" target="_blank" rel="noopener">参考:</a></p>
+<p>下面是柯理化的基础版本。</p>
+<h3 id="柯理化基础版本"><a href="#柯理化基础版本" class="headerlink" title="柯理化基础版本"></a>柯理化基础版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function currying (fn)&#123;</span><br><span class="line">	var args = Array.prototype.slice.call(arguments, 1);</span><br><span class="line">  // 获得最外层函数的参数，fn 不算在内</span><br><span class="line">	return function()&#123;</span><br><span class="line">		var innerArgs = Array.prototype.slice.call(arguments)</span><br><span class="line">    // 获得内层函数的参数</span><br><span class="line">		var finalArgs = args.concat(innerArgs);</span><br><span class="line">    // 组装外层函数和内层函数的参数</span><br><span class="line">		return fn.apply(null, finalArgs);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function add() &#123;</span><br><span class="line">  let result = 0</span><br><span class="line">  Array.from(arguments).map(item =&gt; result+=item)</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let curredAdd = currying(add,4,5,6)(1,2,3);//21</span><br></pre></td></tr></table></figure>
+<p>那么，进一步，如果我们想传任意多个参数，而当不传参数时输出结果呢?下面是柯理化的<strong>延迟计算版本</strong></p>
+<h3 id="柯理化任意多参数延迟计算版本"><a href="#柯理化任意多参数延迟计算版本" class="headerlink" title="柯理化任意多参数延迟计算版本"></a>柯理化任意多参数延迟计算版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function currying(fn) &#123;</span><br><span class="line">  let args= [].slice.call(arguments,1)</span><br><span class="line">  return function A () &#123;</span><br><span class="line">    let innerArgs = [].slice.call(arguments)</span><br><span class="line">    args.push(...innerArgs)</span><br><span class="line">     if (innerArgs.length === 0)&#123;</span><br><span class="line">       return fn.apply(null,args)</span><br><span class="line">     &#125;</span><br><span class="line">    return A</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假如，我们有一个 <code>add</code> 函数，并对其进行柯理化:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function add() &#123;</span><br><span class="line">  let result = 0</span><br><span class="line">  Array.from(arguments).map(item =&gt; result+=item)</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let curredAdd = currying(add);</span><br><span class="line">curredAdd(100,200)(300);</span><br><span class="line">curredAdd(400)</span><br><span class="line">console.log(curredAdd())</span><br></pre></td></tr></table></figure>
+<p><code>curredAdd</code> 是柯里化了的函数，它返回一个新的函数，新的函数接收可分批次接受新的参数，延迟到最后一次计算。我们可以任意传入参数，当不传参数的时候，输出计算结果！</p>
+<p>类似函数柯里化等 <strong>高阶函数</strong> (<em>一个函数的参数是函数，或是将函数作为返回值的函数</em>)，在 Node 的异步编程中十分常见；而且，函数柯里化也是 ES6 的函数尾调用优化的技术基础。</p>
+<h3 id="函数绑定-bind-方法"><a href="#函数绑定-bind-方法" class="headerlink" title="函数绑定 bind 方法"></a>函数绑定 bind 方法</h3><p>除此以外，函数柯里化还常作为函数绑定的一部分包含在其中，以构造出更为复杂的绑定函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function bind(fn, context)&#123;</span><br><span class="line">    var args = Array.property.slice.call(arguments, 2);</span><br><span class="line">    return function ()&#123;</span><br><span class="line">        var innerArgs = Array.property.slice.call(arguments);</span><br><span class="line">        var finalArgs = args.concat(innerArgs);</span><br><span class="line">        return fn.apply(context, finalArgs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其实 ECMAScript5 已经函数定义了一个原生的 <code>bind()</code> 方法，我们可以直接使用它。</p>
+</blockquote>
+<p>JavaScript 中的函数柯里化和函数绑定提供了强大的动态函数创建功能，它们都能用于创建复杂的算法和功能，但是两者都不应滥用，因为每个函数都会带来额外的开销。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/JS高阶/" rel="tag"># JS高阶</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/12/类型检测/" rel="next" title="类型检测">
+                <i class="fa fa-chevron-left"></i> 类型检测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/30/构建知识体系/" rel="prev" title="构建知识体系">
+                构建知识体系 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">onejustonee</p>
+              <p class="site-description motion-element" itemprop="description">onejustone's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#高级阶数"><span class="nav-number">1.</span> <span class="nav-text">高级阶数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数柯里化"><span class="nav-number">2.</span> <span class="nav-text">函数柯里化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#柯理化基础版本"><span class="nav-number">3.</span> <span class="nav-text">柯理化基础版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#柯理化任意多参数延迟计算版本"><span class="nav-number">4.</span> <span class="nav-text">柯理化任意多参数延迟计算版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数绑定-bind-方法"><span class="nav-number">5.</span> <span class="nav-text">函数绑定 bind 方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">onejustonee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
