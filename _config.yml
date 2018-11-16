@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: onejustone
+title: 质数的一
 subtitle: --愿你内心有种不灭的火焰，将你与别人区分开来--
-description: onejustone's blog
+description: 质数的一的博客
 keywords:
-author: onejustonee
+author: 质数的一
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://blog.onejustone.xyz
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -70,7 +70,7 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
-# Extensions
+# Extension
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: landscape

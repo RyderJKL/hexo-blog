@@ -6,9 +6,10 @@
     "version": "3.8.0"
   },
   "scripts": {
-    "d": "hexo d",
-    "gd": "hexo g && hexo d",
-    "cgd": "hexo clean && hexo g && hexo d"
+    "dev": "hexo s --debug",
+    "d": "./deploy.sh",
+    "gd": "hexo g && ./deploy.sh",
+    "cgd": "hexo clean && hexo g && ./deploy.sh"
   },
   "dependencies": {
     "hexo": "^3.7.0",
